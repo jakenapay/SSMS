@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-
-    <!-- Box icons -->
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
-
-    <title>SSMS</title>
-</head>
-
-<body>
     <nav class="sidebar close">
-        <header>
+        <header class="d-flex justify-content-between">
             <div class="image-text">
                 <span class="image">
-                    <img src="logo.png" alt="Logo">
+                    <img src="logo-wo-name.png" alt="Logo">
                 </span>
 
                 <div class="text logo-text">
@@ -40,39 +22,39 @@
                     <input type="text" placeholder="Search...">
                 </li>
 
-                <ul class="menu-links">
+                <ul class="menu-links p-0">
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-home-alt icon'></i>
+                            <i class="fa-solid fa-house-chimney icon"></i>
                             <span class="text nav-text">Dashboard</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-bar-chart-alt-2 icon'></i>
-                            <span class="text nav-text">Revenue</span>
+                            <i class="fa-solid fa-clock-rotate-left icon"></i>
+                            <span class="text nav-text">History</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-bell icon'></i>
+                            <i class="fa-solid fa-bell icon"></i>
                             <span class="text nav-text">Notifications</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-pie-chart-alt icon'></i>
+                            <i class="fa-solid fa-chart-pie icon"></i>
                             <span class="text nav-text">Analytics</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-heart icon'></i>
-                            <span class="text nav-text">Likes</span>
+                            <i class="fa-solid fa-boxes-stacked icon"></i>
+                            <span class="text nav-text">Stocks</span>
                         </a>
                     </li>
 
@@ -89,15 +71,15 @@
             <div class="bottom-content">
                 <li class="">
                     <a href="#">
-                        <i class='bx bx-log-out icon'></i>
+                        <i class="fa-solid fa-power-off icon"></i>
                         <span class="text nav-text">Logout</span>
                     </a>
                 </li>
 
                 <li class="mode">
                     <div class="sun-moon">
-                        <i class='bx bx-moon icon moon'></i>
-                        <i class='bx bx-sun icon sun'></i>
+                        <i class="fa-solid fa-moon icon moon"></i>
+                        <i class="fa-solid fa-sun icon sun"></i>
                     </div>
                     <span class="mode-text text">Dark mode</span>
 
@@ -108,42 +90,4 @@
 
             </div>
         </div>
-
     </nav>
-
-    <section class="home">
-        <div class="text">Dashboard Sidebar</div>
-    </section>
-
-    <script>
-        const body = document.querySelector('body'),
-            sidebar = body.querySelector('nav'),
-            toggle = body.querySelector(".toggle"),
-            searchBtn = body.querySelector(".search-box"),
-            modeSwitch = body.querySelector(".toggle-switch"),
-            modeText = body.querySelector(".mode-text");
-
-
-        toggle.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-        })
-
-        searchBtn.addEventListener("click", () => {
-            sidebar.classList.remove("close");
-        })
-
-        modeSwitch.addEventListener("click", () => {
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                modeText.innerText = "Light mode";
-            } else {
-                modeText.innerText = "Dark mode";
-
-            }
-        });
-    </script>
-
-</body>
-
-</html>

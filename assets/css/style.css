@@ -9,10 +9,10 @@
 
 :root {
   /* ===== Colors ===== */
-  --body-color: #E4E9F7;
-  --sidebar-color: #FFF;
-  --primary-color: #695CFE;
-  --primary-color-light: #F6F5FF;
+  --body-color: #fdfdfd;
+  --sidebar-color: #f2f2f2;
+  --primary-color: #780000;
+  --primary-color-light: #fdfdfd;
   --toggle-color: #DDD;
   --text-color: #707070;
 
@@ -106,6 +106,7 @@ body.dark {
 
 .sidebar header {
   position: relative;
+  padding: 1rem 0;
 }
 
 .sidebar header .image-text {
@@ -168,8 +169,12 @@ body.dark .sidebar header .toggle {
 }
 
 .sidebar .menu {
-  margin-top: 40px;
+  margin-top: 20px;
 }
+
+/* .sidebar .menu-links {
+  margin-left: unset !important;
+} */
 
 .sidebar li.search-box {
   border-radius: 6px;
@@ -258,6 +263,10 @@ body.dark .mode .sun-moon i.moon {
   opacity: 0;
 }
 
+.menu-bar .bottom-content {
+  padding-bottom: 2rem;
+}
+
 .menu-bar .bottom-content .toggle-switch {
   position: absolute;
   right: 0;
@@ -308,10 +317,12 @@ body.dark .switch::before {
 }
 
 .home .text {
-  font-size: 30px;
-  font-weight: 500;
   color: var(--text-color);
-  padding: 12px 60px;
+}
+
+.home .header-title {
+  font-size: 1.5rem;
+  padding: 12px 50px;
 }
 
 .sidebar.close~.home {
