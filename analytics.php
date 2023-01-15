@@ -8,7 +8,6 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,7 +30,7 @@
             <div class="row">
                 <!-- <div class="text">Home</div> -->
                 <div class="col-sm-12 col-md-12 col-lg-12">
-                    <p class="header-title text">Dashboard</p>
+                    <p class="header-title text">Analytics</p>
                 </div>
             </div>
 

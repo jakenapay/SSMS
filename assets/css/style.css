@@ -36,8 +36,8 @@ body {
 
 body.dark {
   --body-color: #18191a;
-  --sidebar-color: #242526;
-  --primary-color: #3a3b3c;
+  --sidebar-color: #333333;
+  --primary-color: #780000;
   --primary-color-light: #3a3b3c;
   --toggle-color: #fff;
   --text-color: #ccc;
@@ -311,18 +311,14 @@ body.dark .switch::before {
   top: 0;
   left: 250px;
   height: 100vh;
-  width: calc(100% - 250px);
+  /* width: calc(100% - 250px); */
+  width: 100%;
   background-color: var(--body-color);
   transition: var(--tran-05);
 }
 
 .home .text {
   color: var(--text-color);
-}
-
-.home .header-title {
-  font-size: 1.5rem;
-  padding: 12px 50px;
 }
 
 .sidebar.close~.home {
@@ -333,4 +329,9 @@ body.dark .switch::before {
 
 body.dark .home .text {
   color: var(--text-color);
+}
+
+.home .header-title {
+  font-size: 1.5rem;
+  padding: 10px 25px;
 }
