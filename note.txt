@@ -1,0 +1,20 @@
+Website objectives:
+
+Dashboard:
+Fetch the count of office_supplies
+Fetch the count of technologies_supplies
+Fetch the count of all stocks
+Fetch the count of all users
+Fetch 5 latest restocks
+Fetch 5 latest actions of users
+
+Login:
+login system
+sign up system
+add user profile
+
+Profile
+edit profile
+see profile
+
+
