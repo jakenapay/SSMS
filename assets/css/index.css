@@ -56,8 +56,8 @@
 }
 
 .home .fa-boxes-packing {
-    color: #780000;
-    background-color: #78000030;
+    color: #FF5400;
+    background-color: #FF540030;
 }
 
 .home .fa-computer {
@@ -91,11 +91,33 @@
 }
 
 .home .history {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: unset;
+    align-items: unset;
+    justify-content: unset;
+}
+
+.home #month-details {
+    display: none;
 }
 
 .home hr {
     margin: 9px 0;
+}
+
+@media screen and (min-width: 768px) {
+    .home .history {
+        display: unset;
+        align-items: unset;
+        justify-content: unset;
+    }
+
+    .home #month-details {
+        display: block;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .home #month-details {
+        display: block;
+    }
 }

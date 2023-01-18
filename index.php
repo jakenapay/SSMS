@@ -40,7 +40,7 @@
                 </div>
 
                 <!-- Total Office supplies -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <div class="box-content">
                         <i class="fa-solid fa-boxes-packing icon"></i>
                         <span>
@@ -56,7 +56,7 @@
                 </div>
 
                 <!-- Total technology supplies -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <div class="box-content">
                         <i class="fa-solid fa-computer icon"></i>
                         <span>
@@ -72,7 +72,7 @@
                 </div>
 
                 <!-- Total Users -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <div class="box-content">
                         <i class="fa-solid fa-users icon"></i>
                         <span>
@@ -88,7 +88,7 @@
                 </div>
 
                 <!-- Total reports -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <div class="box-content">
                         <i class="fa-solid fa-bug icon"></i>
                         <span>
@@ -103,65 +103,116 @@
                     </div>
                 </div>
 
-                <!-- content -->
-                <div class="col-12 col-sm-6 col-md-8 col-lg-8">
+                <!-- Recent History -->
+                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
                             <h3 class="amount"><strong>Recent history</strong></h3>
-                            <p class="category ellipsis">This month</p>
+                            <p class="category ellipsis" id="month-details">This month</p>
                         </span>
                         <hr>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $sql = "SELECT \n"
+                                        . "    h.history_id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                        . "    h.history_quantity AS Quantity, \n"
+                                        . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
+                                        . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
+                                        . "FROM ssms.history h\n"
+                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                        . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
+                                        . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date DESC LIMIT 5;";
 
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Item</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $sql = "SELECT \n"
-                                    . "    h.history_id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
-                                    . "    h.history_quantity AS Quantity, \n"
-                                    . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                    . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
-                                    . "FROM ssms.history h\n"
-                                    . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                    . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                    . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                    . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
-                                    . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) LIMIT 5;";
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        // output data of each row
+                                        while ($row = $result->fetch_assoc()) {
+                                            $item = $row['Item'];
+                                            $qty = $row['Quantity'];
+                                            $user = $row['User'];
+                                            $date = $row['Date'];
 
-                                $result = $conn->query($sql);
-                                if ($result->num_rows > 0) {
-                                    // output data of each row
-                                    while ($row = $result->fetch_assoc()) {
-                                        $item = $row['Item'];
-                                        $qty = $row['Quantity'];
-                                        $user = $row['User'];
-                                        $date = $row['Date'];
-
-                                ?>
-                                        <tr>
-                                            <td><?php echo $item; ?></td>
-                                            <td><?php echo $qty; ?></td>
-                                            <td><?php echo $user; ?></td>
-                                            <td><?php echo $date; ?></td>
-                                        </tr>
-                                <?php
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $item; ?></td>
+                                                <td class="text-center"><?php echo $qty; ?></td>
+                                                <td><?php echo $user; ?></td>
+                                                <td><?php echo $date; ?></td>
+                                            </tr>
+                                    <?php
+                                        }
                                     }
-                                }
 
-                                ?>
-                            </tbody>
-                        </table>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Notifications -->
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="large-content">
+                        <span class="d-flex justify-content-between">
+                            <h3 class="amount"><strong>Notifications</strong></h3>
+                            <!-- <p class="category ellipsis extra-details">This month</p> -->
+                        </span>
+                        <hr>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Item</th>
+                                        <th scope="col">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $sql = "SELECT \n"
+                                        . "    h.history_id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                        . "    h.history_quantity AS Quantity, \n"
+                                        . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
+                                        . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
+                                        . "FROM ssms.history h\n"
+                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                        . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
+                                        . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date DESC LIMIT 5;";
 
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        // output data of each row
+                                        while ($row = $result->fetch_assoc()) {
+                                            $item = $row['Item'];
+                                            $qty = $row['Quantity'];
+
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $item; ?></td>
+                                                <td class="text-center"><?php echo $qty; ?></td>
+                                            </tr>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
