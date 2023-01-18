@@ -310,7 +310,6 @@ body.dark .switch::before {
   top: 0;
   top: 0;
   left: 250px;
-  height: 100vh;
   width: calc(100% - 250px);
   /* width: 100%; */
   background-color: var(--body-color);
@@ -323,7 +322,6 @@ body.dark .switch::before {
 
 .sidebar.close~.home {
   left: 78px;
-  height: 100vh;
   width: calc(100% - 78px);
 }
 
@@ -349,6 +347,12 @@ body.dark .home .text {
 
 .home a {
   color: unset;
+  text-decoration: unset;
+}
+
+.home a:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .home a:hover {
