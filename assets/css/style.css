@@ -4,13 +4,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Helvetica', sans-serif;
 }
 
 :root {
   /* ===== Colors ===== */
-  --body-color: #fdfdfd;
-  --sidebar-color: #f2f2f2;
+  --body-color: #f2f2f2;
+  --sidebar-color: #fdfdfd;
   --primary-color: #780000;
   --primary-color-light: #fdfdfd;
   --toggle-color: #DDD;
@@ -178,7 +178,7 @@ body.dark .sidebar header .toggle {
 
 .sidebar li.search-box {
   border-radius: 6px;
-  background-color: var(--primary-color-light);
+  background-color: var(--body-color);
   cursor: pointer;
   transition: var(--tran-05);
 }
@@ -188,7 +188,7 @@ body.dark .sidebar header .toggle {
   width: 100%;
   outline: none;
   border: none;
-  background-color: var(--primary-color-light);
+  background-color: var(--body-color);
   color: var(--text-color);
   border-radius: 6px;
   font-size: 17px;
@@ -311,8 +311,8 @@ body.dark .switch::before {
   top: 0;
   left: 250px;
   height: 100vh;
-  /* width: calc(100% - 250px); */
-  width: 100%;
+  width: calc(100% - 250px);
+  /* width: 100%; */
   background-color: var(--body-color);
   transition: var(--tran-05);
 }
@@ -331,7 +331,59 @@ body.dark .home .text {
   color: var(--text-color);
 }
 
+/* Update: 01/18/23  */
+.home {
+  padding: 0rem 1.5rem;
+}
+
 .home .header-title {
   font-size: 1.5rem;
-  padding: 10px 25px;
+  margin: unset;
+  padding: unset;
+  color: var(--primary-color);
+}
+
+.home p {
+  margin: unset;
+}
+
+.home a {
+  color: unset;
+}
+
+.home a:hover {
+  color: unset;
+}
+
+#path {
+  color: var(--primary-color);
+}
+
+.header {
+  padding: 1rem 1rem;
+  background-color: var(--sidebar-color);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
+  border-radius: 10px;
+}
+
+
+/* Laptop/Desktops */
+@media screen and (min-width: 768px) {
+  .header-content {
+    padding: 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* Laptop/Desktops */
+@media screen and (min-width: 990px) {
+  .header-content {
+    padding: 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
 }

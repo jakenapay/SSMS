@@ -1,3 +1,4 @@
+<?php include 'includes/config.inc.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,19 +28,110 @@
     <?php include 'nav.php'; ?>
 
     <section class="home">
-        <div class="container">
+        <div class="container mt-3">
             <div class="row">
-                <!-- <div class="text">Home</div> -->
                 <div class="col-sm-12 col-md-12 col-lg-12">
-                    <p class="header-title text">Dashboard</p>
+                    <div class="header">
+                        <div class="header-content">
+                            <p class="header-title text">Dashboard</p>
+                            <p id="path">Home > <a href="index.php">Dashboard</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Office Supplies</p>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-computer icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Technology Supplies</p>
+                        </span>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Restocks Notifications</p>
+                        </span>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Restocks Notifications</p>
+                        </span>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Restocks Notifications</p>
+                        </span>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Restocks Notifications</p>
+                        </span>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Restocks Notifications</p>
+                        </span>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount"><strong>99</strong></h3>
+                            <p class="category ellipsis">Restocks Notifications</p>
+                        </span>
+                    </div>
                 </div>
             </div>
+        </div>
 
+        <div class="container box">
             <div class="row">
 
             </div>
         </div>
+
     </section>
+
+
 
     <script>
         const body = document.querySelector('body'),
@@ -65,7 +157,6 @@
                 modeText.innerText = "Light mode";
             } else {
                 modeText.innerText = "Dark mode";
-
             }
         });
     </script>
