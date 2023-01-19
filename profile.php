@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +13,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -26,15 +32,28 @@
     <?php include 'nav.php'; ?>
 
     <section class="home">
-        <div class="container">
+        <div class="container mt-3">
             <div class="row">
-                <!-- <div class="text">Home</div> -->
                 <div class="col-sm-12 col-md-12 col-lg-12">
-                    <p class="header-title text">Profile</p>
+                    <div class="header">
+                        <div class="header-content">
+                            <p class="header-title text">Profile</p>
+                            <p id="path">Home > <a href="index.php">Dashboard</a></p>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
+                <!-- Here you can start to add code -->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-12">
+                    <div class="box-content">
+                        <i class="fa-solid fa-boxes-packing icon"></i>
+                        <span>
+                            <h3 class="amount">Name:</h3>
+
+                            <p class="category ellipsis">Office Supplies</p>
+                        </span>
+                    </div>
+                </div>
 
             </div>
         </div>

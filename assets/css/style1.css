@@ -1,6 +1,6 @@
-.box {
+/* .box {
     margin: 1.5rem 0;
-}
+} */
 
 .box-content {
     display: flex;
@@ -13,7 +13,6 @@
     transition: var(--tran-05);
     margin-top: 1.3rem;
 }
-
 
 .box-content:hover {
     cursor: pointer;

@@ -10,7 +10,7 @@ body {
     overflow: hidden;
     border: 0 !important;
     border-radius: 20px !important;
-    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
 .img-left {
@@ -26,6 +26,7 @@ body {
 
 .title {
     margin-bottom: 2rem;
+    font-weight: bold;
 }
 
 .form-input {
@@ -49,7 +50,7 @@ body {
     position: absolute;
     top: 10px;
     padding-left: 15px;
-    color: #007bff;
+    color: var(--primary-color);
 }
 
 .form-input input::placeholder {
@@ -57,9 +58,8 @@ body {
     padding-left: 0px;
 }
 
-.form-input input:focus,
-.form-input input:valid {
-    border: 2px solid #007bff;
+.form-input input:focus {
+    border: 1px solid var(--primary-color);
 }
 
 .form-input input:focus::placeholder {
@@ -67,7 +67,7 @@ body {
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
-    background-color: #007bff !important;
+    background-color: var(--primary-color) !important;
     border: 0px;
 }
 
@@ -76,8 +76,9 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 50px;
-    background: #007bff;
-    color: #fff;
+    border: 1px solid var(--primary-color);
+    /* background: var(--primary-color); */
+    color: var(--primary-color);
     font-size: 90%;
     font-weight: bold;
     letter-spacing: .1rem;
@@ -86,47 +87,34 @@ body {
 }
 
 .form-box button[type="submit"]:hover {
-    background: #0069d9;
+    background: var(--primary-color);
+    color: var(--primary-color-light);
 }
 
 .forget-link,
 .register-link {
-    color: #007bff;
-    font-weight: bold;
+    color: #121212;
+    margin: 0 0.5rem;
 }
 
 .forget-link:hover,
 .register-link:hover {
-    color: #0069d9;
-    text-decoration: none;
+    color: #121212;
 }
 
-.form-box .btn-social {
-    color: white !important;
-    border: 0;
-    font-weight: bold;
+form label {
+    margin-left: 0.5rem;
+    cursor: pointer;
 }
 
-.form-box .btn-facebook {
-    background: #4866a8;
+.message {
+    padding: 1rem 1rem;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #FF005430;
+    color: #FF0054;
 }
 
-.form-box .btn-google {
-    background: #da3f34;
-}
-
-.form-box .btn-twitter {
-    background: #33ccff;
-}
-
-.form-box .btn-facebook:hover {
-    background: #3d578f;
-}
-
-.form-box .btn-google:hover {
-    background: #bf3b31;
-}
-
-.form-box .btn-twitter:hover {
-    background: #2eb7e5;
+.message i {
+    padding-right: 1rem;
 }

@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+// Check if there's an id, if it has, then it's logged in
+// If there's no id, head back to login page
+if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
+    header("location: login.php");
+    exit();
+}
+
+// Checks if its a user or admin; if user then go to stocks page
+// Only admin can go to index page or dashboard
+if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+    header("location: stocks.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +26,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -30,6 +48,7 @@
         });
         google.charts.setOnLoadCallback(drawChart);
 
+        // Function for pie chart
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Supplies', 'Quantity'],
@@ -56,8 +75,18 @@
                 }
             };
 
-            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-            chart.draw(data, options);
+            // Draw the pie chart
+            // var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            // chart.draw(data, options);
+            function drawChart() {
+                // code to draw chart
+                var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                chart.draw(data, options);
+            }
+
+            window.onresize = function() {
+                drawChart();
+            }
         }
     </script>
 
@@ -111,8 +140,15 @@
                 color: ['#390099', '#9E0059', '#FF0054', '#FF5400', '#FFBD00']
             };
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
+
+            function drawChart() {
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
+
+            window.onresize = function() {
+                drawChart();
+            }
 
         }
     </script>
@@ -295,7 +331,6 @@
             </div>
 
     </section>
-
 
 
     <script>

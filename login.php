@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- ajax -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 </head>
 
 <body>
@@ -37,71 +40,75 @@
                     <h4 class="title text-center mt-4">
                         S.S.M.S Login
                     </h4>
-                    <form class="form-box px-3">
+                    <form class="form-box px-3" action="includes/login.inc.php" method="post">
+
+                        <!-- error message here -->
+                        <?php
+                        $message = '';
+                        if (isset($_GET['m'])) {
+                            if ($_GET['m'] == 'emptyFields') {
+                                $message = 'Fill up all fields';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'wrongPassword') {
+                                $message = 'Wrong password';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'userNotFound') {
+                                $message = 'Email does not exist';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'inactiveAccount') {
+                                $message = 'Inactive account';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                        }
+                        ?>
+
+
+                        <label for="email">Email Address</label>
                         <div class="form-input">
                             <span><i class="fa fa-envelope-o"></i></span>
-                            <input type="email" name="" placeholder="Email Address" tabindex="10" required>
+                            <input type="email" name="email" id="email" tabindex="10">
+
                         </div>
+
+                        <label for="password">Password</label>
                         <div class="form-input">
                             <span><i class="fa fa-key"></i></span>
-                            <input type="password" name="" placeholder="Password" required>
+                            <input type="password" id="password" name="password">
                         </div>
 
                         <div class="mb-3">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="cb1" name="" onclick="">
-                                <label class="custom-control-label" for="cb1">Show password</label>
+                                <input type="checkbox" class="custom-control-input" id="label-toggle" name="" onclick="showHidePassword()">
+                                <label class="custom-control-label" for="label-toggle">Show password</label>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-block text-uppercase">
+                            <button name="login-btn" id="login-btn" type="submit" class="btn btn-block text-uppercase">
                                 Login
                             </button>
                         </div>
 
-                        <div class="text-right">
+                        <div class="d-flex justify-content-between">
                             <a href="#" class="forget-link">
-                                Forget Password?
+                                Request an account
+                            </a>
+                            <a href="#" class="forget-link">
+                                Forgot Password?
                             </a>
                         </div>
 
-                        <div class="text-center mb-3">
-                            or login with
-                        </div>
 
-                        <div class="row mb-3">
-                            <div class="col-4">
-                                <a href="#" class="btn btn-block btn-social btn-facebook">
-                                    facebook
-                                </a>
-                            </div>
-
-                            <div class="col-4">
-                                <a href="#" class="btn btn-block btn-social btn-google">
-                                    google
-                                </a>
-                            </div>
-
-                            <div class="col-4">
-                                <a href="#" class="btn btn-block btn-social btn-twitter">
-                                    twitter
-                                </a>
-                            </div>
-                        </div>
-
-                        <hr class="my-4">
-
-                        <div class="text-center mb-2">
-                            Don't have an account?
-                            <a href="#" class="register-link">
-                                Register here
-                            </a>
-                        </div>
-                    </form>
                 </div>
+
+
+                </form>
             </div>
         </div>
+    </div>
     </div>
 
     <script>
