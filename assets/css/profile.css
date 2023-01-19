@@ -1,0 +1,14 @@
+.label {
+    font-size: 1rem;
+}
+
+.photo {
+    border-radius: 100%;
+    border: 1px solid #00000028;
+}
+
+#labelUpdateImage {
+    margin: 1.3rem 0 0;
+    font-size: 1.3rem;
+    text-align: center;
+}

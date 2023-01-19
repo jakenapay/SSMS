@@ -14,6 +14,7 @@ session_start();
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/profile.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -44,13 +45,22 @@ session_start();
                 </div>
 
                 <!-- Here you can start to add code -->
-                <div class="col-12 col-sm-6 col-md-6 col-lg-12">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-8">
                     <div class="box-content">
-                        <i class="fa-solid fa-boxes-packing icon"></i>
                         <span>
-                            <h3 class="amount">Name:</h3>
-
+                            <h5 class="label">Name</h5>
                             <p class="category ellipsis">Office Supplies</p>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Profile picture -->
+                <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                    <div class="box-content">
+                        <span>
+                            <img class="img-fluid photo" src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg" alt="Default Photo">
+                            <h2 id="labelUpdateImage">Update image</h2>
+                            <input type="">
                         </span>
                     </div>
                 </div>
