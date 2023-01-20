@@ -81,8 +81,8 @@
 
                         <div class="mb-3">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="label-toggle" name="" onclick="showHidePassword()">
-                                <label class="custom-control-label" for="label-toggle">Show password</label>
+                                <input type="checkbox" class="custom-control-input" id="toggle-password" name="" onclick="showHidePassword()">
+                                <label id="label-toggle" class="custom-control-label" for="toggle-password">Show password</label>
                             </div>
                         </div>
 
