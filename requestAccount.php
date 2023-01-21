@@ -16,10 +16,9 @@
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>">
-
     <link rel="stylesheet" type="text/css" href="assets/css/login.css?v=<?php echo time(); ?>">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -33,8 +32,8 @@
 <body>
     <div class="container">
         <div class="row px-3">
-            <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
-                <div class="img-left d-none d-md-flex"></div>
+            <div class="col-lg-6 col-xl-6 card flex-row mx-auto px-0">
+                <!-- <div class="img-left d-none d-md-flex"></div> -->
 
                 <div class="card-body">
                     <h4 class="title text-center mt-4">
@@ -66,17 +65,34 @@
                         ?>
 
 
+                        <label for="user_firstname">First Name</label>
+                        <div class="form-input">
+                            <span><i class="fa-regular fa-address-card"></i></span>
+                            <input type="text" name="user_firstname" id="user_firstname">
+                        </div>
+
+                        <label for="user_lastname">Last Name</label>
+                        <div class="form-input">
+                            <span><i class="fa-regular fa-address-card"></i></span>
+                            <input type="text" name="user_lastname" id="user_lastname">
+                        </div>
+
                         <label for="email">Email Address</label>
                         <div class="form-input">
                             <span><i class="fa fa-envelope-o"></i></span>
-                            <input type="email" name="email" id="email" tabindex="10">
-
+                            <input type="email" name="email" id="email">
                         </div>
 
                         <label for="password">Password</label>
                         <div class="form-input">
                             <span><i class="fa fa-key"></i></span>
                             <input type="password" id="password" name="password">
+                        </div>
+
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="form-input">
+                            <span><i class="fa fa-key"></i></span>
+                            <input type="password" id="confirmPassword" name="confirmPassword">
                         </div>
 
                         <div class="mb-3">
@@ -86,20 +102,21 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <button name="login-btn" id="login-btn" type="submit" class="btn btn-block text-uppercase">
-                                Login
+                        <div class="mb-3 d-flex justify-content-around">
+
+                            <button name="" id="" type="submit" class="m-1 btn btn-block text-uppercase" onclick="document.location='login.php'">
+                                Back
+                            </button>
+                            <button name="" id="" type="submit" class="m-1 btn btn-block text-uppercase">
+                                Request
                             </button>
                         </div>
-
+                        <!-- 
                         <div class="d-flex justify-content-between">
-                            <a href="requestAccount.php" class="forget-link">
+                            <a href="#" class="forget-link">
                                 Request an account
                             </a>
-                            <a href="#" class="forget-link">
-                                Forgot Password?
-                            </a>
-                        </div>
+                        </div> -->
 
 
                 </div>
@@ -111,19 +128,6 @@
     </div>
     </div>
 
-    <script>
-        function showHidePassword() {
-            var x = document.getElementById("password");
-            var y = document.getElementById("label-toggle");
-            if (x.type === "password") {
-                x.type = "text";
-                y.innerHTML = "Hide Password";
-            } else {
-                x.type = "password";
-                y.innerHTML = "Show Password";
-            }
-        }
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
