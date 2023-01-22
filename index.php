@@ -27,6 +27,7 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/index.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -75,16 +76,18 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                 }
             };
 
-            // Draw the pie chart
-            // var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-            // chart.draw(data, options);
             function drawChart() {
                 // code to draw chart
                 var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
                 chart.draw(data, options);
             }
 
-            window.onresize = function() {
+            drawChart();
+            window.onmouseover = function() {
+                drawChart();
+            }
+
+            window.onmousemove = function() {
                 drawChart();
             }
         }
@@ -146,7 +149,7 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                 chart.draw(data, options);
             }
 
-            window.onresize = function() {
+            window.onmouseover = function() {
                 drawChart();
             }
 
@@ -159,7 +162,7 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
     <?php include 'nav.php'; ?>
 
     <section class="home">
-        <div class="container mt-3">
+        <div class="container mt-3 mb-3">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="header">
@@ -284,6 +287,8 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                                             </tr>
                                     <?php
                                         }
+                                    } else {
+                                        echo '<tr><td>No data found</td></tr>';
                                     }
 
                                     ?>
@@ -301,14 +306,14 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                             <!-- <p class="category ellipsis extra-details">This month</p> -->
                         </span>
                         <hr>
-                        <span class="d-flex justify-content-center align-items-center">
-                            <div id="piechart_3d" style="width: 100%;height: 200px"></div>
+                        <span>
+                            <div id="piechart_3d"></div>
                         </span>
                     </div>
                 </div>
 
                 <!-- Recent Restock -->
-                <div class="col-12 col-sm-12 col-md-8 col-lg-9">
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
                             <h3 class="amount"><strong>Recent Restocks</strong></h3>
@@ -320,8 +325,93 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                             </div>
                         </span>
                     </div>
-
                 </div>
+
+                <!-- Pie Chart -->
+                <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                    <div class="large-content">
+                        <span class="d-flex justify-content-between">
+                            <h3 class="amount"><strong>Users</strong></h3>
+                            <!-- <p class="category ellipsis extra-details">This month</p> -->
+                        </span>
+                        <hr>
+                        <span class="user-count">
+                            <!-- php code to select admins -->
+                            <?php
+                            require 'includes/config.inc.php';
+                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_category='admin'";
+                            $result = mysqli_query($conn, $sql);
+                            $count = mysqli_fetch_array($result)[0];
+                            ?>
+                            <!-- admins count -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <i class="fa-sharp fa-solid fa-user-tie user-count-icon"></i>
+                                    <p class="user-count-title">Admins</p>
+                                </div>
+                                <div>
+                                    <p class="user-count-value"><?php echo $count; ?></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <!-- php code to select users -->
+                            <?php
+                            require 'includes/config.inc.php';
+                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_category='user'";
+                            $result = mysqli_query($conn, $sql);
+                            $count = mysqli_fetch_array($result)[0];
+                            ?>
+                            <!-- users count -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <i class="fa-solid fa-user user-count-icon"></i>
+                                    <p class="user-count-title">Users</p>
+                                </div>
+                                <div>
+                                    <p class="user-count-value"><?php echo $count; ?></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <!-- php code to select users -->
+                            <?php
+                            require 'includes/config.inc.php';
+                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_status='inactive'";
+                            $result = mysqli_query($conn, $sql);
+                            $count = mysqli_fetch_array($result)[0];
+                            ?>
+                            <!-- inactive accounts -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <i class="fa-solid fa-user-slash user-count-icon"></i>
+                                    <p class="user-count-title">Inactive</p>
+                                </div>
+                                <div>
+                                    <p class="user-count-value"><?php echo $count; ?></p>
+                                </div>
+                            </div>
+                            <hr>
+
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                    <div class="large-content">
+                        <span class="d-flex justify-content-between">
+                            <h3 class="amount"><strong>Notifications</strong></h3>
+                            <p>Low stocks</p>
+                            <!-- <p class="category ellipsis extra-details">This month</p> -->
+                        </span>
+                        <hr>
+                        <span>
+
+                        </span>
+                    </div>
+                </div>
+
             </div>
 
             <div class="container box">

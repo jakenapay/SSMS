@@ -115,6 +115,15 @@ form label {
     color: #FF0054;
 }
 
+.message-success {
+    padding: 1rem 1rem;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #00ff3730;
+    color: #00ff37;
+}
+
+.message-success i,
 .message i {
     padding-right: 1rem;
 }

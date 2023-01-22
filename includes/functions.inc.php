@@ -1,5 +1,6 @@
 <?php
 
+// for login
 function checkEmpty($em, $pw)
 {
     $result = true;
@@ -11,6 +12,31 @@ function checkEmpty($em, $pw)
     return $result;
 }
 
+// for signup 
+function checkEmptyRequest($em, $pw, $fn, $ln, $pw2)
+{
+    $result = true;
+    if (empty($em) || empty($pw) || empty($fn) || empty($ln) || empty($pw2)) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
+function passwordMatch($pw, $pw2)
+{
+    $result = true;
+    // 123 != 123 = false
+    if ($pw != $pw2) {
+        $result = true;
+        // password does not match
+    } else {
+        $result = false;
+    }
+
+    return $result;
+}
 
 // checking if username is invalid
 function invalidUsername($em)
@@ -108,23 +134,18 @@ function signUp($conn, $fn, $ln, $em, $pw)
 {
     // hash by md5
     $pw = password_hash($pw, PASSWORD_DEFAULT);
-    $ty = "member";
+    $category = "user";
+    $status = "inactive";
 
     // query
-    $sql = "INSERT INTO website.member (first_name, last_name, email, password, type, created_at)
-VALUES ('$fn', '$ln', '$em', '$pw', '$ty', now())";
+    $sql = "INSERT INTO ssms.users (user_firstname, user_lastname, user_password, user_email, user_category, user_status, user_date)
+VALUES ('$fn', '$ln', '$pw', '$em', '$category', '$status', now())";
 
     if ($conn->query($sql) === TRUE) {
-        echo '<script>
-        alert("Sign up success");
-        window.location.replace("../index.php");
-        </script>';
+        header("location: ../requestAccount.php?m=requestSuccess");
         exit();
     } else {
-        echo '<script>
-        alert("Something went wrong.");
-        window.location.replace("../signUp.php");
-        </script>';
+        header("location: ../requestAccount.php?m=requestFailed");
         exit();
     }
 }

@@ -1,0 +1,12 @@
+.user-count-icon {
+    margin: 0.3rem;
+}
+
+.user-count-title {
+    padding: 0 0.5rem;
+    color: var(--text-color);
+}
+
+.user-count-value {
+    margin-right: 0.5rem;
+}

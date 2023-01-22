@@ -29,17 +29,16 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
 </head>
 
-<body>
+<body class="mt-5 mb-5">
     <div class="container">
         <div class="row px-3">
             <div class="col-lg-6 col-xl-6 card flex-row mx-auto px-0">
                 <!-- <div class="img-left d-none d-md-flex"></div> -->
-
                 <div class="card-body">
                     <h4 class="title text-center mt-4">
-                        S.S.M.S Login
+                        S.S.M.S Request Account
                     </h4>
-                    <form class="form-box px-3" action="includes/login.inc.php" method="post">
+                    <form class="form-box px-3" action="includes/requestAccount.inc.php" method="post">
 
                         <!-- error message here -->
                         <?php
@@ -59,6 +58,22 @@
                             }
                             if ($_GET['m'] == 'inactiveAccount') {
                                 $message = 'Inactive account';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'passwordNotMatch') {
+                                $message = 'Password does not match';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'emailExist') {
+                                $message = 'Email already exists';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'requestSuccess') {
+                                $message = 'Request success';
+                                echo '<p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'requestFailed') {
+                                $message = 'Request failed';
                                 echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
                             }
                         }
@@ -103,13 +118,14 @@
                         </div>
 
                         <div class="mb-3 d-flex justify-content-around">
-
-                            <button name="" id="" type="submit" class="m-1 btn btn-block text-uppercase" onclick="document.location='login.php'">
-                                Back
-                            </button>
-                            <button name="" id="" type="submit" class="m-1 btn btn-block text-uppercase">
+                            <button name="request-btn" id="request-btn" type="submit" class="m-1 btn btn-block text-uppercase">
                                 Request
                             </button>
+                        </div>
+                        <div class="d-flex d-flex justify-content-center">
+                            <a href="login.php" class="forget-link text-center m-auto">
+                                Back
+                            </a>
                         </div>
                         <!-- 
                         <div class="d-flex justify-content-between">
@@ -128,6 +144,22 @@
     </div>
     </div>
 
+    <script>
+        function showHidePassword() {
+            var x = document.getElementById("password");
+            var x2 = document.getElementById("confirmPassword");
+            var y = document.getElementById("label-toggle");
+            if (x.type === "password" || x2.type === "password") {
+                x.type = "text";
+                x2.type = "text";
+                y.innerHTML = "Hide Password";
+            } else {
+                x.type = "password";
+                x2.type = "password";
+                y.innerHTML = "Show Password";
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
