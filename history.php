@@ -50,7 +50,7 @@ session_start();
                 <div class="large-content">
                     <span class="d-flex justify-content-between">
                         <h3 class="amount"><strong>Recent history</strong></h3>
-                        <p class="category ellipsis" id="month-details"><a href="history.php">See more</a></p>
+                        <p class="category ellipsis" id="month-details"><a href="history.php"></a></p>
                     </span>
                     <hr>
                     <div class="table-responsive">
@@ -71,7 +71,7 @@ session_start();
                                     . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
                                     . "    h.history_quantity AS Quantity, \n"
                                     . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                    . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
+                                    . "    h.history_date AS Date\n"
                                     . "FROM ssms.history h\n"
                                     . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
                                     . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
