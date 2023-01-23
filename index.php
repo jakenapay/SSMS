@@ -168,7 +168,7 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                     <div class="header">
                         <div class="header-content">
                             <p class="header-title text">Dashboard</p>
-                            <p id="path">Home > <a href="index.php">Dashboard</a></p>
+                            <p id="path"><a href="profile.php"><?php echo $_SESSION['ln'] . ', ' . $_SESSION['fn']; ?></a></p>
                         </div>
                     </div>
                 </div>

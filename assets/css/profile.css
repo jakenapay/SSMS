@@ -5,10 +5,113 @@
 .photo {
     border-radius: 100%;
     border: 1px solid #00000028;
+    width: 90%;
 }
 
 #labelUpdateImage {
     margin: 1.3rem 0 0;
     font-size: 1.3rem;
     text-align: center;
+}
+
+.box-content-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: var(--sidebar-color);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    box-shadow: rgba(9, 30, 66, 0.05) 0px 1px 1px, rgba(9, 30, 66, 0.03) 0px 0px 1px 1px;
+    transition: var(--tran-05);
+    margin-top: 1.3rem;
+}
+
+.box-content-details {
+    background-color: var(--sidebar-color);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    box-shadow: rgba(9, 30, 66, 0.05) 0px 1px 1px, rgba(9, 30, 66, 0.03) 0px 0px 1px 1px;
+    transition: var(--tran-05);
+    margin-top: 1.3rem;
+}
+
+label,
+input {
+    display: block;
+}
+
+input {
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    border: 1px solid #00000020;
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px !important;
+    width: 100%;
+}
+
+input:focus {
+    border: 1px solid var(--primary-color);
+}
+
+.form-input {
+    margin: 1rem 0rem;
+}
+
+#span-form {
+    padding-left: 2rem;
+}
+
+.label {
+    font-weight: bold;
+    text-align: center !important;
+}
+
+#status {
+    color: #00ff22;
+}
+
+.button-warning {
+    background-color: #FFBD00 !important;
+}
+
+.button-success {
+    border: 1px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.button-success:hover {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+}
+
+.message {
+    padding: 1rem 1rem;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #FF005430;
+    color: #FF0054;
+    margin: 2rem !important;
+}
+
+.message-success {
+    padding: 1rem 1rem;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #00ff3730;
+    color: #00ff37;
+    margin: 2rem !important;
+}
+
+.message-success i,
+.message i {
+    padding-right: 1rem;
+}
+
+@media screen and (min-width: 990px) {
+    .home {
+        height: 100vh;
+    }
 }
