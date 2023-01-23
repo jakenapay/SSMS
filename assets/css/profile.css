@@ -93,7 +93,7 @@ input:focus {
     text-align: center;
     background-color: #FF005430;
     color: #FF0054;
-    margin: 2rem !important;
+    margin-bottom: 2rem !important;
 }
 
 .message-success {
@@ -102,7 +102,7 @@ input:focus {
     text-align: center;
     background-color: #00ff3730;
     color: #00ff37;
-    margin: 2rem !important;
+    margin-bottom: 2rem !important;
 }
 
 .message-success i,
@@ -114,4 +114,15 @@ input:focus {
     .home {
         height: 100vh;
     }
+}
+
+@media screen and (max-width: 400px) {
+
+    .message,
+    .message-success {
+        font-size: 15px;
+        padding: 0.4rem;
+    }
+
+
 }

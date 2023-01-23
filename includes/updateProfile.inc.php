@@ -12,6 +12,18 @@ if (isset($_POST['save-btn'])) {
     $lname = $_POST['new_ln'];
     $email = $_POST['new_em'];
 
+    // check for invalid email
+    if (invalidEmail($email) !== false) {
+        header("location: ../profile.php?m=invalidEmail");
+        exit();
+    }
+
+    // check for email if existing
+    if (checkEmailExist($conn, $email) !== false) {
+        header("location: ../profile.php?m=emailExist");
+        exit();
+    }
+
     // sql query
     $sql = "UPDATE ssms.users SET user_firstname='$fname', user_lastname='$lname', user_email='$email' WHERE user_id=$id";
     if ($conn->query($sql) === TRUE) {

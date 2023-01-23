@@ -160,6 +160,7 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
 <body>
     <!-- Navigational sidebar -->
     <?php include 'nav.php'; ?>
+    <?php include 'includes/user.inc.php'; ?>
 
     <section class="home">
         <div class="container mt-3 mb-3">
@@ -168,7 +169,7 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                     <div class="header">
                         <div class="header-content">
                             <p class="header-title text">Dashboard</p>
-                            <p id="path"><a href="profile.php"><?php echo $_SESSION['ln'] . ', ' . $_SESSION['fn']; ?></a></p>
+                            <p id="path"><a href="profile.php"><?php echo $ln . ', ' . $fn; ?></a></p>
                         </div>
                     </div>
                 </div>

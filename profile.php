@@ -66,24 +66,7 @@ session_start();
                 </div>
 
                 <?php
-                include 'includes/config.inc.php';
-                $id = $_SESSION['id'];
-                $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) > 0) {
-                    // output data of each row
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $id = $row['user_id'];
-                        $fn = $row['user_firstname'];
-                        $ln = $row['user_lastname'];
-                        $em = $row['user_email'];
-                        $ct = $row['user_category'];
-                        $st = $row['user_status'];
-                    }
-                } else {
-                    echo "0 results";
-                }
-                mysqli_close($conn);
+                include 'includes/user.inc.php';
                 ?>
                 <!-- Here you can start to add code -->
                 <div class="col-12 col-sm-6 col-md-8 col-lg-8">
@@ -117,13 +100,13 @@ session_start();
                                         <span id="status" class="text-capitalize"><?php echo $st; ?></span></strong>
                                 </h5>
                                 <div class="form-input">
-                                    <input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
+                                    <input type="hidden" name="id" id="id" value="<?php echo $id; ?>" disabled>
                                     <label for="user_firstname" class="label">First name</label>
-                                    <input id="user_firstname" name="user_firstname" type="text" value="<?php echo $fn; ?>">
+                                    <input id="user_firstname" name="user_firstname" type="text" value="<?php echo $fn; ?>" disabled>
                                 </div>
                                 <div class="form-input">
                                     <label for="user_lastname" class="label text-center">Last name</label>
-                                    <input id="user_lastname" name="user_lastname" type="text" value="<?php echo $ln; ?>">
+                                    <input id="user_lastname" name="user_lastname" type="text" value="<?php echo $ln; ?>" disabled>
                                 </div>
                                 <div class="form-input">
                                     <label for="email" class="label">Email Address</label>

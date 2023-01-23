@@ -13,6 +13,7 @@ session_start();
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/history.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -29,18 +30,84 @@ session_start();
 <body>
     <!-- Navigational sidebar -->
     <?php include 'nav.php'; ?>
+    <?php
+
+    ?>
 
     <section class="home">
-        <div class="container">
-            <div class="row">
-                <!-- <div class="text">Home</div> -->
-                <div class="col-sm-12 col-md-12 col-lg-12">
-                    <p class="header-title text">History</p>
+        <div class="container mt-3 mb-3">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="header">
+                    <div class="header-content">
+                        <p class="header-title text">History</p>
+                        <p id="path"><a href="profile.php"><?php echo $_SESSION['ln'] . ', ' . $_SESSION['fn']; ?></a></p>
+                    </div>
                 </div>
             </div>
 
-            <div class="row">
+            <!-- Recent History -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="large-content">
+                    <span class="d-flex justify-content-between">
+                        <h3 class="amount"><strong>Recent history</strong></h3>
+                        <p class="category ellipsis" id="month-details"><a href="history.php">See more</a></p>
+                    </span>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">History ID</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include 'includes/config.inc.php';
+                                $sql = "SELECT \n"
+                                    . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                    . "    h.history_quantity AS Quantity, \n"
+                                    . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
+                                    . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
+                                    . "FROM ssms.history h\n"
+                                    . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                    . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                    . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                    . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
+                                    . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date;";
 
+                                $result = $conn->query($sql);
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while ($row = $result->fetch_assoc()) {
+                                        $id = $row['Id'];
+                                        $item = $row['Item'];
+                                        $qty = $row['Quantity'];
+                                        $user = $row['User'];
+                                        $date = $row['Date'];
+
+                                ?>
+                                        <tr>
+                                            <td><?php echo $id; ?></td>
+                                            <td><?php echo $item; ?></td>
+                                            <td><?php echo $qty; ?></td>
+                                            <td><?php echo $user; ?></td>
+                                            <td><?php echo $date; ?></td>
+                                        </tr>
+                                <?php
+                                    }
+                                } else {
+                                    echo '<tr><td>No data found</td></tr>';
+                                }
+
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
