@@ -17,10 +17,10 @@
     <div class="menu-bar">
         <div class="menu">
 
-            <li class="search-box">
+            <!-- <li class="search-box">
                 <i class='bx bx-search icon'></i>
                 <input type="text" placeholder="Search">
-            </li>
+            </li> -->
 
             <ul class="menu-links p-0">
 
@@ -107,7 +107,7 @@
                     </a>
                 <?php } ?>
             </li>
-
+            <!-- 
             <li class="mode">
                 <div class="sun-moon">
                     <i class="fa-solid fa-moon icon moon"></i>
@@ -118,7 +118,7 @@
                 <div class="toggle-switch">
                     <span class="switch"></span>
                 </div>
-            </li>
+            </li> -->
 
         </div>
     </div>

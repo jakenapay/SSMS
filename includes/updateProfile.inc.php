@@ -18,11 +18,15 @@ if (isset($_POST['save-btn'])) {
         exit();
     }
 
-    // check for email if existing
-    if (checkEmailExist($conn, $email) !== false) {
-        header("location: ../profile.php?m=emailExist");
-        exit();
+    // retrieve the email and check if the email was changed
+    if ($_SESSION['em'] != $email) {
+        // check for email if existing
+        if (checkEmailExist($conn, $email) !== false) {
+            header("location: ../profile.php?m=emailExist");
+            exit();
+        }
     }
+
 
     // sql query
     $sql = "UPDATE ssms.users SET user_firstname='$fname', user_lastname='$lname', user_email='$email' WHERE user_id=$id";

@@ -402,8 +402,8 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                 <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
-                            <h3 class="amount"><strong>Notifications</strong></h3>
-                            <p>Low stocks</p>
+                            <h3 class="amount"><strong>Low Stocks</strong></h3>
+                            <!-- <p>Low stocks</p> -->
                             <!-- <p class="category ellipsis extra-details">This month</p> -->
                         </span>
                         <hr>

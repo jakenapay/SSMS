@@ -1,5 +1,18 @@
 <?php
 session_start();
+// Check if there's an id, if it has, then it's logged in
+// If there's no id, head back to login page
+if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
+    header("location: login.php");
+    exit();
+}
+
+// Checks if its a user or admin; if user then go to stocks page
+// Only admin can go to index page or dashboard
+if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+    header("location: stocks.php");
+    exit();
+}
 
 ?>
 <!DOCTYPE html>

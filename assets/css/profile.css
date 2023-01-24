@@ -1,3 +1,7 @@
+body {
+    background-color: #f2f2f2 !important;
+}
+
 .label {
     font-size: 1rem;
 }
@@ -110,12 +114,10 @@ input:focus {
     padding-right: 1rem;
 }
 
-@media screen and (min-width: 990px) {
-    .home {
-        height: 100vh;
-    }
-}
+/* for large screens */
+@media screen and (min-width: 990px) {}
 
+/* for cp below */
 @media screen and (max-width: 400px) {
 
     .message,
