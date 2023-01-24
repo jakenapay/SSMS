@@ -38,6 +38,22 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <title>SSMS</title>
+
+    <!-- jQuery Datatables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('table').DataTable();
+        });
+    </script>
+
 </head>
 
 <body>
@@ -53,7 +69,6 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                 <div class="header">
                     <div class="header-content">
                         <p class="header-title text">History</p>
-                        <p id="path"><a href="profile.php"><?php echo $_SESSION['ln'] . ', ' . $_SESSION['fn']; ?></a></p>
                     </div>
                 </div>
             </div>
@@ -61,15 +76,14 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
             <!-- Recent History -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="large-content">
-                    <span class="d-flex justify-content-between">
+                    <!-- <span class="d-flex justify-content-between">
                         <h3 class="amount"><strong>Recent history</strong></h3>
-                        <p class="category ellipsis" id="month-details"><a href="history.php"></a></p>
-                    </span>
-                    <hr>
+                    </span> 
+                    <hr> -->
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>
-                                <tr>
+                                <tr class="pt-5">
                                     <th scope="col">History ID</th>
                                     <th scope="col">Item</th>
                                     <th scope="col">Quantity</th>

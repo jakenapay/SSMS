@@ -135,10 +135,10 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                     minValue: 0
                 },
                 legend: {
-                    position: 'top'
+                    position: 'right'
                 },
                 bar: {
-                    groupWidth: '75%'
+                    groupWidth: '20%'
                 },
                 color: ['#390099', '#9E0059', '#FF0054', '#FF5400', '#FFBD00']
             };
@@ -149,9 +149,12 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                 chart.draw(data, options);
             }
 
+            drawChart();
             window.onmouseover = function() {
                 drawChart();
             }
+
+
 
         }
     </script>
