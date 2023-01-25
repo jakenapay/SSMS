@@ -4,6 +4,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #FDF0D5 !important;
 }
 
 .card {
@@ -15,7 +16,7 @@ body {
 
 .img-left {
     width: 45%;
-    background-image: url('https://sprcms2.blob.core.windows.net/guidearticles/thumbnails/123/Fotolia_78145773_Subscription_Monthly_M(1).jpeg');
+    background-image: url('https://www.ascm.org/globalassets/ascm_website_assets/img/landing/im-01.jpg');
     background-position: center;
     background-size: cover;
 }

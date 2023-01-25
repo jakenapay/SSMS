@@ -37,23 +37,36 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <title>SSMS</title>
+
 </head>
 
 <body>
     <!-- Navigational sidebar -->
     <?php include 'nav.php'; ?>
-
+    <?php include 'includes/user.inc.php'; ?>
     <section class="home">
-        <div class="container">
-            <div class="row">
-                <!-- <div class="text">Home</div> -->
-                <div class="col-sm-12 col-md-12 col-lg-12">
-                    <p class="header-title text">Stock</p>
+        <div class="container mt-3">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="header">
+                    <div class="header-content">
+                        <p class="header-title text">Stocks</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="row">
-                <?php echo $_SESSION['id']; ?>
+
+            <!-- Recent History -->
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="large-content">
+                    <!-- <span class="d-flex justify-content-between">
+                        <h3 class="amount"><strong>Recent history</strong></h3>
+                    </span> 
+                    <hr> -->
+                    <div class="table-responsive">
+
+
+                    </div>
+                </div>
             </div>
         </div>
     </section>

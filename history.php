@@ -7,13 +7,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     exit();
 }
 
-// Checks if its a user or admin; if user then go to stocks page
-// Only admin can go to index page or dashboard
-if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
-    header("location: stocks.php");
-    exit();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,9 +51,7 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
 <body>
     <!-- Navigational sidebar -->
     <?php include 'nav.php'; ?>
-    <?php
-
-    ?>
+    <?php include 'includes/user.inc.php'; ?>
 
     <section class="home">
         <div class="container mt-3 mb-3">
@@ -93,18 +84,36 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                             <tbody>
                                 <?php
                                 include 'includes/config.inc.php';
-                                $sql = "SELECT \n"
-                                    . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
-                                    . "    h.history_quantity AS Quantity, \n"
-                                    . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                    . "    h.history_date AS Date\n"
-                                    . "FROM ssms.history h\n"
-                                    . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                    . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                    . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                    . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
-                                    . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date;";
 
+                                // Checks if its a user or admin; if user then go to stocks page
+                                // Only admin can go to index page or dashboard
+                                if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+                                    $sql = "SELECT \n"
+                                        . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                        . "    h.history_quantity AS Quantity, \n"
+                                        . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
+                                        . "    h.history_date AS Date\n"
+                                        . "FROM ssms.history h\n"
+                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                        . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
+                                        . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE())\n"
+                                        . "AND u.user_id=" . $id . "\n"
+                                        . "ORDER BY h.history_date;";
+                                } else {
+                                    $sql = "SELECT \n"
+                                        . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                        . "    h.history_quantity AS Quantity, \n"
+                                        . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
+                                        . "    h.history_date AS Date\n"
+                                        . "FROM ssms.history h\n"
+                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                        . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
+                                        . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date;";
+                                }
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
                                     // output data of each row
