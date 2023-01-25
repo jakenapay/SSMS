@@ -10,6 +10,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 // Checks if its a user or admin; if user then go to stocks page
 // Only admin can go to index page or dashboard
 // if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+//     If you are a user, run this code below
 //     header("location: stocks.php");
 //     exit();
 // }
