@@ -47,7 +47,6 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.js"></script>
 
-
     <script>
         $(document).ready(function() {
             $('table').DataTable();
