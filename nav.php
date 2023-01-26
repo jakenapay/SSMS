@@ -54,8 +54,8 @@
                 <?php }
                 } ?>
 
-                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
-                    if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>
+                <!-- <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
+                            if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>
                         <li class="nav-link">
                             <a href="analytics.php">
                                 <i class="fa-solid fa-chart-pie icon"></i>
@@ -63,13 +63,35 @@
                             </a>
                         </li>
                 <?php }
-                } ?>
+                        } ?> -->
 
                 <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) { ?>
                     <li class="nav-link">
-                        <a href="stocks.php">
+                        <a href="restocks.php">
                             <i class="fa-solid fa-boxes-stacked icon"></i>
-                            <span class="text nav-text">Stocks</span>
+                            <span class="text nav-text">Restocks</span>
+                        </a>
+                    </li>
+                <?php
+                } ?>
+
+                <!-- Office Supplies -->
+                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) { ?>
+                    <li class="nav-link">
+                        <a href="officeSupplies.php">
+                            <i class="fa-solid fa-boxes-packing icon"></i>
+                            <span class="text nav-text">Office Supplies</span>
+                        </a>
+                    </li>
+                <?php
+                } ?>
+
+                <!-- Technology Supplies -->
+                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) { ?>
+                    <li class="nav-link">
+                        <a href="technologySupplies.php">
+                            <i class="fa-solid fa-computer icon"></i>
+                            <span class="text nav-text">Technology Supplies</span>
                         </a>
                     </li>
                 <?php

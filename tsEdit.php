@@ -119,7 +119,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                     <input id="ts_category" name="ts_category" type="text" class="form-control" placeholder="Category" value="<?php echo $cat; ?>">
                                 </div>
                                 <div class="col-md-6 pb-3">
-                                    <label for="ts_quantity">Quantity (<a href="#">Restock here</a>)</label>
+                                    <label for="ts_quantity">Quantity (<a href="restocks.php?rid=<?php echo $tsid; ?>">Restock here</a>)</label>
                                     <input id="ts_quantity" name="ts_quantity" type="number" class="form-control" placeholder="Quantity" value="<?php echo $qty; ?>" disabled>
                                 </div>
                                 <div class="col-md-6 pb-3">
