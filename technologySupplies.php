@@ -20,6 +20,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/history.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/ts.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -148,10 +149,10 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
-                                                    <td>
-                                                        <button type="button" class="btn updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
-                                                            Update
-                                                        </button>
+                                                    <td><a href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
+                                                                Update
+                                                            </button></a>
+
                                                     </td>
 
 
@@ -217,50 +218,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
             </div>
         </div>
 
-        <!-- Update Modal -->
-        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update</h5>
-                        <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-12 pt-4 pb-5 d-flex flex-column justify-content-center align-items-center">
-                                        <img src="logo-wo-name.png" alt="Technology Supply" class="img-fluid pb-5" style="width: 300px;">
-                                        <input id="update_ts_img" name="update_ts_img" type="file" accept="image/*">
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="update_ts_name">Name</label>
-                                        <input type="text" class="form-control" id="update_ts_name" name="update_ts_name">
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="update_ts_model">Model</label>
-                                        <input type="text" class="form-control" id="update_ts_model" name="update_ts_model">
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="update_ts_brand">Brand</label>
-                                        <input type="text" class="form-control" id="update_ts_brand" name="update_ts_brand">
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="update_ts_category">Category</label>
-                                        <input type="text" class="form-control" id="update_ts_category" name="update_ts_category">
-                                    </div>
-                                </div>
-                            </form>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <script>
@@ -310,22 +267,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 $('#ts_location').val(data[4]);
             });
 
-            // update btn
-            $('.updateBtn').on('click', function() {
-                $('#updateModal').modal('show');
-                $tr = $(this).closest('tr');
-                var data = $tr.children('td').map(function() {
-                    return $(this).text();
-                }).get();
-
-                // after getting the data from table; put it in form inputs
-                console.log(data);
-                $('#update_ts_name').val(data[0]);
-                $('#update_ts_model').val(data[1]);
-                $('#update_ts_brand').val(data[2]);
-                $('#update_ts_category').val(data[3]);
-                $('#update_ts_location').val(data[4]);
-            });
         });
     </script>
 

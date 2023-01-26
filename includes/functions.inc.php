@@ -149,3 +149,55 @@ VALUES ('$fn', '$ln', '$pw', '$em', '$category', '$status', now())";
         exit();
     }
 }
+
+
+
+function checkImageSize($image_size)
+{
+    $result = true;
+    if ($image_size > 2000000) {
+        // Error
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
+function checkImageError($image_error)
+{
+    $result = true;
+    if ($image_error !== 0) {
+        // Error
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
+function checkImageType($image_ext)
+{
+    $result = true;
+    $ext = array('jpg', 'jpeg', 'png', 'pdf');
+    if (in_array($image_ext, $ext)) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
+function checkEmptyInput($name, $model, $brand, $cat, $loc, $dlm, $by)
+{
+    $result = true;
+    if (
+        empty($name) || empty($model) || empty($brand) || empty($cat) || empty($loc)
+        || empty($dlm) || empty($by)
+    ) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
