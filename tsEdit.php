@@ -93,14 +93,15 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-7">
                     <div class="box-content">
-                        <form method="POST" action="includes/ts.inc.php" enctype="multipart/form-data">
+                        <form method="POST" action="includes/ts.inc.php">
                             <div class="row">
 
                                 <input type="hidden" name="uid" id="uid" value="<?php echo $_SESSION['id']; ?>">
 
                                 <div class="col-md-3 pb-3">
-                                    <label for="">Id</label>
-                                    <input id="ts_id" name="ts_id" type="text" class="form-control" placeholder="Id" value="<?php echo $tsid; ?>" disabled>
+                                    <label for="ts_id">Id</label>
+                                    <input id="ts_id" name="ts_id" type="hidden" class="form-control" placeholder="Id" value="<?php echo $tsid; ?>">
+                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $tsid; ?></p>
                                 </div>
                                 <div class="col-md-5 pb-3">
                                     <label for="ts_name">Name</label>
@@ -120,7 +121,8 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="ts_quantity">Quantity (<a href="restocks.php?rid=<?php echo $tsid; ?>">Restock here</a>)</label>
-                                    <input id="ts_quantity" name="ts_quantity" type="number" class="form-control" placeholder="Quantity" value="<?php echo $qty; ?>" disabled>
+                                    <input id="ts_quantity" name="ts_quantity" type="hidden" class="form-control" placeholder="Quantity" value="<?php echo $qty; ?>">
+                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $qty; ?></p>
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="ts_location">Location</label>
@@ -131,15 +133,18 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="date_added">Date Added</label>
-                                    <input id="date_added" name="date_added" type="text" class="form-control" placeholder="Date Added" value="<?php echo $da; ?>" disabled>
+                                    <input id="date_added" name="date_added" type="hidden" class="form-control" placeholder="Date Added" value="<?php echo $da; ?>">
+                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $da; ?></p>
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="date_last_modified">Last Modified</label>
-                                    <input id="date_last_modified" name="date_last_modified" type="text" class="form-control" placeholder="Last Modified" value="<?php echo $dlm; ?>" disabled>
+                                    <input id="date_last_modified" name="date_last_modified" type="hidden" class="form-control" placeholder="Last Modified" value="<?php echo $dlm; ?>">
+                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $dlm; ?></p>
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="modified_by">Modified by</label>
-                                    <input id="modified_by" name="modified_by" type="text" class="form-control" placeholder="Modified by" value="<?php echo $by; ?>" disabled>
+                                    <input id="modified_by" name="modified_by" type="hidden" class="form-control" placeholder="Modified by" value="<?php echo $by; ?>">
+                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $by; ?></p>
                                 </div>
                                 <div class="w-100 pb-3">
                                     <hr>
