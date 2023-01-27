@@ -33,7 +33,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
             $cat = $row['ts_category'];
             $qty = $row['ts_quantity'];
             $loc = $row['ts_location'];
-            $img = $row['ts_img'];
+            $old_img = $row['ts_img'];
             $da = $row['date_added'];
             $dlm = $row['date_last_modified'];
             $by = $row['fullname'];
@@ -83,7 +83,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="header">
                         <div class="header-content">
-                            <span class="d-flex justify-content-start align-items-center">
+                            <span class="d-flex justify-content-between align-items-center">
                                 <i class="fa-solid fa-computer icon"></i>
                                 <p class="header-title text">Edit Technology Supplies</p>
                             </span>
@@ -161,8 +161,20 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                 <div class="col-12 col-sm-6 col-md-6 col-lg-5">
                     <div class="box-content">
                         <div class="col-md-12 pt-4 pb-4 d-flex justify-content-center flex-column align-items-center">
-                            <img src="logo-wo-name.png" alt="" class="img-fluid pb-5" style="width: 300px;">
+                            <!-- Checks if there's an existing image -->
+                            <?php
+                            if ($old_img != '') {
+                                // if there's an existing image then echo the image
+                                echo '<img src="technologySupplies/<?php echo $old_img; ?>" alt="" class="img-fluid pb-5" style="width: 300px;">';
+                            } else {
+                                echo '<label class="m-5">No image found</label>';
+                            }
+                            ?>
                             <input type="file" accept="image/*">
+                            <div class="w-100 pb-3 mt-3">
+                                <hr>
+                            </div>
+                            <input type="submit" name="update-img" value="Save Changes" />
                         </div>
                     </div>
                 </div>
