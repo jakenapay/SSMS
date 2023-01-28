@@ -165,9 +165,9 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                             <?php
                             if ($old_img != '') {
                                 // if there's an existing image then echo the image
-                                echo '<img src="technologySupplies/<?php echo $old_img; ?>" alt="" class="img-fluid pb-5" style="width: 300px;">';
+                                echo '<img src="technologySupplies/' . $old_img . '" alt="" class="img-fluid pb-5" style="width: 300px;">';
                             } else {
-                                echo '<label class="m-5">No image found</label>';
+                                echo '<label class="m-5">No image found.</label>';
                             }
                             ?>
                             <input type="file" accept="image/*">
