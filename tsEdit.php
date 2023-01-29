@@ -94,8 +94,8 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                 <div class="col-12 col-sm-6 col-md-6 col-lg-7">
                     <div class="box-content">
                         <form method="POST" action="includes/ts.inc.php">
+                            <h3 class="header-title text text-center">Details</h3><br>
                             <div class="row">
-
                                 <input type="hidden" name="uid" id="uid" value="<?php echo $_SESSION['id']; ?>">
 
                                 <div class="col-md-3 pb-3">
@@ -160,8 +160,9 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-5">
                     <div class="box-content">
-                        <div class="col-md-12 pt-4 pb-4 d-flex justify-content-center flex-column align-items-center">
+                        <div class="col-md-12 pt-1 pb-4 d-flex justify-content-center flex-column align-items-center">
                             <!-- Checks if there's an existing image -->
+                            <h3 class="header-title text">Image</h3><br>
                             <?php
                             if ($old_img != '') {
                                 // if there's an existing image then echo the image
