@@ -37,11 +37,9 @@ if (isset($_POST['save-changes'])) {
         echo $conn->error;
         echo "<script>alert('Error updating product.');</script>";
     }
-} else {
-    header("location: ../technologySupplies.php");
-    exit();
 }
 
+// UPDATE AN IMAGE OF TECHNOLOGY SUPPLIES
 if (isset($_POST['update-img'])) {
 
     // check first if there's an id of technology and the user
@@ -54,21 +52,17 @@ if (isset($_POST['update-img'])) {
     require 'config.inc.php';
     require 'functions.inc.php';
 
-    // If img has name and img name isnt blank
-    if (isset($_FILES['product_pic']['name']) && ($_FILES['product_pic']['name'] != '')) {
-        // Get the uploaded image file and its information
-        // $image = $_FILES['product_pic']['name'];
-        // $tmp_img_name = $_FILES['product_pic']['tmp_name'];
-        // $image_type = $_FILES['product_pic']['type'];
-        // $image_size = $_FILES['product_pic']['size'];
-        // $image_error = $_FILES['product_pic']['error'];
+    $tsid = $_POST['ts_id'];
 
-        $imgName = $_FILES['product_pic']['name'];
-        $imgTmpName = $_FILES['product_pic']['tmp_name'];
-        $imgType = $_FILES['product_pic']['type'];
-        $imgSize = $_FILES['product_pic']['size'];
-        $imgError = $_FILES['product_pic']['error'];
-        $old_pic = $_POST['old_pic'];
+    // If img has name and img name isnt blank
+    if (isset($_FILES['ts_img']['name']) && ($_FILES['ts_img']['name'] != '')) {
+
+        $imgName = $_FILES['ts_img']['name'];
+        $imgTmpName = $_FILES['ts_img']['tmp_name'];
+        $imgType = $_FILES['ts_img']['type'];
+        $imgSize = $_FILES['ts_img']['size'];
+        $imgError = $_FILES['ts_img']['error'];
+        $old_img = $_POST['old_img'];
 
         // Seperate extension and filename
         $imageTmpExt = explode('.', $imgName);
@@ -76,26 +70,26 @@ if (isset($_POST['update-img'])) {
 
         // Check if image type is an image
         if (checkImageType($imgType) !== false) {
-            header("location: ../product.php?id='.$id.'&error=ImageTypeDenied");
+            header("location: ../product.php?id='.$tsid.'&error=ImageTypeDenied");
             exit();
         }
 
         // Check if image size is more than 2mb
         if (checkImageSize($imgSize) !== false) {
-            header("location: ../product.php?id='.$id.'&error=ImageTooLarge");
+            header("location: ../product.php?id='.$tsid.'&error=ImageTooLarge");
             exit();
         }
 
         // Check if image has an error
         if (checkImageError($imgError) !== false) {
-            header("location: ../product.php?id='.$id.'&error=ImageError");
+            header("location: ../product.php?id='.$tsid.'&error=ImageError");
             exit();
         }
 
         // If all functions were passed then explode the image name and extension
         // Declare path and old pic name, and unlink/delete it from folder of images
-        if (isset($old_pic) && ($old_pic != '')) {
-            $path = "../product_img/" . $old_pic;
+        if (isset($old_img) && ($old_img != '')) {
+            $path = "../technologySupplies/" . $old_img;
             if (!unlink($path)) {
                 echo "You have an error deleting image";
             }
@@ -107,10 +101,20 @@ if (isset($_POST['update-img'])) {
 
         // Upload the image to upload folder (product_img)
         $img = 'IMG_' . $imageNewName;
-        $folder = '../product_img/';
+        $folder = '../technologySupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
+
+        $sql = "UPDATE ssms.technology_supplies SET ts_img='$img' WHERE ts_id=$tsid";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "<script>alert('Product updated successfully.');</script>";
+            header("location: ../tsEdit.php?eid=$tsid&m=success");
+        } else {
+            echo $conn->error;
+            echo "<script>alert('Error updating product.');window.location.replace('../tsEdit.php?eid='.$tsid.'&m=failed');</script>";
+        }
     } else {
-        $img = $old_pic;
+        $img = $old_img;
     }
 }
 

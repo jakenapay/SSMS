@@ -160,23 +160,33 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-5">
                     <div class="box-content">
-                        <div class="col-md-12 pt-1 pb-4 d-flex justify-content-center flex-column align-items-center">
-                            <!-- Checks if there's an existing image -->
-                            <h3 class="header-title text">Image</h3><br>
-                            <?php
-                            if ($old_img != '') {
-                                // if there's an existing image then echo the image
-                                echo '<img src="technologySupplies/' . $old_img . '" alt="" class="img-fluid pb-5" style="width: 300px;">';
-                            } else {
-                                echo '<label class="m-5">No image found.</label>';
-                            }
-                            ?>
-                            <input type="file" accept="image/*">
-                            <div class="w-100 pb-3 mt-3">
-                                <hr>
+
+                        <form action="includes/ts.inc.php" method="post" enctype="multipart/form-data">
+                            <div class="col-md-12 pt-1 pb-4 d-flex justify-content-center flex-column align-items-center">
+                                <!-- Checks if there's an existing image -->
+                                <h3 class="header-title text">Image</h3><br>
+
+                                <!-- hidden -->
+                                <input type="hidden" name="old_img" value="<?php echo $old_img; ?>">
+                                <input type="hidden" name="ts_id" value="<?php echo $tsid; ?>">
+                                <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
+
+                                <?php
+                                if ($old_img != '') {
+                                    // if there's an existing image then echo the image
+                                    echo '<img src="technologySupplies/' . $old_img . '" alt="" class="img-fluid pb-5" style="width: 300px;">';
+                                } else {
+                                    echo '<label class="m-5">No image found.</label>';
+                                }
+                                ?>
+                                <input type="file" accept="image/*" name="ts_img" id="ts_img">
+                                <div class="w-100 pb-3 mt-3">
+                                    <hr>
+                                </div>
+                                <input type="submit" name="update-img" value="Save Edit Image" />
                             </div>
-                            <input type="submit" name="update-img" value="Save Changes" />
-                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
