@@ -59,6 +59,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/history.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/ts.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/updateSupply.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -90,6 +91,42 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                         </div>
                     </div>
                 </div>
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="box-content d-block">
+                        <!-- error message here -->
+                        <?php
+                        $message = '';
+                        if (isset($_GET['m'])) {
+                            if ($_GET['m'] == 'emptyFields') {
+                                $message = 'Fill up all fields';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'ImageError') {
+                                $message = 'Image has an error';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'ImageTooLarge') {
+                                $message = 'Image too large';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'ImageTypeDenied') {
+                                $message = 'Image type denied';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'error') {
+                                $message = 'Error Occured';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'success') {
+                                $message = 'Technology Supply Updated';
+                                echo '<p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>';
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+
 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-7">
                     <div class="box-content">
@@ -151,7 +188,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>
                                 <div class="form-input d-flex justify-content-between align-items-center px-4">
                                     <a href="technologySupplies.php">Back</a>
-                                    <input name="save-changes" id="save-changes" type="submit" value="Save Changes" />
+                                    <input class="submit-btn" name="save-changes" id="save-changes" type="submit" value="Save Changes" />
                                 </div>
 
                             </div>
@@ -183,7 +220,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 <div class="w-100 pb-3 mt-3">
                                     <hr>
                                 </div>
-                                <input type="submit" name="update-img" value="Save Edit Image" />
+                                <input type="submit" class="submit-btn" name="update-img" value="Save Edit Image" />
                             </div>
                         </form>
 

@@ -1,0 +1,36 @@
+.message {
+    padding: 1rem 1rem;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #FF005430;
+    color: #FF0054;
+}
+
+.message-success {
+    padding: 1rem 1rem;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #00ff3730;
+    color: #00ff37;
+}
+
+.message-success i,
+.message i {
+    padding-right: 1rem;
+}
+
+.submit-btn {
+    padding: 0.3rem 1rem;
+    border-radius: 13px;
+    outline: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+
+    transition: var(--tran-03);
+}
+
+.submit-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}

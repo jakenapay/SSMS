@@ -35,7 +35,7 @@ if (isset($_POST['save-changes'])) {
         header("location: ../tsEdit.php?eid=$tsid&m=success");
     } else {
         echo $conn->error;
-        echo "<script>alert('Error updating product.');</script>";
+        echo "<script>alert('Error updating product.');window.location.replace('../tsEdit.php?eid=$tsid&m=error');</script>";
     }
 }
 
@@ -53,6 +53,7 @@ if (isset($_POST['update-img'])) {
     require 'functions.inc.php';
 
     $tsid = $_POST['ts_id'];
+    $uid = $_POST['uid'];
 
     // If img has name and img name isnt blank
     if (isset($_FILES['ts_img']['name']) && ($_FILES['ts_img']['name'] != '')) {
@@ -70,19 +71,19 @@ if (isset($_POST['update-img'])) {
 
         // Check if image type is an image
         if (checkImageType($imgType) !== false) {
-            header("location: ../product.php?id='.$tsid.'&error=ImageTypeDenied");
+            header("location: ../tsEdit.php?eid='.$tsid.'&error=ImageTypeDenied");
             exit();
         }
 
         // Check if image size is more than 2mb
         if (checkImageSize($imgSize) !== false) {
-            header("location: ../product.php?id='.$tsid.'&error=ImageTooLarge");
+            header("location: ../tsEdit.php?eid='.$tsid.'&error=ImageTooLarge");
             exit();
         }
 
         // Check if image has an error
         if (checkImageError($imgError) !== false) {
-            header("location: ../product.php?id='.$tsid.'&error=ImageError");
+            header("location: ../tsEdit.php?eid='.$tsid.'&error=ImageError");
             exit();
         }
 
@@ -104,14 +105,14 @@ if (isset($_POST['update-img'])) {
         $folder = '../technologySupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE ssms.technology_supplies SET ts_img='$img' WHERE ts_id=$tsid";
+        $sql = "UPDATE ssms.technology_supplies SET ts_img='$img', date_last_modified=now(), modified_by=$uid WHERE ts_id=$tsid";
 
         if ($conn->query($sql) === TRUE) {
-            echo "<script>alert('Product updated successfully.');</script>";
+            echo "<script>alert('Product updated successfully.');window.location.replace('../tsEdit.php?eid='.$tsid.'&m=failed');</script>";
             header("location: ../tsEdit.php?eid=$tsid&m=success");
         } else {
             echo $conn->error;
-            echo "<script>alert('Error updating product.');window.location.replace('../tsEdit.php?eid='.$tsid.'&m=failed');</script>";
+            echo "<script>alert('Error updating product.');window.location.replace('../tsEdit.php?eid='.$tsid.'&m=error');</script>";
         }
     } else {
         $img = $old_img;
