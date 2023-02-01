@@ -96,9 +96,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
                                         . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
                                         . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                        . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
-                                        . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE())\n"
-                                        . "AND u.user_id=" . $id . "\n"
+                                        . "WHERE u.user_id=" . $id . "\n"
                                         . "ORDER BY h.history_date;";
                                 } else {
                                     $sql = "SELECT \n"
@@ -110,8 +108,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
                                         . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
                                         . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                        . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
-                                        . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date;";
+                                        . "ORDER BY h.history_date;";
+                                    // $sql = "SELECT *, h.history_id as Id FROM `ssms`.`history` as h";
                                 }
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
@@ -122,6 +120,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         $qty = $row['Quantity'];
                                         $user = $row['User'];
                                         $date = $row['Date'];
+
                                 ?>
                                         <tr>
                                             <td><?php echo $id; ?></td>

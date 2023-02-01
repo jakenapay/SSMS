@@ -14,6 +14,8 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
     header("location: stocks.php");
     exit();
 }
+
+include 'includes/config.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -261,17 +263,18 @@ if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT \n"
-                                        . "    h.history_id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
-                                        . "    h.history_quantity AS Quantity, \n"
-                                        . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                        . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
-                                        . "FROM ssms.history h\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                        . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
-                                        . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date DESC LIMIT 3;";
+                                    // $sql = "SELECT \n"
+                                    //     . "    h.history_id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                    //     . "    h.history_quantity AS Quantity, \n"
+                                    //     . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
+                                    //     . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
+                                    //     . "FROM ssms.history h\n"
+                                    //     . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                    //     . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                    //     . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                    //     . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
+                                    //     . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date DESC LIMIT 3;";
+                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM ssms.history as h LEFT JOIN ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN ssms.users as u on h.user_id=u.user_id ORDER BY h.history_date DESC LIMIT 3;";
 
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
