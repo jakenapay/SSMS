@@ -84,7 +84,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <tbody>
                                 <?php
                                 include 'includes/config.inc.php';
-
                                 // Checks if its a user or admin; if user then go to stocks page
                                 // Only admin can go to index page or dashboard
                                 if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
@@ -123,7 +122,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         $qty = $row['Quantity'];
                                         $user = $row['User'];
                                         $date = $row['Date'];
-
                                 ?>
                                         <tr>
                                             <td><?php echo $id; ?></td>
