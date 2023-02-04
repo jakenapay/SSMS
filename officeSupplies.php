@@ -184,7 +184,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <form>
                                 <div class="row">
                                     <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
-                                        <img src="logo-wo-name.png" alt="" class="img-fluid" style="width: 300px;">
+                                        <img src="logo-wo-name.png"  alt="" class="img-fluid" style="width: 300px;">
                                     </div>
                                     <div class="col-md-6 pt-1 pb-1">
                                         <label for="os_name">Name</label>

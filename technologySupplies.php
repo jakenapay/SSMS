@@ -100,7 +100,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 <?php
                                 // fetch all tech supplies 
                                 include 'includes/config.inc.php';
-                                $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity > 3";
+                                $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, ts_img as img, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity > 3";
 
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
@@ -112,6 +112,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         $brand = $row['brand'];
                                         $cat = $row['cat'];
                                         $loc = $row['loc'];
+                                        $img = $row['img'];
 
                                         // for admins only to see
                                         $qty = $row['qty'];
@@ -121,6 +122,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         <tr>
                                             <form action="includes/ts.inc.php" method="post" enctype="multipart/form-data">
                                                 <!-- rows -->
+                                                <!-- image -->
+                                                <!-- <td style="display: none;"><img src="technologySupplies/<?php echo $img; ?>"></td> -->
 
                                                 <!-- id -->
                                                 <input name="ts_id" type="hidden" value="<?php echo $id; ?>">
@@ -267,6 +270,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 $('#ts_brand').val(data[2]);
                 $('#ts_category').val(data[3]);
                 $('#ts_location').val(data[4]);
+                $('#ts_img').val(data[6]);
             });
 
         });
