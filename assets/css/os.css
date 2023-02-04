@@ -1,0 +1,10 @@
+.viewBtn {
+    color: #FFF !important;
+    background-color: #FF5400 !important;
+    padding: 0px 15px !important;
+}
+
+.btn {
+    margin: unset !important;
+    padding: unset !important;
+}

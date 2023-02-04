@@ -31,7 +31,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>SSMS | Technology Supplies</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -85,11 +85,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <th scope="col">Brand</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Location</th>
-                                    <th scope="col"></th>
+                                    <th scope="col" colspan="">Action</th>
 
                                     <!-- for admins -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                        <th scope="col">Quantity</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                     <?php } ?>
@@ -149,6 +150,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <td><?php echo $qty; ?></td>
                                                     <td><a href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
                                                                 Update
                                                             </button></a>

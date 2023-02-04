@@ -110,7 +110,7 @@ session_start();
                                 </div>
                                 <div class="form-input">
                                     <label for="email" class="label">Email Address</label>
-                                    <input id="email" name="email" type="email" value="<?php echo $em; ?>">
+                                    <input id="email" name="email" type="email" value="<?php echo $em; ?>" disabled>
                                 </div>
                                 <div class="form-input">
                                     <label for="category" class="label">Category</label>
