@@ -37,7 +37,10 @@ session_start();
 
 <body>
     <!-- Navigational sidebar -->
-    <?php include 'nav.php'; ?>
+    <?php
+    include 'nav.php';
+    include 'includes/user.inc.php';
+    ?>
 
     <section class="home">
         <div class="container mt-3 mb-5">
@@ -57,20 +60,34 @@ session_start();
                 <!-- Profile picture -->
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                     <div class="box-content-profile">
-                        <div class="d-flex justify-content-center align-items-center flex-column">
-                            <img class="img-fluid photo" src="https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg" alt="Default Photo">
-                            <br>
-                            <h5 class="label">Edit image</h5>
-                        </div>
-                        <span>
+                        <form action="includes/updateProfile.inc.php" method="post" enctype="multipart/form-data">
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <!-- hidden -->
+                                <input type="hidden" name="old_img" value="<?php echo $old_img; ?>">
+                                <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                                <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
 
-                        </span>
+                                <?php
+                                if ($old_img != '') {
+                                    // if there's an existing image then echo the image
+                                    echo '<img src="userProfile/' . $old_img . '" alt="" class="img-fluid pb-3" style="width: 300px;">';
+                                } else {
+                                    echo '<label class="m-5">No image found.</label>';
+                                }
+                                ?>
+                                <div class="w-100 pb-3 m-0">
+                                    <hr>
+                                </div>
+                                <label class="label">Update new image</label>
+                                <input type="file" accept="image/*" name="user_img" id="user_img">
+                                <div class="w-100 pb-0 mt-2">
+                                    <input type="submit" class="mt-2 btn button-warning" name="edit-image" value="Save ">
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
-                <?php
-                include 'includes/user.inc.php';
-                ?>
                 <!-- Here you can start to add code -->
                 <div class="col-12 col-sm-6 col-md-8 col-lg-8">
                     <div class="box-content-details">
@@ -122,7 +139,7 @@ session_start();
                                 <div class="form-input mb-0">
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn button-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Edit
+                                        Edit Profile
                                     </button>
                                 </div>
                             </form>
@@ -160,7 +177,7 @@ session_start();
                         </div>
                         <div class="form-group pt-2 pb-2">
                             <label for="new_em">Email address</label>
-                            <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>">
+                            <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>" disabled>
                         </div>
                     </div>
                     <div class="modal-footer">

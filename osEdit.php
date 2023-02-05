@@ -40,7 +40,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
         }
     }
 } else {
-    header("location: officeSupplies.php");
+    header("location: officeSupplies.php?m=tanginamo");
     exit();
 }
 
@@ -180,11 +180,11 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                     <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $qty; ?></p>
                                 </div>
                                 <div class="col-md-6 pb-3">
-                                    <label for="ts_location">Location</label>
-                                    <input id="ts_location" name="ts_location" type="text" class="form-control" placeholder="Location" value="<?php echo $loc; ?>">
+                                    <label for="os_location">Location</label>
+                                    <input id="os_location" name="os_location" type="text" class="form-control" placeholder="Location" value="<?php echo $loc; ?>">
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="os_desc">Description</label>
+                                    <label for="os_desc ">Description</label>
                                     <textarea id="os_desc" name="os_desc" type="text" class="form-control" placeholder="Description"><?php echo $des; ?></textarea>
                                 </div>
                                 <div class="w-100 pb-3">

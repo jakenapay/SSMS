@@ -10,6 +10,7 @@ if (mysqli_num_rows($result) > 0) {
         $fn = $row['user_firstname'];
         $ln = $row['user_lastname'];
         $em = $row['user_email'];
+        $old_img = $row['user_img'];
         $ct = $row['user_category'];
         $st = $row['user_status'];
     }

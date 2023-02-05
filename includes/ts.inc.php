@@ -24,7 +24,7 @@ if (isset($_POST['save-changes'])) {
 
     if (checkEmptyInput($name, $model, $brand, $cat, $loc, $dlm, $by) !== false) {
         // if true !== false => true; run this code
-        header("location: ../tsEdit.php?m=emptyFields");
+        header("location: ../tsEdit.php?eid=$tsid&m=emptyFields");
         exit();
     }
 

@@ -5,7 +5,7 @@ if (isset($_POST['save-changes'])) {
 
     if (!isset($_POST['os_id']) and !isset($_POST['uid'])) {
         // go back to edit panel
-        header("location: ../osEdit.php");
+        header("location: ../officeSupplies.php?m=noid");
         exit();
     }
 
@@ -22,9 +22,9 @@ if (isset($_POST['save-changes'])) {
     $dlm = $_POST['date_last_modified'];
     $by = $_POST['modified_by'];
 
-    if (checkEmptyInput($name, $model, $brand, $cat, $loc, $dlm, $by) !== false) {
+    if (checkEmptyInput($name, $des, $brand, $uom, $loc, $dlm, $by) !== false) {
         // if true !== false => true; run this code
-        header("location: ../osEdit.php?m=emptyFields");
+        header("location: ../osEdit.php?eid=$osid&m=emptyFields");
         exit();
     }
 
@@ -32,7 +32,7 @@ if (isset($_POST['save-changes'])) {
     $updateQuery = "UPDATE ssms.office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom',`os_location`='$loc', `os_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE os_id=$osid;";
 
     if ($conn->query($updateQuery) === TRUE) {
-        echo "<script>alert('Product updated successfully.');</script>";
+        // echo "<script>alert('Product updated successfully.');</script>";
         header("location: ../osEdit.php?eid=$osid&m=success");
     } else {
         echo $conn->error;

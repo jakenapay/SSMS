@@ -188,11 +188,11 @@ function checkImageType($image_ext)
     return $result;
 }
 
-function checkEmptyInput($name, $model, $brand, $cat, $loc, $dlm, $by)
+function checkEmptyInput($name, $bla, $brand, $cat, $loc, $dlm, $by)
 {
     $result = true;
     if (
-        empty($name) || empty($model) || empty($brand) || empty($cat) || empty($loc)
+        empty($name) || empty($bla) || empty($brand) || empty($cat) || empty($loc)
         || empty($dlm) || empty($by)
     ) {
         $result = true;
