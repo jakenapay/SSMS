@@ -142,6 +142,7 @@ if (isset($_POST['check_view'])) {
             $qty = $row['os_quantity'];
             $loc = $row['os_location'];
             $old_img = $row['os_img'];
+            $des = $row['os_desc'];
             $da = $row['date_added'];
             $dlm = $row['date_last_modified'];
             // $by = $row['fullname'];
@@ -152,7 +153,7 @@ if (isset($_POST['check_view'])) {
                     <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
                         <img src="officeSupplies/' . $old_img . '" alt="" class="img-fluid" style="width: 300px;">
                     </div>
-                    <div class="col-md-6 pt-1 pb-1">
+                    <div class="col-md-12 pt-1 pb-1">
                         <label for="">Name</label>
                         <input type="text" class="form-control" id="os_name" name="os_name" value="' . $name . '" disabled>
                     </div>  
@@ -163,6 +164,10 @@ if (isset($_POST['check_view'])) {
                     <div class="col-md-6 pt-1 pb-1">
                         <label for="ts_model">Unit of Measure</label>
                         <input type="text" class="form-control" id="os_uom" name="os_uom" value="' . $uom . '" disabled>
+                    </div>
+                    <div class="col-md-12 pt-1 pb-1">
+                        <label for="ts_model">Description (additional information)</label>
+                        <textarea type="text" class="form-control" id="os_uom" name="os_uom" disabled>' . $des . '</textarea>
                     </div>
                 </div>
             </form>

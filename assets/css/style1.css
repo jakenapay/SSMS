@@ -48,6 +48,17 @@
     bottom: 0;
 }
 
+.btn {
+    margin: unset !important;
+    padding: unset !important;
+}
+
+.viewBtn, .btn-default {
+    color: #FFF !important;
+    background-color: #780000 !important;
+    padding: 0px 15px !important;
+}
+
 .home .icon {
     padding: 1rem;
     margin-right: 1rem;
@@ -101,6 +112,10 @@
 
 .home hr {
     margin: 9px 0;
+}
+
+.btn {
+    btn
 }
 
 @media screen and (min-width: 768px) {

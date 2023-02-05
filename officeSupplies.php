@@ -199,7 +199,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                     <div class="modal-footer">
                         <div class="row">
                             <button type="button" class="btn btn-danger px-2" data-bs-dismiss="modal">Close</button>
-
                         </div>
                     </div>
                 </div>
