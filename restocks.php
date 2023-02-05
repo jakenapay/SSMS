@@ -63,7 +63,19 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 <div class="modal-body">
                     <div class="restock_supplies">
                         <form action="" method="post">
-                            
+                            <div class="form-group">
+                                <label for="r_supply">Supply</label>
+                                <select name="" id="r_supply">
+                                    <?php
+                                    include 'includes/config.inc.php';
+                                    $sql = "SELECT  FROM ";
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        // output data of each row
+                                        while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                </select>
+                            </div>
                         </form>
                     </div>
                 </div>

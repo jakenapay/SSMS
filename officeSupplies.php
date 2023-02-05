@@ -104,7 +104,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             </thead>
                             <tbody>
                                 <?php
-                                // fetch all tech supplies 
+                                // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
                                 $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 3";
 
