@@ -81,18 +81,24 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         <table class="table table-hover">
                             <thead>
                                 <tr class="pt-5">
+                                    <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Brand</th>
                                     <th scope="col">Unit of Measure</th>
                                     <th scope="col">Location</th>
-                                    <th scope="col">Action</th>
+                                    <!-- for users -->
+                                    <?php
+                                    if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") { ?>
+                                        <th scope="col"></th>
+                                    <?php } ?>
 
                                     <!-- for admins -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                         <th scope="col">Quantity</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
                                     <?php } ?>
                                 </tr>
                             </thead>
@@ -122,7 +128,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <!-- rows -->
 
                                                 <!-- id -->
-                                                <input name="ts_id" type="hidden" value="<?php echo $id; ?>">
+                                                <td class="os_id"><?php echo $id; ?></td>
+                                                <input name="os_id" class="os_id" type="hidden" value="<?php echo $id; ?>">
 
                                                 <!-- name -->
                                                 <td><?php echo $name; ?></td>
@@ -152,7 +159,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
 
-                                                    <td><a class="btn btn-warning" href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn btn-warning px-2 updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
+                                                    <td><a class="btn btn-warning" href="osEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn btn-warning px-2 updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
                                                                 Update
                                                             </button></a>
                                                     </td>
@@ -178,41 +185,20 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">View Technology Supply</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">View Office Supply</h5>
                         <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
-                                        <img src="logo-wo-name.png" alt="" class="img-fluid" style="width: 300px;">
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="os_name">Name</label>
-                                        <input type="text" class="form-control" id="os_name" name="os_name" disabled>
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="os_brand">Brand</label>
-                                        <input type="text" class="form-control" id="os_brand" name="os_brand" disabled>
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="os_uom">Unit of Measure</label>
-                                        <input type="text" class="form-control" id="os_uom" name="os_uom" disabled>
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="os_location">Location</label>
-                                        <input type="text" class="form-control" id="os_location" name="os_location" disabled>
-                                    </div>
-                                </div>
-                            </form>
-                        </form>
+                        <div class="os_view">
+
+                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <div class="row">
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger px-2" data-bs-dismiss="modal">Close</button>
 
                         </div>
                     </div>
@@ -241,23 +227,25 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     </script>
     <script>
         $(document).ready(function() {
-            // view btn
-            $('.viewBtn').on('click', function() {
-                $('#viewModal').modal('show');
-                $tr = $(this).closest('tr');
-                var data = $tr.children('td').map(function() {
-                    return $(this).text();
-                }).get();
+            $('.viewBtn').click(function(e) {
+                e.preventDefault();
+                // alert('hello');
+                var os_id = $(this).closest('tr').find('.os_id').text();
 
-                // after getting the data from table; put it in form inputs
-                console.log(data);
-                $('#os_name').val(data[0]);
-                $('#os_brand').val(data[1]);
-                $('#os_uom').val(data[2]);
-                $('#os_location').val(data[3]);
-                // $('#ts_location').val(data[4]);
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/os.inc.php",
+                    data: {
+                        'check_view': true,
+                        'os_id': os_id
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        $('.os_view').html(response);
+                        $('#viewModal').modal('show');
+                    }
+                });
             });
-
         });
     </script>
 

@@ -86,7 +86,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <th scope="col">Brand</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Location</th>
-                                    <!-- for admins -->
+                                    <!-- for users -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") { ?>
                                         <th scope="col"></th>
@@ -176,7 +176,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 } else {
                                     echo '<tr><td>No data found</td></tr>';
                                 }
-
                                 ?>
                             </tbody>
                         </table>
@@ -197,33 +196,11 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                     </div>
                     <div class="modal-body">
                         <div class="ts_view">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
-                                        <img src="logo-wo-name.png" alt="" class="img-fluid" style="width: 300px;">
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="">Name</label>
-                                        <input type="text" class="form-control" id="ts_name" name="ts_name" disabled>
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="ts_model">Model</label>
-                                        <input type="text" class="form-control" id="ts_model" name="ts_model" disabled>
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="ts_brand">Brand</label>
-                                        <input type="text" class="form-control" id="ts_brand" name="ts_brand" disabled>
-                                    </div>
-                                    <div class="col-md-6 pt-1 pb-1">
-                                        <label for="ts_category">Category</label>
-                                        <input type="text" class="form-control" id="ts_category" name="ts_category" disabled>
-                                    </div>
-                                </div>
-                            </form>
+
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger px  -2" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger px-2" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
