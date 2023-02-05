@@ -45,7 +45,10 @@ session_start();
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="header">
                         <div class="header-content">
-                            <p class="header-title text">Profile</p>
+                            <div class="d-flex flex-row align-items-center"><i class="fa-solid fa-users icon"></i>
+                                <p class="header-title text">Profile</p>
+                            </div>
+
                             <p id="path"><a href="includes/logout.inc.php">Logout</a></p>
                         </div>
                     </div>

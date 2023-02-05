@@ -1,5 +1,6 @@
 <?php
 
+// UPDATE DETAILS OF TECHNOLOGY SUPPLIES
 if (isset($_POST['save-changes'])) {
 
     if (!isset($_POST['ts_id']) and !isset($_POST['uid'])) {
@@ -120,69 +121,59 @@ if (isset($_POST['update-img'])) {
 }
 
 
+if (isset($_POST['check_view'])) {
 
+    // get the technology supply id
+    $ts_id = $_POST['ts_id'];
 
+    // requirements to run into database and functions for configurations
+    require 'config.inc.php';
 
+    $result = $conn->query("SELECT * FROM ssms.technology_supplies WHERE ts_id = $ts_id");
+    // Check if the query was successful
+    if ($result) {
+        // Loop through the rows of the result set
+        while ($row = $result->fetch_assoc()) {
+            // Process each row and generate the HTML content
+            $tsid = $row['ts_id'];
+            $name = $row['ts_name'];
+            $model = $row['ts_model'];
+            $brand = $row['ts_brand'];
+            $cat = $row['ts_category'];
+            $qty = $row['ts_quantity'];
+            $loc = $row['ts_location'];
+            $old_img = $row['ts_img'];
+            $da = $row['date_added'];
+            $dlm = $row['date_last_modified'];
+            // $by = $row['fullname'];
 
-
-
-
-
-    // // If img has name and img name isnt blank
-    // if (isset($_FILES['product_pic']['name']) && ($_FILES['product_pic']['name'] != '')) {
-    //     // Get the uploaded image file and its information
-    //     // $image = $_FILES['product_pic']['name'];
-    //     // $tmp_img_name = $_FILES['product_pic']['tmp_name'];
-    //     // $image_type = $_FILES['product_pic']['type'];
-    //     // $image_size = $_FILES['product_pic']['size'];
-    //     // $image_error = $_FILES['product_pic']['error'];
-
-    //     $imgName = $_FILES['product_pic']['name'];
-    //     $imgTmpName = $_FILES['product_pic']['tmp_name'];
-    //     $imgType = $_FILES['product_pic']['type'];
-    //     $imgSize = $_FILES['product_pic']['size'];
-    //     $imgError = $_FILES['product_pic']['error'];
-    //     $old_pic = $_POST['old_pic'];
-
-    //     // Seperate extension and filename
-    //     $imageTmpExt = explode('.', $imgName);
-    //     $imageExt = strtolower(end($imageTmpExt));
-
-    //     // Check if image type is an image
-    //     if (checkImageType($imgType) !== false) {
-    //         header("location: ../product.php?id='.$id.'&error=ImageTypeDenied");
-    //         exit();
-    //     }
-
-    //     // Check if image size is more than 2mb
-    //     if (checkImageSize($imgSize) !== false) {
-    //         header("location: ../product.php?id='.$id.'&error=ImageTooLarge");
-    //         exit();
-    //     }
-
-    //     // Check if image has an error
-    //     if (checkImageError($imgError) !== false) {
-    //         header("location: ../product.php?id='.$id.'&error=ImageError");
-    //         exit();
-    //     }
-
-    //     // If all functions were passed then explode the image name and extension
-    //     // Declare path and old pic name, and unlink/delete it from folder of images
-    //     if (isset($old_pic) && ($old_pic != '')) {
-    //         $path = "../product_img/" . $old_pic;
-    //         if (!unlink($path)) {
-    //             echo "You have an error deleting image";
-    //         }
-    //     }
-
-    //     // Create a unique ID for the image
-    //     // Upload the image to the folder
-    //     $imageNewName = uniqid('', true) . "." . $imageExt;
-
-    //     // Upload the image to upload folder (product_img)
-    //     $img = 'IMG_' . $imageNewName;
-    //     $folder = '../product_img/';
-    //     move_uploaded_file($imgTmpName, $folder . $img);
-    // } else {
-    //     $img = $old_pic;
-    // }
+            echo $return = '
+            <form>
+                <div class="row">
+                    <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
+                        <img src="technologySupplies/' . $old_img . '" alt="" class="img-fluid" style="width: 300px;">
+                    </div>
+                    <div class="col-md-6 pt-1 pb-1">
+                        <label for="">Name</label>
+                        <input type="text" class="form-control" id="ts_name" name="ts_name" value="' . $name . '" disabled>
+                    </div>  
+                    <div class="col-md-6 pt-1 pb-1">
+                        <label for="ts_model">Model</label>
+                        <input type="text" class="form-control" id="ts_model" name="ts_model" value="' . $model . '" disabled>
+                    </div>
+                    <div class="col-md-6 pt-1 pb-1">
+                        <label for="ts_brand">Brand</label>
+                        <input type="text" class="form-control" id="ts_brand" name="ts_brand" value="' . $brand . '" disabled>
+                    </div>
+                    <div class="col-md-6 pt-1 pb-1">
+                        <label for="ts_category">Category</label>
+                        <input type="text" class="form-control" id="ts_category" name="ts_category" value="' . $cat . '" disabled>
+                    </div>
+                </div>
+            </form>
+            ';
+        }
+    } else {
+        echo '<h5>No result</h5>';
+    }
+}

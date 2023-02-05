@@ -78,7 +78,9 @@ input:focus {
 }
 
 .button-warning {
-    background-color: #FFBD00 !important;
+    padding: 0px 15px !important;
+    color: #FFF !important;
+    background-color: #9E0059 !important;
 }
 
 .button-success {

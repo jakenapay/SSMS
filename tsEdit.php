@@ -10,7 +10,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 // Checks if its a user or admin; if user then go to stocks page
 // Only admin can go to index page or dashboard
 if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
-    header("location: stocks.php");
+    header("location: index.php");
     exit();
 }
 
@@ -92,40 +92,62 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="box-content d-block">
-                        <!-- error message here -->
-                        <?php
-                        $message = '';
-                        if (isset($_GET['m'])) {
-                            if ($_GET['m'] == 'emptyFields') {
-                                $message = 'Fill up all fields';
-                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                            }
-                            if ($_GET['m'] == 'ImageError') {
-                                $message = 'Image has an error';
-                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                            }
-                            if ($_GET['m'] == 'ImageTooLarge') {
-                                $message = 'Image too large';
-                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                            }
-                            if ($_GET['m'] == 'ImageTypeDenied') {
-                                $message = 'Image type denied';
-                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                            }
-                            if ($_GET['m'] == 'error') {
-                                $message = 'Error Occured';
-                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                            }
-                            if ($_GET['m'] == 'success') {
-                                $message = 'Technology Supply Updated';
-                                echo '<p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>';
-                            }
-                        }
-                        ?>
-                    </div>
-                </div>
+
+                <!-- error message here -->
+                <?php
+                $message = '';
+                if (isset($_GET['m'])) {
+                    if ($_GET['m'] == 'emptyFields') {
+                        $message = 'Fill up all fields';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'ImageError') {
+                        $message = 'Image has an error';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'ImageTooLarge') {
+                        $message = 'Image too large';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'ImageTypeDenied') {
+                        $message = 'Image type denied';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'error') {
+                        $message = 'Error Occured';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'success') {
+                        $message = 'Technology Supply Updated';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                }
+                ?>
+
 
 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-7">

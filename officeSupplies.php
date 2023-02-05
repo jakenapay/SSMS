@@ -137,6 +137,11 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <td><?php echo $loc; ?></td>
                                                 <input name="os_location" type="hidden" value="<?php echo $loc; ?>">
 
+                                                <?php
+                                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <td><?php echo $qty; ?></td>
+                                                <?php } ?>
+
                                                 <td>
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn viewBtn px-2" data-bs-toggle="modal" data-bs-target="#viewModal">
@@ -146,7 +151,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
-                                                    <td><?php echo $qty; ?></td>
+
                                                     <td><a class="btn btn-warning" href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn btn-warning px-2 updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
                                                                 Update
                                                             </button></a>
@@ -160,7 +165,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 } else {
                                     echo '<tr><td>No data found</td></tr>';
                                 }
-
                                 ?>
                             </tbody>
                         </table>
@@ -184,7 +188,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <form>
                                 <div class="row">
                                     <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
-                                        <img src="logo-wo-name.png"  alt="" class="img-fluid" style="width: 300px;">
+                                        <img src="logo-wo-name.png" alt="" class="img-fluid" style="width: 300px;">
                                     </div>
                                     <div class="col-md-6 pt-1 pb-1">
                                         <label for="os_name">Name</label>
@@ -207,7 +211,10 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <div class="row">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+
+                        </div>
                     </div>
                 </div>
             </div>

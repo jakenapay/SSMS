@@ -173,7 +173,10 @@ include 'includes/config.inc.php';
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="header">
                         <div class="header-content">
-                            <p class="header-title text">Dashboard</p>
+                            <div class="d-flex flex-row align-items-center">
+                                <!-- <i class="fa-solid fa-house-chimney icon"></i> -->
+                                <p class="header-title text">Dashboard</p>
+                            </div>
                             <p id="path"><a href="profile.php"><?php echo $ln . ', ' . $fn; ?></a></p>
                         </div>
                     </div>

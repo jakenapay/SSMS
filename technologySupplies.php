@@ -80,17 +80,23 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         <table class="table table-hover">
                             <thead>
                                 <tr class="pt-5">
+                                    <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Model</th>
                                     <th scope="col">Brand</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Location</th>
-                                    <th scope="col" colspan="">Action</th>
+                                    <!-- for admins -->
+                                    <?php
+                                    if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") { ?>
+                                        <th scope="col"></th>
+                                    <?php } ?>
 
                                     <!-- for admins -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                         <th scope="col">Quantity</th>
+                                        <th scope="col"></th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                     <?php } ?>
@@ -126,7 +132,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <!-- <td style="display: none;"><img src="technologySupplies/<?php echo $img; ?>"></td> -->
 
                                                 <!-- id -->
-                                                <input name="ts_id" type="hidden" value="<?php echo $id; ?>">
+                                                <td class="ts_id"><?php echo $id; ?></td>
+                                                <input name="ts_id" class="ts_id" type="hidden" value="<?php echo $id; ?>">
 
                                                 <!-- name -->
                                                 <td><?php echo $name; ?></td>
@@ -144,6 +151,11 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <td><?php echo $loc; ?></td>
                                                 <input name="ts_location" type="hidden" value="<?php echo $loc; ?>">
 
+                                                <?php
+                                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <td><?php echo $qty; ?></td>
+                                                <?php } ?>
+
                                                 <td>
                                                     <!-- Button trigger modal -->
                                                     <button type="button" class="btn viewBtn" data-bs-toggle="modal" data-bs-target="#viewModal">
@@ -153,14 +165,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
-                                                    <td><?php echo $qty; ?></td>
-                                                    <td><a href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
-                                                                Update
-                                                            </button></a>
-
+                                                    <td><a href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></a>
                                                     </td>
-
-
                                                     <td><a href="url_to_delete<?php echo $id; ?>" id="<?php echo $id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><button>Delete</button></a></td>
                                                 <?php } ?>
                                             </form>
@@ -190,7 +196,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <div class="ts_view">
                             <form>
                                 <div class="row">
                                     <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
@@ -214,10 +220,10 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     </div>
                                 </div>
                             </form>
-                        </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger px  -2" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -241,38 +247,29 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
         searchBtn.addEventListener("click", () => {
             sidebar.classList.remove("close");
         })
-
-        modeSwitch.addEventListener("click", () => {
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                modeText.innerText = "Light mode";
-            } else {
-                modeText.innerText = "Dark mode";
-
-            }
-        });
     </script>
     <script>
         $(document).ready(function() {
-            // view btn
-            $('.viewBtn').on('click', function() {
-                $('#viewModal').modal('show');
-                $tr = $(this).closest('tr');
-                var data = $tr.children('td').map(function() {
-                    return $(this).text();
-                }).get();
+            $('.viewBtn').click(function(e) {
+                e.preventDefault();
+                // alert('hello');
+                var ts_id = $(this).closest('tr').find('.ts_id').text();
+                console.log(ts_id);
 
-                // after getting the data from table; put it in form inputs
-                console.log(data);
-                $('#ts_name').val(data[0]);
-                $('#ts_model').val(data[1]);
-                $('#ts_brand').val(data[2]);
-                $('#ts_category').val(data[3]);
-                $('#ts_location').val(data[4]);
-                $('#ts_img').val(data[6]);
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/ts.inc.php",
+                    data: {
+                        'check_view': true,
+                        'ts_id': ts_id
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        $('.ts_view').html(response);
+                        $('#viewModal').modal('show');
+                    }
+                });
             });
-
         });
     </script>
 
