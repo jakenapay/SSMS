@@ -158,7 +158,7 @@ if (isset($_POST['check_view'])) {
                         <label for="tsid">ID</label>
                         <input type="text" class="form-control" id="ts_id" name="ts_id" value="' . $tsid . '" disabled>
                         <input type="hidden" class="form-control" id="ts_id" name="ts_id" value="' . $tsid . '">
-                    </div>  
+                    </div> 
                     <div class="col-md-6 pt-1 pb-1">
                         <label for="">Name</label>
                         <input type="text" class="form-control" id="ts_name" name="ts_name" value="' . $name . '" disabled>

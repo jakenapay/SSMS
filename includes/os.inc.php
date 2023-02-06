@@ -148,12 +148,16 @@ if (isset($_POST['check_view'])) {
             // $by = $row['fullname'];
 
             echo $return = '
-            <form>
                 <div class="row">
                     <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
                         <img src="officeSupplies/' . $old_img . '" alt="" class="img-fluid" style="width: 300px;">
                     </div>
-                    <div class="col-md-12 pt-1 pb-1">
+                    <div class="col-md-6 pt-1 pb-1">
+                        <label for="os_id">ID</label>
+                        <input type="text" class="form-control" id="os_id" name="os_id" value="' . $osid . '" disabled>
+                        <input type="hidden" class="form-control" id="os_id" name="os_id" value="' . $osid . '">
+                    </div>  
+                    <div class="col-md-6 pt-1 pb-1">
                         <label for="">Name</label>
                         <input type="text" class="form-control" id="os_name" name="os_name" value="' . $name . '" disabled>
                     </div>  
@@ -170,10 +174,77 @@ if (isset($_POST['check_view'])) {
                         <textarea type="text" class="form-control" id="os_uom" name="os_uom" disabled>' . $des . '</textarea>
                     </div>
                 </div>
-            </form>
+                <div class="row">
+                    <div class="w-100 my-2">
+                        <hr
+                    </div>
+                    <div class="col-md-12 pt-3 pb-2">
+                        <h6><strong>Get this item:</strong></h6>
+                        <h6><span class="text-muted"><strong>Note:</strong> Please be careful when getting items</span></h6>
+                         <div class="form-group mt-3">
+                            <span class="d-flex justify-content-between align-items-center">
+                                <label class="" for="get_quantity">Quantity (1-10)</label>
+                                <label><strong>' . $qty . ' left</strong></label>
+                            </span>
+                                <input class="form-control" type="number" min="1" max="10" name="get_quantity" id="get_quantity" placeholder="1-10" required>
+                                <input type="hidden" name="os_quantity" value="' . $qty . '" />
+                        </div>
+                    </div>
+                </div>
             ';
         }
     } else {
         echo '<h5>No result</h5>';
+    }
+}
+
+if (isset($_POST['get-btn-office'])) {
+
+    // include other php process
+    include_once 'config.inc.php';
+    include_once 'functions.inc.php';
+
+    if (empty($_POST['user_id']) or empty($_POST['os_id'])) {
+        header("location: ../officeSupplies.php?m=noid");
+        exit();
+    }
+
+    $osid = $_POST['os_id'];
+    $id = $_POST['user_id'];
+
+    // how many supply the user will get
+    $qty = $_POST['get_quantity'];
+    // how many supply left
+    $qty_left = $_POST['os_quantity'];
+
+    if (empty($qty)) {
+        header("location: ../officeSupplies.php?m=nogetquantity");
+    }
+    if (empty($qty_left)) {
+        header("location: ../officeSupplies.php?m=noquantityleft");
+    }
+
+    // 18 = 19 - 1
+    // 0 = 1 - 1 
+    $left = $qty_left - $qty;
+    if ($left < 0) { // 18 < 0 => false
+        // 0 < 0 = false; but -1 < 0 true
+        // If left is less than 0, run this code below
+        header("location: ../officeSupplies.php?m=insufficientStock");
+        exit();
+    }
+
+    $sql = "UPDATE ssms.office_supplies SET os_quantity='$left', date_last_modified=now(), modified_by=$id WHERE os_id=$osid";
+    if ($conn->query($sql) === TRUE) {
+        $sql2 = "INSERT INTO ssms.history(`os_id`, `history_quantity`, `user_id`, `history_date`) VALUES ('$osid', '$qty', $id, now())";
+        if ($conn->query($sql2) === TRUE) {
+            header("location: ../officeSupplies.php?m=success");
+        } else {
+            echo $conn->error;
+            echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
+        }
+    } else {
+        echo $conn->error;
+        echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
     }
 }

@@ -151,7 +151,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn viewBtn px-2" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal">
                                                         View
                                                     </button>
                                                 </td>
@@ -183,25 +183,27 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
         <!-- View Modal -->
         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">View Office Supply</h5>
-                        <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="os_view">
+                <form action="includes/os.inc.php" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">View Office Supply</h5>
+                            <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="os_view">
+
+                            </div>
 
                         </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <div class="row">
-                            <button type="button" class="btn btn-danger px-2" data-bs-dismiss="modal">Close</button>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
+                            <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-default px-2" name="get-btn-office" value="Get Supply">
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 

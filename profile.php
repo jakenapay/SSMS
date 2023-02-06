@@ -60,33 +60,29 @@ session_start();
                 <!-- Profile picture -->
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                     <div class="box-content-profile">
-                        <form action="includes/updateProfile.inc.php" method="post" enctype="multipart/form-data">
-                            <!-- <div class="d-flex justify-content-center align-items-center flex-column"> -->
-                            <!-- hidden -->
-                            <input type="hidden" name="old_img" value="<?php echo $old_img; ?>">
-                            <input type="hidden" name="user_id" value="<?php echo $id; ?>">
-                            <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
+                        <form action="includes/updateProfile.inc.php" method="post" enctype="multipart/form-data" class="">
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <!-- hidden -->
+                                <input type="hidden" name="old_img" value="<?php echo $old_img; ?>">
+                                <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                                <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
 
-                            <?php
-                            if ($old_img != '') {
-                                // if there's an existing image then echo the image
-                                echo '<img src="userProfile/' . $old_img . '" alt="" class="img-fluid pb-3" style="max-width: 200px;">';
-                            } else {
-                                echo '<label class="m-5">No image found.</label>';
-                            }
-                            ?>
-                            <div class="w-100 pb-3 m-0">
+                                <?php
+                                if ($old_img != '') {
+                                    // if there's an existing image then echo the image
+                                    echo '<img src="userProfile/' . $old_img . '" alt="" class="img-fluid pb-3" style="max-width: 200px;">';
+                                } else {
+                                    echo '<label class="m-5">No image found.</label>';
+                                }
+                                ?>
                                 <hr>
-                            </div>
-                            <div class="form-group"><label class="label">Update new image</label>
+                                <label class="label">Update new image</label>
                                 <input type="file" accept="image/*" name="user_img" id="user_img">
-                                <div class="w-100 pb-0 mt-2">
-                                    <input type="submit" class="mt-2 btn button-warning" name="edit-image" value="Save ">
-                                </div>
+                                <input type="submit" class="mt-2 btn button-warning" name="edit-image" value="Save ">
+
+
+
                             </div>
-
-
-                            <!-- </div> -->
                         </form>
                     </div>
                 </div>
