@@ -91,7 +91,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") { ?>
                                         <th scope="col"></th>
                                     <?php } ?>
-
                                     <!-- for admins -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
@@ -107,7 +106,11 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 <?php
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
-                                $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 3";
+                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") {
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0 AND status='enabled'";
+                                } else if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0";
+                                }
 
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
@@ -126,7 +129,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         $dm = $row['dm'];
                                 ?>
                                         <tr>
-                                            <form action="includes/ts.inc.php" method="post" enctype="multipart/form-data">
+                                            <form action="includes/os.inc.php" method="post" enctype="multipart/form-data">
                                                 <!-- rows -->
 
                                                 <!-- id -->
@@ -149,8 +152,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                                     <td><?php echo $qty; ?></td>
-                                                    <td class="text-capitalize"><?php echo $stat; ?></td>
-                                                <?php } ?>
+                                                <?php
+                                                    if ($stat == "enabled") {
+                                                        echo '<td class="text-capitalize text-success"><strong>' . $stat . '</strong></td>';
+                                                    } else if ($stat == "disabled") {
+                                                        echo '<td class="text-capitalize text-danger"><strong>' . $stat . '</strong></td>';
+                                                    }
+                                                } ?>
 
                                                 <td>
                                                     <!-- Button trigger modal -->
@@ -165,7 +173,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                                 Update
                                                             </button></a>
                                                     </td>
-                                                    <td><a class="btn btn-danger" href="url_to_delete<?php echo $id; ?>" id="<?php echo $id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-danger px-2">Delete</button></a></td>
+                                                    <?php
+                                                    if ($stat == 'enabled') {
+                                                        echo '<td><a href=""><button class="btn btn-danger px-2 disable-btn">Disable</button></a></td>';
+                                                    } else if ($stat == 'disabled') {
+                                                        echo '<td><a href=""><button class="btn btn-success px-2 enable-btn">Enable</button></a></td>';
+                                                    }
+                                                    ?>
                                                 <?php } ?>
                                             </form>
                                         </tr>
@@ -203,6 +217,58 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
                             <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
                             <input type="submit" class="btn btn-default px-2" name="get-btn-office" value="Get Supply">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Delete(disabled supply) Modal -->
+        <div class="modal fade" id="disableModal" tabindex="-1" role="dialog" aria-labelledby="disableModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="includes/os.inc.php" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="disableModal">Disable Office Supply</h5>
+                            <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="del_id" id="del_id">
+                            <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
+                            <h6>Are you sure you want to disable this supply?</h6>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
+                            <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-default px-2" name="delete-supply" value="Disable Supply">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Enable supply Modal -->
+        <div class="modal fade" id="enableModal" tabindex="-1" role="dialog" aria-labelledby="enableModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="includes/os.inc.php" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="enableModal">Enable Office Supply</h5>
+                            <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="enbl_id" id="enbl_id">
+                            <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
+                            <h6>Are you sure you want to enable this supply?</h6>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
+                            <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-default px-2" name="enable-supply" value="Enable Supply">
                         </div>
                     </div>
                 </form>
@@ -248,6 +314,26 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         $('#viewModal').modal('show');
                     }
                 });
+            });
+
+            // disabling TS
+            $('.disable-btn').click(function(e) {
+                e.preventDefault();
+                var os_id = $(this).closest('tr').find('.os_id').text();
+                // console.log(ts_id);
+                $('#del_id').val(os_id);
+                $('#disableModal').modal('show');
+
+            });
+
+            // enabling TS 
+            $('.enable-btn').click(function(e) {
+                e.preventDefault();
+                var os_id = $(this).closest('tr').find('.os_id').text();
+                // console.log(ts_id);
+                $('#enbl_id').val(os_id);
+                $('#enableModal').modal('show');
+
             });
         });
     </script>

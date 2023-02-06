@@ -248,3 +248,44 @@ if (isset($_POST['get-btn-office'])) {
         echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
     }
 }
+
+// disabling tech supply
+if (isset($_POST['delete-supply'])) {
+
+    // include other php process
+    include_once 'config.inc.php';
+    include_once 'functions.inc.php';
+
+    $del_id = $_POST['del_id']; // delete id of the certain TS
+    $uid = $_POST['uid']; // user id - the id of account that you're using
+
+    $sql = "UPDATE ssms.office_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$del_id";
+    if ($conn->query($sql) === TRUE) {
+        header("location: ../officeSupplies.php?m=disablingSuccess");
+        exit();
+    } else {
+        echo $conn->error;
+        echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
+        exit();
+    }
+}
+
+// enable-supply
+if (isset($_POST['enable-supply'])) {
+
+    // include other php process
+    include_once 'config.inc.php';
+    include_once 'functions.inc.php';
+
+    $enbl_id = $_POST['enbl_id']; // delete id of the certain TS
+    $uid = $_POST['uid']; // user id - the id of account that you're using
+
+    $sql = "UPDATE ssms.office_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$enbl_id";
+    if ($conn->query($sql) === TRUE) {
+        header("location: ../officeSupplies.php?m=enablingSuccess");
+        exit();
+    } else {
+        echo $conn->error;
+        echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
+    }
+}

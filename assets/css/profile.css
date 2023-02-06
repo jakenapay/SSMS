@@ -30,6 +30,11 @@ body {
     margin-top: 1.3rem;
 }
 
+#form input {
+    width: 100%;
+    display: block;
+}
+
 .box-content-details {
     background-color: var(--sidebar-color);
     border-radius: 10px;

@@ -29,9 +29,21 @@ session_start();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <title>SSMS</title>
+    <title>SSMS | Profile & Accounts</title>
 
+    <!-- jQuery Datatables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.4.0/js/responsive.bootstrap5.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('table').DataTable();
+        });
+    </script>
 
 </head>
 
@@ -49,7 +61,7 @@ session_start();
                     <div class="header">
                         <div class="header-content">
                             <div class="d-flex flex-row align-items-center"><i class="fa-solid fa-users icon"></i>
-                                <p class="header-title text">Profile</p>
+                                <p class="header-title text">Profile & Accounts</p>
                             </div>
 
                             <p id="path"><a href="includes/logout.inc.php">Logout</a></p>
@@ -58,7 +70,7 @@ session_start();
                 </div>
 
                 <!-- Profile picture -->
-                <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-5">
                     <div class="box-content-profile">
                         <form action="includes/updateProfile.inc.php" method="post" enctype="multipart/form-data" class="">
                             <div class="d-flex justify-content-center align-items-center flex-column">
@@ -78,17 +90,14 @@ session_start();
                                 <hr>
                                 <label class="label">Update new image</label>
                                 <input type="file" accept="image/*" name="user_img" id="user_img">
-                                <input type="submit" class="mt-2 btn button-warning" name="edit-image" value="Save ">
-
-
-
+                                <input type="submit" class="mt-4 btn button-warning" name="edit-image" value="Save ">
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <!-- Here you can start to add code -->
-                <div class="col-12 col-sm-6 col-md-8 col-lg-8">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-5">
                     <div class="box-content-details">
                         <span id="span-form">
                             <!-- error message here -->
@@ -145,14 +154,86 @@ session_start();
                         </span>
                     </div>
                 </div>
+                <!-- end of user details -->
 
+                <!-- Users accounts tables -->
+                <?php if ((isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user')) { ?>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="large-content">
+                            <!-- <span class="d-flex justify-content-between">
+                        <h3 class="amount"><strong>Recent history</strong></h3>
+                    </span> 
+                    <hr> -->
+                            <div class="table-responsive">
+                                <h5>User Accounts</h5>
+                                <hr class="my-3">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="pt-5">
+                                            <th scope="col">User ID</th>
+                                            <th scope="col">First Name</th>
+                                            <th scope="col">Last Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        include 'includes/config.inc.php';
+                                        include 'includes/user.inc.php';
+                                        // Checks if its a user or admin; if user then go to stocks page
+                                        // Only admin can go to index page or dashboard
+                                        if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM ssms.users WHERE user_id=' . $id . '";
+                                        } else {
+                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM ssms.users";
+                                        }
+                                        $result = $conn->query($sql);
+                                        if ($result->num_rows > 0) {
+                                            // output data of each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                $id = $row['id'];
+                                                $fn = $row['fn'];
+                                                $ln = $row['ln'];
+                                                $em = $row['em'];
+                                                $cat = $row['cat'];
+                                                $stat = $row['stat'];
 
+                                        ?>
+                                                <tr>
+                                                    <td><?php echo $id; ?></td>
+                                                    <td><?php echo $fn; ?></td>
+                                                    <td><?php echo $ln; ?></td>
+                                                    <td><?php echo $em; ?></td>
+                                                    <?php
+                                                    if ($cat == 'admin') {
+                                                        echo '<td class="text-capitalize text-success"><strong>' . $cat . '</strong></td>';
+                                                    } else if ($cat == 'user') {
+                                                        echo '<td class="text-danger text-capitalize"><strong>' . $cat . '</strong></td>';
+                                                    } ?>
+                                                    <?php
+                                                    if ($stat == 'active') {
+                                                        echo '<td class="text-success text-capitalize"><strong>' . $stat . '</strong></td>';
+                                                    } else if ($stat == 'inactive') {
+                                                        echo '<td class="text-danger text-capitalize"><strong>' . $stat . '</strong></td>';
+                                                    } ?>
+                                                </tr>
+                                        <?php
+                                            }
+                                        } else {
+                                            echo '<tr><td>No data found</td></tr>';
+                                        }
 
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
-        </div>
     </section>
-
-
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -196,7 +277,6 @@ session_start();
             modeSwitch = body.querySelector(".toggle-switch"),
             modeText = body.querySelector(".mode-text");
 
-
         toggle.addEventListener("click", () => {
             sidebar.classList.toggle("close");
         })
@@ -204,20 +284,9 @@ session_start();
         searchBtn.addEventListener("click", () => {
             sidebar.classList.remove("close");
         })
-
-        modeSwitch.addEventListener("click", () => {
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                modeText.innerText = "Light mode";
-            } else {
-                modeText.innerText = "Dark mode";
-
-            }
-        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
