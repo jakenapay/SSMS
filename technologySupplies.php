@@ -21,6 +21,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/history.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/ts.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/profile.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -69,6 +70,37 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 </div>
             </div>
 
+            <!-- error message here -->
+            <?php
+            $message = '';
+            if (isset($_GET['m'])) {
+                if ($_GET['m'] == 'emptyFields') {
+                    $message = 'Fill up all fields';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'error') {
+                    $message = 'Error Occured';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'success') {
+                    $message = 'You can now get your product';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+            }
+            ?>
+
             <!-- Recent History -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="large-content">
@@ -96,6 +128,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                         <th scope="col">Quantity</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
@@ -106,7 +139,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 <?php
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
-                                $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, ts_img as img, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity > 3";
+                                $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity > 3 AND status = 'enabled'";
 
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
@@ -119,6 +152,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         $cat = $row['cat'];
                                         $loc = $row['loc'];
                                         $img = $row['img'];
+                                        $des = $row['des'];
+                                        $stat = $row['status'];
 
                                         // for admins only to see
                                         $qty = $row['qty'];
@@ -154,6 +189,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                                     <td><?php echo $qty; ?></td>
+                                                    <td><?php
+                                                        if ($stat == 'enabled') {
+                                                            echo "Enabled";
+                                                        } else {
+                                                            echo "Disabled";
+                                                        }
+                                                        ?></td>
                                                 <?php } ?>
 
                                                 <td>
@@ -165,9 +207,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
-                                                    <td><a href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></a>
+                                                    <td><a href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn updateBtn btn-warning px-2" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></a>
                                                     </td>
-                                                    <td><a href="url_to_delete<?php echo $id; ?>" id="<?php echo $id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><button>Delete</button></a></td>
+                                                    <td><a href="url_to_delete<?php echo $id; ?>" id="<?php echo $id; ?>" onclick="return confirm('Are you sure you want to delete this item?');"><button class="btn btn-danger px-2">Delete</button></a></td>
                                                 <?php } ?>
                                             </form>
                                         </tr>
@@ -187,22 +229,26 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
         <!-- View Modal -->
         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">View Technology Supply</h5>
-                        <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="ts_view">
+                <form action="includes/ts.inc.php" method="post">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">View Technology Supply</h5>
+                            <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="ts_view">
 
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
+                            <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-default px-2" name="get-btn-tech" value="Get Supply">
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger px-2" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 

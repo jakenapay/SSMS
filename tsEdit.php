@@ -34,6 +34,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
             $qty = $row['ts_quantity'];
             $loc = $row['ts_location'];
             $old_img = $row['ts_img'];
+            $des = $row['ts_desc'];
             $da = $row['date_added'];
             $dlm = $row['date_last_modified'];
             $by = $row['fullname'];
@@ -186,6 +187,10 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 <div class="col-md-6 pb-3">
                                     <label for="ts_location">Location</label>
                                     <input id="ts_location" name="ts_location" type="text" class="form-control" placeholder="Location" value="<?php echo $loc; ?>">
+                                </div>
+                                <div class="col-md-12 pb-3">
+                                    <label for="ts_desc">Description (Additional Information)</label>
+                                    <textarea id="ts_desc" name="ts_desc" type="text" class="form-control" placeholder="Location"><?php echo $des; ?></textarea>
                                 </div>
                                 <div class="w-100 pb-3">
                                     <hr>

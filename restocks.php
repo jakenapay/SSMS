@@ -151,9 +151,6 @@ include 'includes/user.inc.php';
                                 <label for="restock_quantity">Quantity (0-100)</label>
                                 <input class="form-control" type="number" min="0" max="100" name="restock_quantity" id="restock_quantity" required>
                             </div>
-
-                            <!-- hidden -->
-                            <input type="hidden" name="user_id" value="<?php echo $id; ?>">
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between">

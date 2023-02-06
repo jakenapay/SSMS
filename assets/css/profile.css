@@ -96,8 +96,7 @@ input:focus {
     border-radius: 50px;
     text-align: center;
     background-color: #FF005430;
-    color: #FF0054;
-    margin-bottom: 2rem;
+    color: #000;
 }
 
 .message-success {
@@ -105,8 +104,7 @@ input:focus {
     border-radius: 50px;
     text-align: center;
     background-color: #00ff3730;
-    color: #00ff37;
-    margin-bottom: 2rem !important;
+    color: #000;
 }
 
 .message-success i,

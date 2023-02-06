@@ -58,7 +58,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="header">
                     <div class="header-content">
-                        <p class="header-title text">History (Get supplies)</p>
+                        <p class="header-title text">History <span class="text-muted">(Supply taken)</span></p>
                     </div>
                 </div>
             </div>

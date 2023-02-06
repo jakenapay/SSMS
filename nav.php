@@ -65,14 +65,15 @@
                 <?php }
                         } ?> -->
 
-                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) { ?>
-                    <li class="nav-link">
-                        <a href="restocks.php">
-                            <i class="fa-solid fa-boxes-stacked icon"></i>
-                            <span class="text nav-text">Restocks</span>
-                        </a>
-                    </li>
-                <?php
+                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
+                    if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>
+                        <li class="nav-link">
+                            <a href="restocks.php">
+                                <i class="fa-solid fa-boxes-stacked icon"></i>
+                                <span class="text nav-text">Restocks</span>
+                            </a>
+                        </li>
+                <?php }
                 } ?>
 
                 <!-- Office Supplies -->
