@@ -9,7 +9,6 @@ body {
 .photo {
     border-radius: 100%;
     border: 1px solid #00000028;
-    width: 90%;
 }
 
 #labelUpdateImage {
@@ -53,7 +52,6 @@ input {
     outline: none;
     background: transparent;
     font-size: 15px !important;
-    width: 100%;
 }
 
 input:focus {
@@ -99,7 +97,7 @@ input:focus {
     text-align: center;
     background-color: #FF005430;
     color: #FF0054;
-    margin-bottom: 2rem !important;
+    margin-bottom: 2rem;
 }
 
 .message-success {

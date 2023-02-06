@@ -7,6 +7,14 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     exit();
 }
 
+// Checks if its a user or admin; if user then go to stocks page
+// Only admin can go to index page or dashboard
+if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+    header("location: history.php");
+    exit();
+}
+
+include 'includes/user.inc.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +28,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/history.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/profile.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -50,47 +59,114 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
 <body>
 
-    <!-- View Modal -->
+    <!-- View Modal for technology supplies -->
     <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Restock Supply</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Restock Technology Supply</h5>
                     <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="restock_supplies">
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="r_supply">Supply</label>
-                                <select name="" id="r_supply">
+                <form action="includes/restock.inc.php" method="post">
+                    <div class="modal-body">
+                        <div class="restock_supplies">
+                            <div class="form-group my-2">
+                                <label for="restock_item">Technology Supply</label><br>
+                                <select class="form-select" id="restock_item" name="restock_item" aria-label="Default select example" required>
+                                    <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT  FROM ";
+                                    $sql = "SELECT ts_id as id, ts_quantity as quantity, CONCAT(ts_name, ' ', ts_model) as item, ts_location as location FROM ssms.technology_supplies WHERE ts_quantity <= 5";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
                                         while ($row = $result->fetch_assoc()) {
                                     ?>
+                                            <option value="<?php echo $row['id']; ?>"><?php echo $row['item']; ?></option>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo '<tr><td>No data found</td></tr>';
+                                    }
+                                    ?>
+
                                 </select>
                             </div>
-                        </form>
+                            <div class="form-group my-2">
+                                <label for="restock_quantity">Quantity (0-100)</label>
+                                <input class="form-control" type="number" min="0" max="100" name="restock_quantity" id="restock_quantity" required>
+                            </div>
+
+                            <!-- hidden -->
+                            <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row">
-                        <button type="button" class="btn btn-danger px-2" data-bs-dismiss="modal">Close</button>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-default px-2" name="restock-btn" value="Restock">
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Modal for technology supplies -->
+    <div class="modal fade" id="viewModalOffice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Restock Office Supply</h5>
+                    <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <form action="includes/restock.inc.php" method="post">
+                    <div class="modal-body">
+                        <div class="restock_supplies">
+                            <div class="form-group my-2">
+                                <label for="restock_item">Office Supply</label><br>
+                                <select class="form-select" id="restock_item" name="restock_item" aria-label="Default select example" required>
+                                    <option selected>Select</option>
+                                    <?php
+                                    include 'includes/config.inc.php';
+                                    $sql = "SELECT os_id as id, os_quantity as quantity, CONCAT(os_name, ' ', os_brand) as item, os_location as location FROM ssms.office_supplies WHERE os_quantity <= 5";
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        // output data of each row
+                                        while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                            <option value="<?php echo $row['id']; ?>"><?php echo $row['item']; ?></option>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo '<tr><td>No data found</td></tr>';
+                                    }
+                                    ?>
+
+                                </select>
+                            </div>
+                            <div class="form-group my-2">
+                                <label for="restock_quantity">Quantity (0-100)</label>
+                                <input class="form-control" type="number" min="0" max="100" name="restock_quantity" id="restock_quantity" required>
+                            </div>
+
+                            <!-- hidden -->
+                            <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-default px-2" name="restock-btn-office" value="Restock">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
     <!-- Navigational sidebar -->
     <?php include 'nav.php'; ?>
-    <?php include 'includes/user.inc.php'; ?>
 
     <section class="home">
         <div class="container mt-3 mb-3">
@@ -99,11 +175,43 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                     <div class="header-content">
                         <p class="header-title text">Restocks</p>
                         <div>
-                            <button class="btn btn-default py-1" data-bs-toggle="modal" data-bs-target="#viewModal">Restock Supply</button>
+                            <button class="btn btn-default py-1 my-1" data-bs-toggle="modal" data-bs-target="#viewModal">Restock Technology Supply</button>
+                            <button class="btn btn-default py-1 my-1" data-bs-toggle="modal" data-bs-target="#viewModalOffice">Restock Office Supply</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- error message here -->
+            <?php
+            $message = '';
+            if (isset($_GET['m'])) {
+                if ($_GET['m'] == 'emptyFields') {
+                    $message = 'Fill up all fields';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'error') {
+                    $message = 'Error Occured';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'success') {
+                    $message = 'Technology Supply Updated';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+            }
+            ?>
 
             <!-- Recent History -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
