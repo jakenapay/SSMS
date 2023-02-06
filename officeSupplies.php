@@ -96,6 +96,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                         <th scope="col">Quantity</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
@@ -106,7 +107,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 <?php
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
-                                $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 3";
+                                $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 3";
 
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
@@ -120,6 +121,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                         // for admins only to see
                                         $qty = $row['qty'];
+                                        $stat = $row['status'];
                                         $da = $row['da'];
                                         $dm = $row['dm'];
                                 ?>
@@ -147,6 +149,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                                     <td><?php echo $qty; ?></td>
+                                                    <td class="text-capitalize"><?php echo $stat; ?></td>
                                                 <?php } ?>
 
                                                 <td>
@@ -158,7 +161,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
-
                                                     <td><a class="btn btn-warning" href="osEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn btn-warning px-2 updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
                                                                 Update
                                                             </button></a>

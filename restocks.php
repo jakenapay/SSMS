@@ -78,7 +78,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT ts_id as id, ts_quantity as quantity, CONCAT(ts_name, ' ', ts_model) as item, ts_location as location FROM ssms.technology_supplies WHERE ts_quantity <= 5";
+                                    $sql = "SELECT ts_id as id, ts_quantity as quantity, ts_name as item, ts_location as location FROM ssms.technology_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -131,7 +131,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT os_id as id, os_quantity as quantity, CONCAT(os_name, ' ', os_brand) as item, os_location as location FROM ssms.office_supplies";
+                                    $sql = "SELECT os_id as id, os_quantity as quantity,os_name as item, os_location as location FROM ssms.office_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
