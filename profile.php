@@ -51,7 +51,25 @@ session_start();
     <!-- Navigational sidebar -->
     <?php
     include 'nav.php';
-    include 'includes/user.inc.php';
+
+    include 'includes/config.inc.php';
+    $id = $_SESSION['id'];
+    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        // output data of each row
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id = $row['user_id'];
+            $fn = $row['user_firstname'];
+            $ln = $row['user_lastname'];
+            $em = $row['user_email'];
+            $old_img = $row['user_img'];
+            $ct = $row['user_category'];
+            $st = $row['user_status'];
+        }
+    } else {
+        echo "0 results";
+    }
     ?>
 
     <section class="home">
@@ -176,6 +194,7 @@ session_start();
                                             <th scope="col">Email</th>
                                             <th scope="col">Category</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">View</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -193,7 +212,7 @@ session_start();
                                         if ($result->num_rows > 0) {
                                             // output data of each row
                                             while ($row = $result->fetch_assoc()) {
-                                                $id = $row['id'];
+                                                $userid = $row['id'];
                                                 $fn = $row['fn'];
                                                 $ln = $row['ln'];
                                                 $em = $row['em'];
@@ -202,22 +221,32 @@ session_start();
 
                                         ?>
                                                 <tr>
-                                                    <td><?php echo $id; ?></td>
-                                                    <td><?php echo $fn; ?></td>
-                                                    <td><?php echo $ln; ?></td>
-                                                    <td><?php echo $em; ?></td>
-                                                    <?php
-                                                    if ($cat == 'admin') {
-                                                        echo '<td class="text-capitalize text-success"><strong>' . $cat . '</strong></td>';
-                                                    } else if ($cat == 'user') {
-                                                        echo '<td class="text-danger text-capitalize"><strong>' . $cat . '</strong></td>';
-                                                    } ?>
-                                                    <?php
-                                                    if ($stat == 'active') {
-                                                        echo '<td class="text-success text-capitalize"><strong>' . $stat . '</strong></td>';
-                                                    } else if ($stat == 'inactive') {
-                                                        echo '<td class="text-danger text-capitalize"><strong>' . $stat . '</strong></td>';
-                                                    } ?>
+                                                    <form action="includes/user.inc.php" method="POST" enctype="multipart/form-data">
+                                                        <td class=" user_id"><?php echo $userid; ?></td>
+                                                        <input name="user_id" class="user_id" type="hidden" value="<?php echo $userid; ?>">
+                                                        <td><?php echo $fn; ?></td>
+                                                        <td><?php echo $ln; ?></td>
+                                                        <td><?php echo $em; ?></td>
+                                                        <?php
+                                                        if ($cat == 'admin') {
+                                                            echo '<td class="text-capitalize text-success"><strong>' . $cat . '</strong></td>';
+                                                        } else if ($cat == 'user') {
+                                                            echo '<td class="text-danger text-capitalize"><strong>' . $cat . '</strong></td>';
+                                                        } ?>
+                                                        <?php
+                                                        if ($stat == 'active') {
+                                                            echo '<td class="text-success text-capitalize"><strong>' . $stat . '</strong></td>';
+                                                        } else if ($stat == 'inactive') {
+                                                            echo '<td class="text-danger text-capitalize"><strong>' . $stat . '</strong></td>';
+                                                        } ?>
+
+                                                        <td>
+                                                            <!-- Button trigger modal -->
+                                                            <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewUserAccountModal">
+                                                                View
+                                                            </button>
+                                                        </td>
+                                                    </form>
                                                 </tr>
                                         <?php
                                             }
@@ -235,7 +264,7 @@ session_start();
             </div>
     </section>
 
-    <!-- Modal -->
+    <!-- For editing details Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -269,6 +298,32 @@ session_start();
         </div>
     </div>
 
+    <!-- View other user accounts modal -->
+    <div class="modal fade" id="viewUserAccountModal" tabindex="-1" role="dialog" aria-labelledby="viewUserAccountModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="includes/user.inc.php" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewUserAccountModal">View User Account</h5>
+                        <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="user_view">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
+                        <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-default px-2" name="user_btn_update" value="Update">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         const body = document.querySelector('body'),
             sidebar = body.querySelector('nav'),
@@ -285,8 +340,31 @@ session_start();
             sidebar.classList.remove("close");
         })
     </script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script>
+        $(document).ready(function() {
+            $('.viewBtn').click(function(e) {
+                e.preventDefault();
+                // alert('hello');
+                var user_id = $(this).closest('tr').find('.user_id').text();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/user.inc.php",
+                    data: {
+                        'check_view': true,
+                        'user_id': user_id
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        $('.user_view').html(response);
+                        $('#viewUserAccountModal').modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
