@@ -52,6 +52,7 @@ if (isset($_POST['edit-image'])) {
     require 'config.inc.php';
     require 'functions.inc.php';
 
+    $old_img = $_POST['old_img'];
     $user_id = $_POST['user_id'];
     $uid = $_POST['uid'];
 
@@ -105,7 +106,7 @@ if (isset($_POST['edit-image'])) {
         $folder = '../userProfile/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE ssms.users SET user_img='$img' WHERE user_id=$user_id";
+        $sql = "UPDATE ssms.users SET user_img='$img', date_last_modified=now(), modified_by='$uid' WHERE user_id=$user_id";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../profile.php?m=failed');</script>";
@@ -116,5 +117,7 @@ if (isset($_POST['edit-image'])) {
         }
     } else {
         $img = $old_img;
+        header("location: ../profile.php");
+        exit();
     }
 }

@@ -8,7 +8,7 @@ if (isset($_POST['check_view'])) {
 
     include 'config.inc.php';
 
-    $result = $conn->query("SELECT u.user_id, u.user_firstname, u.user_lastname, u.user_email, , CONCAT(us.user_firstname, ' ', us.user_lastname) as modified_by FROM ssms.users u INNER JOIN ssms.users us ON u.modified_by=us.modified_by WHERE user_id ='$user_id'");
+    $result = $conn->query("SELECT u.user_id, u.user_firstname, u.user_lastname, u.user_email, u.user_img, u.user_category, u.user_status, u.user_date, u.date_last_modified, CONCAT(us.user_firstname, ' ', us.user_lastname) as Modified_by FROM `ssms`.`users` as u INNER JOIN `ssms`.`users` as us ON u.user_id=us.user_id WHERE u.user_id=$user_id");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set
@@ -23,7 +23,7 @@ if (isset($_POST['check_view'])) {
             $stat = $row['user_status'];
             $date = $row['user_date'];
             $dlm = $row['date_last_modified'];
-            $by = $row['modified_by'];
+            $by = $row['Modified_by'];
 
             echo $return = '
                 <div class="row">
@@ -49,16 +49,16 @@ if (isset($_POST['check_view'])) {
                     </div>  
                     <div class="col-md-6 pt-3 pb-1">
                         <label for="user_category">Category</label>
-                        <select class="user_category" id="user_category">
-                            <option value="admin"' . ($cat == 'admin' ? "selected" : "") . '>Admin</option>
-                            <option value="user"' . ($cat == 'user' ? "selected" : "") . '>User</option>
+                        <select class="user_category" id="user_category" name="user_category">
+                            <option value="admin"' . ($cat == 'Admin' ? "selected" : "") . '>Admin</option>
+                            <option value="user"' . ($cat == 'User' ? "selected" : "") . '>User</option>
                         </select>
                     </div> 
                     <div class="col-md-6 pt-3 pb-1">
                         <label for="user_status">Status</label>
-                        <select class="user_status" id="user_status">
-                            <option value="active"' . ($cat == 'active' ? "selected" : "") . '>Active</option>
-                            <option value="inactive"' . ($cat == 'inactive' ? "selected" : "") . '>Inactive</option>
+                        <select class="user_status" id="user_status" name="user_status">
+                            <option value="active"' . ($cat == 'Active' ? "selected" : "") . '>Active</option>
+                            <option value="inactive"' . ($cat == 'Inactive' ? "selected" : "") . '>Inactive</option>
                         </select>
                     </div>
 
@@ -68,14 +68,17 @@ if (isset($_POST['check_view'])) {
                       <div class="col-md-12 pt-1 pb-1">
                         <label for="user_date">Date Created</label>
                         <input type="text" class="form-control" id="user_date" name="user_date" value="' . $date . '" disabled>
+                        <input type="hidden" class="form-control" id="user_date" name="user_date" value="' . $date . '" >
                     </div>
                       <div class="col-md-12 pt-1 pb-1">
                         <label for="date_last_modified">Last Modified</label>
                         <input type="text" class="form-control" id="date_last_modified" name="date_last_modified" value="' . $dlm . '" disabled>
+                        <input type="hidden" class="form-control" id="date_last_modified" name="date_last_modified" value="' . $dlm . '" >
                     </div>  
                       <div class="col-md-12 pt-1 pb-1">
                         <label for="modified_by">Modified By</label>
                         <input type="text" class="form-control" id="modified_by" name="modified_by" value="' . $by . '" disabled>
+                        <input type="hidden" class="form-control" id="modified_by" name="modified_by" value="' . $by . '" >
                     </div>  
                 </div>
 
@@ -84,5 +87,41 @@ if (isset($_POST['check_view'])) {
         }
     } else {
         echo '<h5>' . $conn->error . '</h5>';
+    }
+}
+
+if (isset($_POST['user_btn_update'])) {
+
+    // test
+    // echo '<script>alert("hi");</script>';
+
+    // includes to run database and functions
+    include 'config.inc.php';
+    include 'functions.inc.php';
+
+    // check if empty user id
+    if (empty($_POST['user_id']) and (empty($_POST['uid']))) {
+        header("location: ../profile.php?m=noid");
+        exit();
+    }
+
+    // get user info
+    $uid = $_POST['uid'];
+    $user_id = $_POST['user_id'];
+    $fn = $_POST['user_firstname'];
+    $ln = $_POST['user_lastname'];
+    $em = $_POST['user_email'];
+    $cat = $_POST['user_category'];
+    $stat = $_POST['user_status'];
+    $date = $_POST['user_date'];
+    $by = $_POST['modified_by'];
+    $dlm = $_POST['date_last_modified'];
+
+    $sql = "UPDATE ssms.users SET user_id='$user_id', user_firstname='$fn', user_lastname='$ln', user_email='$em', user_category='$cat', user_status='$stat', user_date='$date',date_last_modified=now(), modified_by=$uid WHERE user_id=$user_id";
+    if ($conn->query($sql) === TRUE) {
+        header("location: ../profile.php?m=success");
+    } else {
+        echo $conn->error;
+        echo "<script>alert('Error updating product.');window.location.replace('../restocks.php?m=error');</script>";
     }
 }

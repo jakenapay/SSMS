@@ -2,7 +2,7 @@
     <header class="d-flex justify-content-between">
         <div class="image-text">
             <span class="image">
-                <img src="logo-wo-name.png" alt="Logo">
+                <img src="logo.png" alt="Logo">
             </span>
 
             <div class="text logo-text">
