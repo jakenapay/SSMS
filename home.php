@@ -10,8 +10,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
 // Checks if its a user or admin; if user then go to stocks page
 // Only admin can go to index page or dashboard
-if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
-    header("location: home.php");
+if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'admin')) {
+    header("location: index.php");
     exit();
 }
 
@@ -114,8 +114,8 @@ include 'includes/config.inc.php';
                 ['Month', 'Quantity'],
                 <?php
                 include('includes/config.inc.php');
-                $query = "SELECT 
-    MONTH(restock_date) as month, 
+                $query = "SELECT
+    MONTH(restock_date) as month,
     SUM(restock_quantity) as total_quantity
     FROM ssms.restocks
     GROUP BY MONTH(restock_date)
@@ -173,11 +173,12 @@ include 'includes/config.inc.php';
                 ['Supplies', 'Count'],
                 <?php
                 include('includes/config.inc.php');
-                $office_supplies_query = "SELECT COUNT(*) as count FROM ssms.office_supplies WHERE os_quantity < 5";
+                $id = $_SESSION['id'];
+                $office_supplies_query = "SELECT COUNT(*) as count FROM ssms.history WHERE user_id=$id AND os_id!=''";
                 $office_supplies_result = mysqli_query($conn, $office_supplies_query);
                 $office_supplies_data = mysqli_fetch_assoc($office_supplies_result);
                 $office_supplies_count = $office_supplies_data['count'];
-                $technology_supplies_query = "SELECT COUNT(*) as count FROM ssms.technology_supplies WHERE ts_quantity < 5";
+                $technology_supplies_query = "SELECT COUNT(*) as count FROM ssms.history WHERE user_id=$id AND ts_id!=''";
                 $technology_supplies_result = mysqli_query($conn, $technology_supplies_query);
                 $technology_supplies_data = mysqli_fetch_assoc($technology_supplies_result);
                 $technology_supplies_count = $technology_supplies_data['count'];
@@ -188,8 +189,8 @@ include 'includes/config.inc.php';
 
             var options = {
                 chart: {
-                    title: 'Count of Supplies',
-                    subtitle: 'Office Supplies vs Technology Supplies'
+                    title: 'Total counts on how many times you took supply',
+                    subtitle: 'In Office Supplies vs Technology Supplies'
                 },
                 bars: 'horizontal' // Required for Material Bar Charts.
             };
@@ -248,7 +249,7 @@ include 'includes/config.inc.php';
 
                 <!-- Total Office supplies -->
 
-                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                     <a style="text-decoration: none" href="officesupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-boxes-packing icon"></i>
@@ -268,7 +269,7 @@ include 'includes/config.inc.php';
 
 
                 <!-- Total technology supplies -->
-                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                     <a style="text-decoration: none" href="technologysupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-computer icon"></i>
@@ -285,44 +286,8 @@ include 'includes/config.inc.php';
                     </a>
                 </div>
 
-                <!-- Total Users -->
-                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <a style="text-decoration: none" href="profile.php" class="dashboard-link">
-                        <div class="box-content">
-                            <i class="fa-solid fa-users icon"></i>
-                            <span>
-                                <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.users");
-                                if ($result = $result->fetch_assoc()) {
-                                ?>
-                                    <h3 class="amount"><strong><?php echo implode($result); ?></strong></h3>
-                                <?php } ?>
-                                <p class="category ellipsis">Total Users</p>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Total reports -->
-                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <a style="text-decoration: none" href="reports.php" class="dashboard-link">
-                        <div class="box-content">
-                            <i class="fa-solid fa-bug icon"></i>
-                            <span>
-                                <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.reports");
-                                if ($result = $result->fetch_assoc()) {
-                                ?>
-                                    <h3 class="amount"><strong><?php echo implode($result); ?></strong></h3>
-                                <?php } ?>
-                                <p class="category ellipsis">Total Reports</p>
-                            </span>
-                        </div>
-                    </a>
-                </div>
-
                 <!-- Recent History -->
-                <div class="col-12 col-sm-12 col-md-8 col-lg-9">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
                             <h3 class="amount"><strong>Recent history</strong></h3>
@@ -341,18 +306,7 @@ include 'includes/config.inc.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    // $sql = "SELECT \n"
-                                    //     . "    h.history_id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
-                                    //     . "    h.history_quantity AS Quantity, \n"
-                                    //     . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                    //     . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
-                                    //     . "FROM ssms.history h\n"
-                                    //     . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                    //     . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                    //     . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                    //     . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
-                                    //     . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date DESC LIMIT 3;";
-                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM ssms.history as h LEFT JOIN ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN ssms.users as u on h.user_id=u.user_id ORDER BY h.history_date DESC LIMIT 3;";
+                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM ssms.history as h LEFT JOIN ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN ssms.users as u on h.user_id=u.user_id WHERE h.user_id=$id ORDER BY h.history_date DESC LIMIT 3;";
 
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
@@ -384,7 +338,7 @@ include 'includes/config.inc.php';
                 </div>
 
                 <!-- Pie Chart -->
-                <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
                             <h3 class="amount"><strong>Supplies</strong></h3>
@@ -398,10 +352,10 @@ include 'includes/config.inc.php';
                 </div>
 
                 <!-- Bar horizontal graph -->
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
-                            <h3 class="amount"><strong>Notifications</strong></h3>
+                            <h3 class="amount"><strong>Office Supply vs Technology Supply</strong></h3>
                             <p class="category ellipsis" id="month-details"><a href="notifications.php">See more</a></p>
                         </span>
                         <hr>
@@ -412,100 +366,7 @@ include 'includes/config.inc.php';
                     </div>
                 </div>
 
-                <!-- Recent Restock -->
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                    <div class="large-content">
-                        <span class="d-flex justify-content-between">
-                            <h3 class="amount"><strong>Recent Restocks</strong></h3>
-                            <p class="category ellipsis" id="month-details"><a href="restocks.php">See more</a></p>
-                        </span>
-                        <hr>
-                        <span>
-                            <div id="chart_div" class="">
-                            </div>
-                        </span>
-                    </div>
-                </div>
 
-                <!-- Pie Chart -->
-                <div class="col-12 col-sm-12 col-md-4 col-lg-5">
-                    <div class="large-content">
-                        <span class="d-flex justify-content-between">
-                            <h3 class="amount"><strong>Users</strong></h3>
-                            <!-- <p class="category ellipsis extra-details">This month</p> -->
-                        </span>
-                        <hr>
-                        <span class="user-count">
-                            <!-- php code to select admins -->
-                            <?php
-                            require 'includes/config.inc.php';
-                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_category='admin'";
-                            $result = mysqli_query($conn, $sql);
-                            $count = mysqli_fetch_array($result)[0];
-                            ?>
-                            <!-- admins count -->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <i class="fa-sharp fa-solid fa-user-tie user-count-icon"></i>
-                                    <p class="user-count-title">Admins</p>
-                                </div>
-                                <div>
-                                    <p class="user-count-value"><?php echo $count; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-
-                            <!-- php code to select users -->
-                            <?php
-                            require 'includes/config.inc.php';
-                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_category='user'";
-                            $result = mysqli_query($conn, $sql);
-                            $count = mysqli_fetch_array($result)[0];
-                            ?>
-                            <!-- users count -->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <i class="fa-solid fa-user user-count-icon"></i>
-                                    <p class="user-count-title">Users</p>
-                                </div>
-                                <div>
-                                    <p class="user-count-value"><?php echo $count; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-
-                            <!-- php code to select users -->
-                            <?php
-                            require 'includes/config.inc.php';
-                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_status='inactive'";
-                            $result = mysqli_query($conn, $sql);
-                            $count = mysqli_fetch_array($result)[0];
-                            ?>
-                            <!-- inactive accounts -->
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <i class="fa-solid fa-user-slash user-count-icon"></i>
-                                    <p class="user-count-title">Inactive</p>
-                                </div>
-                                <div>
-                                    <p class="user-count-value"><?php echo $count; ?></p>
-                                </div>
-                            </div>
-                            <hr>
-
-                        </span>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-            <div class="container box">
-                <div class="row">
-                    <!-- <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit ex autem beatae eius non architecto minus eligendi incidunt molestias dolore?</h1> -->
-                </div>
-            </div>
 
     </section>
 
@@ -526,16 +387,6 @@ include 'includes/config.inc.php';
         searchBtn.addEventListener("click", () => {
             sidebar.classList.remove("close");
         })
-
-        modeSwitch.addEventListener("click", () => {
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                modeText.innerText = "Light mode";
-            } else {
-                modeText.innerText = "Dark mode";
-            }
-        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

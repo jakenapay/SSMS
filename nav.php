@@ -35,6 +35,17 @@
                 <?php }
                 } ?>
 
+                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
+                    if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'admin') { ?>
+                        <li class="nav-link">
+                            <a href="home.php">
+                                <i class="fa-solid fa-house-chimney icon"></i>
+                                <span class="text nav-text">Home</span>
+                            </a>
+                        </li>
+                <?php }
+                } ?>
+
 
                 <li class="nav-link">
                     <a href="history.php">

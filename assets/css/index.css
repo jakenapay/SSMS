@@ -10,3 +10,7 @@
 .user-count-value {
     margin-right: 0.5rem;
 }
+
+a:hover {
+    text-decoration: unset;
+}

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" type="text/css" href="assets/css/login.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" type="text/css" href="assets/css/profile.css?v=<?php echo time(); ?>">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -27,15 +28,20 @@
 
     <!-- ajax -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <style>
+        body {
+            padding-top: 200px !important;
+        }
+    </style>
 </head>
 
 <body class="mt-5 mb-5">
     <div class="container">
-        <div class="row px-3">
+        <div class="row px-3 py-5">
             <div class="col-lg-6 col-xl-6 card flex-row mx-auto px-0">
                 <!-- <div class="img-left d-none d-md-flex"></div> -->
                 <div class="card-body">
-                    <h4 class="title text-center mt-4">
+                    <h4 class="title text-center">
                         S.S.M.S Request Account
                     </h4>
                     <form class="form-box px-3" action="includes/requestAccount.inc.php" method="post">

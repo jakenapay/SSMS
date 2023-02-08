@@ -53,15 +53,15 @@ if (isset($_POST['check_view'])) {
                     <div class="col-md-6 pt-3 pb-1">
                         <label for="user_category">Category</label>
                         <select class="user_category" id="user_category" name="user_category">
-                            <option value="admin"' . ($cat == 'Admin' ? "selected" : "") . '>Admin</option>
-                            <option value="user"' . ($cat == 'User' ? "selected" : "") . '>User</option>
+                            <option value="admin"' . ($cat == 'admin' ? "selected" : "") . '>Admin</option>
+                            <option value="user"' . ($cat == 'user' ? "selected" : "") . '>User</option>
                         </select>
                     </div> 
                     <div class="col-md-6 pt-3 pb-1">
                         <label for="user_status">Status</label>
                         <select class="user_status" id="user_status" name="user_status">
-                            <option value="active"' . ($cat == 'Active' ? "selected" : "") . '>Active</option>
-                            <option value="inactive"' . ($cat == 'Inactive' ? "selected" : "") . '>Inactive</option>
+                            <option value="active"' . ($stat == 'active' ? "selected" : "") . '>Active</option>
+                            <option value="inactive"' . ($stat == 'inactive' ? "selected" : "") . '>Inactive</option>
                         </select>
                     </div>
 

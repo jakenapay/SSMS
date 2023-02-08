@@ -90,7 +90,7 @@ function login($conn, $em, $pw)
                     // admin != admin = false; go to else
                     // user != admin = true; you're user only
                     if ($row['user_category'] !== 'admin') {
-                        header("location: ../profile.php");
+                        header("location: ../home.php");
                         exit();
                     } else {
                         header("location: ../index.php");

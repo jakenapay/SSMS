@@ -121,3 +121,30 @@ if (isset($_POST['edit-image'])) {
         exit();
     }
 }
+
+if (isset($_POST['delete-confirm-btn'])) {
+
+    include 'config.inc.php';
+
+    if (empty($_POST['user_id']) or empty($_POST['user_password'])) {
+        header("location: ../profile.php?m=error");
+        exit();
+    }
+
+    if (!password_verify($_POST['user_password'], $_POST['user_password_correct'])) {
+        header("location: ../profile.php?m=wrongpassword");
+        exit();
+    }
+
+    $id = $_POST['user_id'];
+    $pw = $_POST['user_password'];
+    $sql = "UPDATE ssms.users SET user_status='inactive' WHERE user_id=$id";
+    if ($conn->query($sql) === TRUE) {
+        header("location: ../login.php");
+        exit();
+    } else {
+        // header("location: ../profile.php?m=error");
+        // exit();
+        echo $conn->error;
+    }
+}

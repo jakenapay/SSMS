@@ -82,7 +82,11 @@ session_start();
                                 <p class="header-title text">Profile & Accounts</p>
                             </div>
 
-                            <p id="path"><a href="includes/logout.inc.php">Logout</a></p>
+                            <!-- Button trigger modal -->
+                            <div><input type="hidden" id="user_id" name="user_id" class="user_id" value="<?php echo $_SESSION['id']; ?>" readonly></div>
+                            <button type="button" class="btn delete-btn btn-default px-2" data-bs-toggle="modal" data-bs-target="#delAccModal">
+                                Disable account
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -100,6 +104,22 @@ session_start();
                                     </div>
                                 </div>';
                         }
+                        if ($_GET['m'] == 'error') {
+                            $message = 'Error, something went wrong';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                        if ($_GET['m'] == 'wrongpassword') {
+                            $message = 'Wrong Password';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
                         if ($_GET['m'] == 'emailExist') {
                             $message = 'Email already exists';
                             echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -110,6 +130,14 @@ session_start();
                         }
                         if ($_GET['m'] == 'updateSuccess') {
                             $message = 'Update success';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                        if ($_GET['m'] == 'success') {
+                            $message = 'User updated successfully';
                             echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                     <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -283,6 +311,8 @@ session_start();
             </div>
     </section>
 
+
+
     <!-- For editing details Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -327,9 +357,9 @@ session_start();
                             <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>" readonly>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" name="save-btn" class="btn button-default">Save changes</button>
+                        <button type="submit" name="save-btn" class="btn button-warning">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -359,6 +389,59 @@ session_start();
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- For Deleting account Modal -->
+    <div class="modal fade" id="delAccModal" tabindex="-1" role="dialog" aria-labelledby="delAccModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delAccModalLabel">Deleting Account</h5>
+                    <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?php
+                include 'includes/config.inc.php';
+                $id = $_SESSION['id'];
+                $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+                $result = mysqli_query($conn, $sql);
+                if (mysqli_num_rows($result) > 0) {
+                    // output data of each row
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $id = $row['user_id'];
+                        $fn = $row['user_firstname'];
+                        $ln = $row['user_lastname'];
+                        $pw = $row['user_password'];
+                        $em = $row['user_email'];
+                        $old_img = $row['user_img'];
+                        $ct = $row['user_category'];
+                        $st = $row['user_status'];
+                    }
+                } else {
+                    echo "0 results";
+                } ?>
+                <form action="includes/updateProfile.inc.php" method="post">
+                    <div class="modal-body">
+                        <div class="form-group pt-2 pb-2">
+                            <h6><strong>Note:</strong>
+                                <span class="text-muted">By entering your password and confirming to disable account will disable your account, and this cannot be undone.</>
+                            </h6>
+                        </div>
+                        <div class="form-group pt-2 pb-2">
+                            <label for="user_password">Password</label>
+                            <input type="password" class="form-control" id="user_password" name="user_password" placeholder="Enter your password">
+                            <!-- readonly -->
+                            <input type="hidden" name="user_password_correct" id="user_password_correct" value="<?php echo $pw; ?>" readonly>
+                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>" readonly>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-default px-2" name="delete-confirm-btn" value="Confirm">
+                        </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -398,6 +481,16 @@ session_start();
                         $('#viewUserAccountModal').modal('show');
                     }
                 });
+            });
+
+            // deleting account
+            $('.delete-btn').click(function(e) {
+                e.preventDefault();
+                var user_id = $(this).closest('.user_id').find('.user_id').text();
+                console.log(ts_id);
+                $('#user_id').val(user_id);
+                $('#delAccModal').modal('show');
+
             });
         });
     </script>
