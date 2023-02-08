@@ -428,13 +428,11 @@ include 'includes/config.inc.php';
                 <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
-                            <h3 class="amount"><strong>Low Stocks</strong></h3>
-                            <!-- <p>Low stocks</p> -->
-                            <!-- <p class="category ellipsis extra-details">This month</p> -->
+                            <h3 class="amount"><strong>Notifications</strong></h3>
                         </span>
                         <hr>
                         <span>
-
+                            
                         </span>
                     </div>
                 </div>

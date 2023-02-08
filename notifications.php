@@ -42,7 +42,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
     <script>
         $(document).ready(function() {
-            $('table').DataTable();
+            $('table').DataTable({
+                scrollY: 200
+            });
         });
     </script>
 
@@ -66,8 +68,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
             <!-- Recent History -->
             <div class="row">
 
-
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="large-content">
                         <div class="d-flex justify-content-start align-items-center">
                             <i class="fa-solid fa-boxes-packing icon"></i>
@@ -78,11 +79,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <table class="table table-hover">
                                 <thead>
                                     <tr class="pt-5">
-                                        <th scope="col">Supply ID</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Brand</th>
+                                        <th scope="col">Unit of Measure</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Location</th>
+                                        <th scope="col">Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,7 +92,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     include 'includes/config.inc.php';
                                     // Checks if its a user or admin; if user then go to stocks page
                                     // Only admin can go to this page or dashboard
-                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0";
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -101,7 +103,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                             $brand = $row['brand'];
                                             $loc = $row['loc'];
 
-                                            // for admins only to see
+                                            $des = $row['des'];
                                             $qty = $row['qty'];
                                             $stat = $row['status'];
                                             $da = $row['da'];
@@ -109,11 +111,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                     ?>
                                             <tr>
-                                                <td><?php echo $id; ?></td>
+                                                <!-- <td><?php echo $id; ?></td> -->
                                                 <td><?php echo $name; ?></td>
+                                                <td><?php echo $brand; ?></td>
                                                 <td><?php echo $uom; ?></td>
-                                                <td><?php echo $user; ?></td>
-                                                <td><?php echo $date; ?></td>
+                                                <td><?php echo $qty; ?></td>
+                                                <td><?php echo $loc; ?></td>
+                                                <td><?php echo $des; ?></td>
                                             </tr>
                                     <?php
                                         }
@@ -129,7 +133,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 </div>
 
                 <!-- Recent History -->
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="large-content">
                         <div class="d-flex justify-content-start align-items-center">
                             <i class="fa-solid fa-computer icon"></i>
@@ -141,11 +145,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <table class="table table-hover">
                                 <thead>
                                     <tr class="pt-5">
-                                        <th scope="col">History ID</th>
-                                        <th scope="col">Item</th>
+                                        <!-- <th scope="col">History ID</th> -->
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Brand</th>
+                                        <th scope="col">Model</th>
                                         <th scope="col">Quantity</th>
-                                        <th scope="col">User</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -153,48 +159,35 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     include 'includes/config.inc.php';
                                     // Checks if its a user or admin; if user then go to stocks page
                                     // Only admin can go to index page or dashboard
-                                    if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
-                                        $sql = "SELECT \n"
-                                            . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
-                                            . "    h.history_quantity AS Quantity, \n"
-                                            . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                            . "    h.history_date AS Date\n"
-                                            . "FROM ssms.history h\n"
-                                            . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                            . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                            . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                            . "WHERE u.user_id=" . $id . "\n"
-                                            . "ORDER BY h.history_date;";
-                                    } else {
-                                        $sql = "SELECT \n"
-                                            . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
-                                            . "    h.history_quantity AS Quantity, \n"
-                                            . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                            . "    h.history_date AS Date\n"
-                                            . "FROM ssms.history h\n"
-                                            . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                            . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                            . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                            . "ORDER BY h.history_date;";
-                                        // $sql = "SELECT *, h.history_id as Id FROM `ssms`.`history` as h";
-                                    }
+                                    $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity > 0";
+
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
                                         while ($row = $result->fetch_assoc()) {
-                                            $id = $row['Id'];
-                                            $item = $row['Item'];
-                                            $qty = $row['Quantity'];
-                                            $user = $row['User'];
-                                            $date = $row['Date'];
+                                            //     th scope="col">Name</th>
+                                            // <th scope="col">Brand</th>
+                                            // <th scope="col">Model</th>
+                                            // <th scope="col">Quantity</th>
+                                            // <th scope="col">Location</th>
+                                            // <th scope="col">Description</th>
+                                            $id = $row['id'];
+                                            $name = $row['name'];
+                                            $brand = $row['brand'];
+                                            $model = $row['model'];
+                                            $qty = $row['qty'];
+                                            $loc = $row['loc'];
+                                            $des = $row['des'];
 
                                     ?>
                                             <tr>
-                                                <td><?php echo $id; ?></td>
-                                                <td><?php echo $item; ?></td>
+                                                <!-- <td><?php echo $id; ?></td> -->
+                                                <td><?php echo $name; ?></td>
+                                                <td><?php echo $brand; ?></td>
+                                                <td><?php echo $model; ?></td>
                                                 <td><?php echo $qty; ?></td>
-                                                <td><?php echo $user; ?></td>
-                                                <td><?php echo $date; ?></td>
+                                                <td><?php echo $loc; ?></td>
+                                                <td><?php echo $des; ?></td>
                                             </tr>
                                     <?php
                                         }
