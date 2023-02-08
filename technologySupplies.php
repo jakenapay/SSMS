@@ -64,7 +64,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="includes/ts.inc.php" method="post">
+                <form action="includes/ts.inc.php" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
                             <!-- add name -->
@@ -113,7 +113,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <!-- image -->
                             <div class="col-md-12 pt-3 pb-1">
                                 <label for="img">Image</label>
-                                <input type="file" accept="image/*" name="ts_img" id="ts_img">
+                                <input type="file" accept="image/*" name="ts_img" id="ts_img" required>
                             </div>
 
                             <!-- hidden -->
@@ -159,9 +159,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <i class="fa-solid fa-computer icon"></i>
                             <p class="header-title text">Technology Supplies</p>
                         </span>
-                        <div>
-                            <button class="btn btn-default py-1 px-2 my-1" data-bs-toggle="modal" data-bs-target="#addModal">Add Technology Supply</button>
-                        </div>
+                        <?php
+                        if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                            <div>
+                                <button class="btn btn-default py-1 px-2 my-1" data-bs-toggle="modal" data-bs-target="#addModal">Add Technology Supply</button>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -210,6 +213,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <th scope="col">Brand</th>
                                     <th scope="col">Category</th>
                                     <th scope="col">Location</th>
+                                    <th scope="col">Image</th>
                                     <!-- for users -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") { ?>
@@ -282,6 +286,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <td><?php echo $loc; ?></td>
                                                 <input name="ts_location" type="hidden" value="<?php echo $loc; ?>">
+
+                                                <td><img src="technologySupplies/<?php echo $img; ?>" style="width: 100px;" class="img-fluid"></td>
+                                                <input name="ts_img" type="hidden" value="<?php echo $img; ?>">
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>

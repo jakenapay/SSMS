@@ -316,6 +316,8 @@ if (isset($_POST['add-tech-btn'])) {
         exit();
     }
 
+    // details
+    $uid = $_POST['user_id'];
     $name = $_POST['ts_name'];
     $model = $_POST['ts_model'];
     $brand = $_POST['ts_brand'];
@@ -323,8 +325,69 @@ if (isset($_POST['add-tech-btn'])) {
     $qty = $_POST['ts_quantity'];
     $loc = $_POST['ts_location'];
     $des = $_POST['ts_description'];
-    $stat = $_POST['ts_status'];
+    $stat = $_POST['status'];
+    $ts_img = $_POST['ts_img']['name'];
 
     // functions to be added
-    // LAST STOP
+    // requires
+    require_once 'config.inc.php';
+    require_once 'functions.inc.php';
+
+    // Get the uploaded image file and its information
+    $image = $_FILES['ts_img']['name'];
+    $tmp_img_name = $_FILES['ts_img']['tmp_name'];
+    $image_type = $_FILES['ts_img']['type'];
+    $image_size = $_FILES['ts_img']['size'];
+    $image_error = $_FILES['ts_img']['error'];
+
+    // Seperate extension and filename
+    $image_tmp_ext = explode('.', $image);
+    $image_ext = strtolower(end($image_tmp_ext));
+
+    // Check if there is an empty field
+    if (empty($name) or empty($model) or empty($brand) or empty($cat) or empty($qty) or empty($qty) or empty($loc)) {
+        header("location: ../technologySupplies.php?m=emptyFields");
+        exit();
+    }
+
+    // Check if image type is an image
+    if (checkImageType($image_type) !== false) {
+        header("location: ../technologySupplies.php?m=ImageTypeDenied");
+        exit();
+    }
+
+    // Check if image size is more than 2mb
+    if (checkImageSize($image_size) !== false) {
+        header("location: ../technologySupplies.php?m=ImageTooLarge");
+        exit();
+    }
+
+    // Check if image has an error
+    if (
+        checkImageError($image_error) !== false
+    ) {
+        header("location: ../technologySupplies.php?m=ImageError");
+        exit();
+    }
+
+    // If all functions were passed then explode the image name and extension
+    // Create a unique ID for the image
+    // Upload the image to the folder
+    $image_new_name = uniqid('', true) . "." . $image_ext;
+
+    // Upload the image to upload folder (product_img)
+    $image_final_name = 'IMG_' . $image_new_name;
+    $folder = '../technologySupplies/';
+    move_uploaded_file($tmp_img_name, $folder . $image_final_name);
+
+    // All done head back to product.php
+    $sql = "INSERT INTO `ssms`.`technology_supplies` (`ts_name`, `ts_model`, `ts_brand`, `ts_category`, `ts_quantity`, `ts_location`, `ts_img`, `ts_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name','$model','$brand','$cat','$qty', '$loc', '$image_final_name', '$des', '$stat', now(), now(), '$uid')";
+
+    if ($conn->query($sql) === false) {
+        header("location: ../technologySupplies.php?m=uploadError");
+        exit();
+    }
+
+    header('location: ../technologySupplies.php?m=success');
+    exit();
 }
