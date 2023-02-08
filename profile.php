@@ -87,6 +87,47 @@ session_start();
                     </div>
                 </div>
 
+                <div class="col-12">
+                    <!-- error message here -->
+                    <?php
+                    $message = '';
+                    if (isset($_GET['m'])) {
+                        if ($_GET['m'] == 'emptyFields') {
+                            $message = 'Fill up all fields';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                        if ($_GET['m'] == 'emailExist') {
+                            $message = 'Email already exists';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                        if ($_GET['m'] == 'updateSuccess') {
+                            $message = 'Update success';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                        if ($_GET['m'] == 'updateFailed') {
+                            $message = 'Update failed';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                    }
+                    ?>
+                </div>
+
                 <!-- Profile picture -->
                 <div class="col-12 col-sm-12 col-md-6 col-lg-5">
                     <div class="box-content-profile">
@@ -118,28 +159,6 @@ session_start();
                 <div class="col-12 col-sm-12 col-md-6 col-lg-5">
                     <div class="box-content-details">
                         <span id="span-form">
-                            <!-- error message here -->
-                            <?php
-                            $message = '';
-                            if (isset($_GET['m'])) {
-                                if ($_GET['m'] == 'emptyFields') {
-                                    $message = 'Fill up all fields';
-                                    echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                                }
-                                if ($_GET['m'] == 'emailExist') {
-                                    $message = 'Email already exists';
-                                    echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                                }
-                                if ($_GET['m'] == 'updateSuccess') {
-                                    $message = 'Update success';
-                                    echo '<p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>';
-                                }
-                                if ($_GET['m'] == 'updateFailed') {
-                                    $message = 'Update failed';
-                                    echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
-                                }
-                            }
-                            ?>
 
                             <form id="form">
                                 <h5><strong>Status:

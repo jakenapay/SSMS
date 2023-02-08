@@ -252,13 +252,11 @@ if (isset($_POST['get-btn-tech'])) {
             header("location: ../technologySupplies.php?m=success");
         } else {
             echo $conn->error;
-            echo "<script>alert('Error updating product.');</script>";
-            // window . location . replace('../technoglogySupplies.php?m=error');
+            echo "<script>alert('Error updating product.');window.location.replace('../technoglogySupplies.php?m=error');</script>";
         }
     } else {
         echo $conn->error;
-        echo "<script>alert('Error updating product.');</script>";
-        // window . location . replace('../technoglogySupplies.php?m=error');
+        echo "<script>alert('Error updating product.');window.location.replace('../technoglogySupplies.php?m=error');</script>";
     }
 }
 

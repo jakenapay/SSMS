@@ -160,6 +160,49 @@ include 'includes/config.inc.php';
 
         }
     </script>
+
+    <!-- Bar Graph for Notifications -->
+    <script type="text/javascript">
+        google.charts.load('current', {
+            'packages': ['bar']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Supplies', 'Count'],
+                <?php
+                include('includes/config.inc.php');
+                $office_supplies_query = "SELECT COUNT(*) as count FROM ssms.office_supplies";
+                $office_supplies_result = mysqli_query($conn, $office_supplies_query);
+                $office_supplies_data = mysqli_fetch_assoc($office_supplies_result);
+                $office_supplies_count = $office_supplies_data['count'];
+                $technology_supplies_query = "SELECT COUNT(*) as count FROM ssms.technology_supplies";
+                $technology_supplies_result = mysqli_query($conn, $technology_supplies_query);
+                $technology_supplies_data = mysqli_fetch_assoc($technology_supplies_result);
+                $technology_supplies_count = $technology_supplies_data['count'];
+                echo "['Office Supplies', $office_supplies_count],";
+                echo "['Technology Supplies', $technology_supplies_count]";
+                ?>
+            ]);
+
+            var options = {
+                chart: {
+                    title: 'Count of Supplies',
+                    subtitle: 'Office Supplies vs Technology Supplies'
+                },
+                bars: 'horizontal' // Required for Material Bar Charts.
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('bar-chart-container'));
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+
+            $(window).resize(function() {
+                drawChart();
+            });
+        }
+    </script>
+
 </head>
 
 <body>
@@ -432,7 +475,7 @@ include 'includes/config.inc.php';
                         </span>
                         <hr>
                         <span>
-                            
+
                         </span>
                     </div>
                 </div>

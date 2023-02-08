@@ -3,7 +3,6 @@
     border-radius: 50px;
     text-align: center;
     background-color: #FF005430;
-    color: #FF0054;
 }
 
 .message-success {
@@ -11,7 +10,6 @@
     border-radius: 50px;
     text-align: center;
     background-color: #00ff3730;
-    color: #00ff37;
 }
 
 .message-success i,

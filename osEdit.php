@@ -60,6 +60,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
     <link rel="stylesheet" href="assets/css/history.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/ts.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/updateSupply.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/profile.css?v=<?php echo time(); ?>">
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -105,6 +106,22 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                     </div>
                                 </div>';
                     }
+                    if ($_GET['m'] == 'error') {
+                        $message = 'Error occured';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'uploadError') {
+                        $message = 'Error adding supply';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
                     if ($_GET['m'] == 'ImageError') {
                         $message = 'Image has an error';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -113,24 +130,48 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                     </div>
                                 </div>';
                     }
-                    if ($_GET['m'] == 'ImageTooLarge') {
-                        $message = 'Image too large';
-                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="box-content d-block">
-                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
-                                    </div>
-                                </div>';
-                    }
                     if ($_GET['m'] == 'ImageTypeDenied') {
-                        $message = 'Image type denied';
+                        $message = 'Image type is denied';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                     <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
                                     </div>
                                 </div>';
                     }
-                    if ($_GET['m'] == 'error') {
-                        $message = 'Error Occured';
+                    if ($_GET['m'] == 'ImageTooLarge') {
+                        $message = 'Image is too large';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'noid') {
+                        $message = 'Something went wrong';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'noquantityleft') {
+                        $message = 'Insufficient stock will be left, please get a sufficient quantity only';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'nogetquantity') {
+                        $message = 'Enter how many supply you will take';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'insufficientStock') {
+                        $message = 'Insufficient stock will be left, please get a sufficient quantity only';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                     <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
@@ -138,7 +179,23 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>';
                     }
                     if ($_GET['m'] == 'success') {
-                        $message = 'Technology Supply Updated';
+                        $message = 'Technology supply updated';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'enablingSuccess') {
+                        $message = 'Technology supply updated';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
+                    if ($_GET['m'] == 'disablingSuccess') {
+                        $message = 'Technology supply updated';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>

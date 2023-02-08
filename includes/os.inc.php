@@ -46,7 +46,7 @@ if (isset($_POST['update-img'])) {
     // check first if there's an id of technology and the user
     if (!isset($_POST['os_id']) and !isset($_POST['uid'])) {
         // go back to edit panel
-        header("location: ../officeSupplies.php");
+        header("location: ../officeSupplies.php?m=noid");
         exit();
     }
 

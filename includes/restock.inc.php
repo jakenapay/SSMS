@@ -41,7 +41,7 @@ if (isset($_POST['restock-btn-office'])) {
     include_once 'functions.inc.php';
 
     if (empty($_POST['user_id']) or empty($_POST['restock_item'])) {
-        header("location: ../restocks.php");
+        header("location: ../restocks.php?m=noid");
         exit();
     }
 

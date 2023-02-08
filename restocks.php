@@ -199,6 +199,14 @@ include 'includes/user.inc.php';
                                     </div>
                                 </div>';
                 }
+                if ($_GET['m'] == 'noid') {
+                    $message = 'Something went wrong';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
                 if ($_GET['m'] == 'success') {
                     $message = 'Technology Supply Updated';
                     echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">

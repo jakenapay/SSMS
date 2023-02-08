@@ -182,7 +182,71 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 </div>';
                 }
                 if ($_GET['m'] == 'error') {
-                    $message = 'Error Occured';
+                    $message = 'Error occured';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'uploadError') {
+                    $message = 'Error adding supply';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'ImageError') {
+                    $message = 'Image has an error';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'ImageTypeDenied') {
+                    $message = 'Image type is denied';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'ImageTooLarge') {
+                    $message = 'Image is too large';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'noid') {
+                    $message = 'Something went wrong';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'noquantityleft') {
+                    $message = 'Insufficient stock will be left, please get a sufficient quantity only';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'nogetquantity') {
+                    $message = 'Enter how many supply you will take';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'insufficientStock') {
+                    $message = 'Insufficient stock will be left, please get a sufficient quantity only';
                     echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                     <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
@@ -190,7 +254,23 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 </div>';
                 }
                 if ($_GET['m'] == 'success') {
-                    $message = 'You can now get your product';
+                    $message = 'Technology supply updated';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'enablingSuccess') {
+                    $message = 'Technology supply updated';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'disablingSuccess') {
+                    $message = 'Technology supply updated';
                     echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -199,7 +279,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 }
             }
             ?>
-
             <!-- Recent History -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="large-content">
