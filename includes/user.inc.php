@@ -1,4 +1,7 @@
 <?php
+//library to use phpmailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // view users account
 if (isset($_POST['check_view'])) {
@@ -8,7 +11,7 @@ if (isset($_POST['check_view'])) {
 
     include 'config.inc.php';
 
-    $result = $conn->query("SELECT u.user_id, u.user_firstname, u.user_lastname, u.user_email, u.user_img, u.user_category, u.user_status, u.user_date, u.date_last_modified, CONCAT(us.user_firstname, ' ', us.user_lastname) as Modified_by FROM `ssms`.`users` as u INNER JOIN `ssms`.`users` as us ON u.user_id=us.user_id WHERE u.user_id=$user_id");
+    $result = $conn->query("SELECT u.user_id, u.user_firstname, u.user_lastname, u.user_email, u.user_img, u.user_category, u.user_status, u.user_date, u.date_last_modified, us.modified_by as Modified_by FROM `ssms`.`users` as u INNER JOIN `ssms`.`users` as us ON u.user_id=us.user_id WHERE u.user_id=$user_id");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set
@@ -32,7 +35,7 @@ if (isset($_POST['check_view'])) {
                     </div>
                     <div class="col-md-6 pt-1 pb-1">
                         <label for="user_id">User ID</label>
-                        <input type="text" class="form-control" id="user_id" name="user_id" value="' . $user_id . '" >
+                        <input type="text" class="form-control" id="user_id" name="user_id" value="' . $user_id . '" disabled>
                         <input type="hidden" class="form-control" id="user_id" name="user_id" value="' . $user_id . '">
                     </div>  
                     <div class="col-md-6 pt-1 pb-1">
@@ -84,20 +87,22 @@ if (isset($_POST['check_view'])) {
                     <div class="w-100 my-2">
                         <hr
                     </div>
+                    <div class="col-12">
+                        <label><strong>Send an email</strong></label>
+                    </div>
                     <div class="col-md-12 pt-1 pb-1">
                         <label for="receiver_email">Receiver Email:</label>
-                        <input type="text" class="form-control" id="receiver_email" name="receiver_email" value="' . $em . '" disabled>
-                        <input type="hidden" class="form-control" id="receiver_email" name="receiver_email" value="' . $em . '" >
+                        <input type="text" class="form-control" id="receiver_email" name="receiver_email" value="' . $em . '" readonly>
                     </div>  
                     <div class="col-md-12 pt-1 pb-1">
                         <label for="subject_email">Subject:</label>
                         <input type="text" class="form-control" id="subject_email" name="subject_email">
-                        <input type="hidden" class="form-control" id="subject_email" name="subject_email" value="Account Updated" >
                     </div>  
                     <div class="col-md-12 pt-1 pb-1">
                         <label for="message_email">Message:</label>
                         <textarea type="text" class="form-control" id="message_email" name="message_email"></textarea>
-                    </div>  
+                    </div>
+                     <input type="submit" class="btn btn-default px-2 my-2" name="send_email" value="Send Email">
                 </div>
 
                 
@@ -142,4 +147,66 @@ if (isset($_POST['user_btn_update'])) {
         echo $conn->error;
         echo "<script>alert('Error updating product.');window.location.replace('../restocks.php?m=error');</script>";
     }
+}
+
+if (isset($_POST['send_email'])) {
+
+    // test
+    // echo '<script>alert("hi");</script>';
+
+    // includes to run database and functions
+    include 'config.inc.php';
+    include 'functions.inc.php';
+
+    // check if empty user id
+    if (empty($_POST['user_id']) and (empty($_POST['uid']))) {
+        header("location: ../profile.php?m=noid");
+        exit();
+    }
+
+    $msg = $_POST['message_email'];
+    $subj = $_POST['subject_email'];
+    $receiver = $_POST['receiver_email'];
+
+    $uid = $_POST['uid'];
+    $user_id = $_POST['user_id'];
+
+    require("../phpmailer/src/Exception.php");
+    require("../phpmailer/src/PHPMailer.php");
+    require("../phpmailer/src/SMTP.php");
+
+    $mail = new PHPMailer(true); //to allow this Mailer
+
+    $mail->isSMTP(); //send using Secure Message Transport Protocol
+    $mail->Host = "smtp.gmail.com"; //google server
+
+    $mail->SMTPAuth = true; //enable authentication
+
+    $mail->Username = 'storagesupplyms@gmail.com';
+    $mail->Password = 'yzdeygapfniprdrq'; //google password
+
+    $mail->SMTPSecure = "tls"; //tls (Transport Layer Security)
+    $mail->Port = 587;
+
+    $mail->From = "storagesupplyms@gmail.com"; //my gmail
+    $mail->FromName = "Storage Suppy Management System Admin"; //sender name
+
+    $mail->addAddress($receiver); //email reciever
+
+    $mail->isHTML(true); //this line is to allow the html
+    $mail->Subject    = $subj;
+    $mail->Body    = $msg;
+    $mail->send();
+
+    echo "
+    <script>
+    alert('success');
+
+    </script>
+
+    ";
+
+
+    echo '<script>alert("Email sent successfully !")</script>';
+    echo '<script>window.location.href="../profile.php";</script>';
 }
