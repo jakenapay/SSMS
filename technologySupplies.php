@@ -53,6 +53,82 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 </head>
 
 <body>
+
+    <!-- Add Modal for technology supplies -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add Technology Supply</h5>
+                    <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="includes/ts.inc.php" method="post">
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- add name -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="ts_name">Name</label><br>
+                                <input class="form-control" type="text" name="ts_name" id="ts_name" placeholder="Supply Name">
+                            </div>
+                            <!-- model -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="ts_model">Model</label><br>
+                                <input class="form-control" type="text" name="ts_model" id="ts_model" placeholder="Supply Model">
+                            </div>
+                            <!-- brand -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="ts_brand">Brand</label><br>
+                                <input class="form-control" type="text" name="ts_brand" id="ts_brand" placeholder="Supply Brand">
+                            </div>
+                            <!-- category -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="ts_category">Category</label><br>
+                                <input class="form-control" type="text" name="ts_category" id="ts_category" placeholder="Supply Category">
+                            </div>
+                            <!-- quantity -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="ts_quantity">Quantity</label>
+                                <input class="form-control" type="number" min="1" max="100" name="ts_quantity" id="ts_quantity" required placeholder="(1-100)">
+                            </div>
+                            <!-- location -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="ts_location">Location</label>
+                                <input class="form-control" type="text" name="ts_location" id="ts_location" placeholder="Location">
+                            </div>
+                            <!-- description -->
+                            <div class="col-md-12 pt-3 pb-1">
+                                <label for="ts_description">Description</label>
+                                <textarea class="form-control" type="text" name="ts_description" id="ts_description" placeholder="Other information.."></textarea>
+                            </div>
+                            <!-- status -->
+                            <div class="col-md-12 pt-3 pb-1">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" class="text-dark">
+                                    <option value="enabled">Enabled</option>
+                                    <option value="disabled">Enabled</option>
+                                </select>
+                            </div>
+                            <!-- image -->
+                            <div class="col-md-12 pt-3 pb-1">
+                                <label for="img">Image</label>
+                                <input type="file" accept="image/*" name="ts_img" id="ts_img">
+                            </div>
+
+                            <!-- hidden -->
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-default px-2" name="add-tech-btn" value="Add Supply">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigational sidebar -->
     <?php include 'nav.php';
     include 'includes/config.inc.php';
@@ -78,11 +154,14 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
         <div class="container mt-3 mb-3">
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="header">
-                    <div class="header-content">
+                    <div class="header-content d-flex justify-content-between">
                         <span class="d-flex justify-content-start align-items-center">
                             <i class="fa-solid fa-computer icon"></i>
                             <p class="header-title text">Technology Supplies</p>
                         </span>
+                        <div>
+                            <button class="btn btn-default py-1 px-2 my-1" data-bs-toggle="modal" data-bs-target="#addModal">Add Technology Supply</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -121,10 +200,6 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
             <!-- Recent History -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="large-content">
-                    <!-- <span class="d-flex justify-content-between">
-                        <h3 class="amount"><strong>Recent history</strong></h3>
-                    </span> 
-                    <hr> -->
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead>

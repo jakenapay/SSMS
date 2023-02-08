@@ -303,3 +303,28 @@ if (isset($_POST['enable-supply'])) {
         echo "<script>alert('Error updating product.');window.location.replace('../technoglogySupplies.php?m=error');</script>";
     }
 }
+
+// add supply
+if (isset($_POST['add-tech-btn'])) {
+
+    // include other php process
+    include_once 'config.inc.php';
+    include_once 'functions.inc.php';
+
+    if (empty($_POST['user_id'])) {
+        header("location: ../technologySupplies.php?m=noid");
+        exit();
+    }
+
+    $name = $_POST['ts_name'];
+    $model = $_POST['ts_model'];
+    $brand = $_POST['ts_brand'];
+    $cat = $_POST['ts_category'];
+    $qty = $_POST['ts_quantity'];
+    $loc = $_POST['ts_location'];
+    $des = $_POST['ts_description'];
+    $stat = $_POST['ts_status'];
+
+    // functions to be added
+    // LAST STOP
+}

@@ -213,10 +213,6 @@ include 'includes/user.inc.php';
             <!-- Recent History -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="large-content">
-                    <!-- <span class="d-flex justify-content-between">
-                        <h3 class="amount"><strong>Recent history</strong></h3>
-                    </span> 
-                    <hr> -->
                     <div class="table-responsive">
                         <h5>Latest Restocks</h5>
                         <hr class="my-3">
