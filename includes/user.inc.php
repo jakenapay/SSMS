@@ -70,15 +70,33 @@ if (isset($_POST['check_view'])) {
                         <input type="text" class="form-control" id="user_date" name="user_date" value="' . $date . '" disabled>
                         <input type="hidden" class="form-control" id="user_date" name="user_date" value="' . $date . '" >
                     </div>
-                      <div class="col-md-12 pt-1 pb-1">
+                    <div class="col-md-12 pt-1 pb-1">
                         <label for="date_last_modified">Last Modified</label>
                         <input type="text" class="form-control" id="date_last_modified" name="date_last_modified" value="' . $dlm . '" disabled>
                         <input type="hidden" class="form-control" id="date_last_modified" name="date_last_modified" value="' . $dlm . '" >
                     </div>  
-                      <div class="col-md-12 pt-1 pb-1">
+                    <div class="col-md-12 pt-1 pb-1">
                         <label for="modified_by">Modified By</label>
                         <input type="text" class="form-control" id="modified_by" name="modified_by" value="' . $by . '" disabled>
                         <input type="hidden" class="form-control" id="modified_by" name="modified_by" value="' . $by . '" >
+                    </div>  
+
+                    <div class="w-100 my-2">
+                        <hr
+                    </div>
+                    <div class="col-md-12 pt-1 pb-1">
+                        <label for="receiver_email">Receiver Email:</label>
+                        <input type="text" class="form-control" id="receiver_email" name="receiver_email" value="' . $em . '" disabled>
+                        <input type="hidden" class="form-control" id="receiver_email" name="receiver_email" value="' . $em . '" >
+                    </div>  
+                    <div class="col-md-12 pt-1 pb-1">
+                        <label for="subject_email">Subject:</label>
+                        <input type="text" class="form-control" id="subject_email" name="subject_email">
+                        <input type="hidden" class="form-control" id="subject_email" name="subject_email" value="Account Updated" >
+                    </div>  
+                    <div class="col-md-12 pt-1 pb-1">
+                        <label for="message_email">Message:</label>
+                        <textarea type="text" class="form-control" id="message_email" name="message_email"></textarea>
                     </div>  
                 </div>
 
