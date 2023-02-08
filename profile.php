@@ -156,7 +156,7 @@ session_start();
                                 </div>
                                 <div class="form-input">
                                     <label for="email" class="label">Email Address</label>
-                                    <input id="email" name="email" type="email" value="<?php echo $em; ?>" disabled>
+                                    <input id="email" name="email" type="email" value="<?php echo $em; ?>" readonly>
                                 </div>
                                 <div class="form-input">
                                     <label for="category" class="label">Category</label>
@@ -305,12 +305,12 @@ session_start();
                         </div>
                         <div class="form-group pt-2 pb-2">
                             <label for="new_em">Email address</label>
-                            <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>" disabled>
+                            <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>" readonly>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" name="save-btn" class="btn button-success">Save changes</button>
+                        <button type="submit" name="save-btn" class="btn button-default">Save changes</button>
                     </div>
                 </form>
             </div>

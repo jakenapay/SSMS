@@ -112,7 +112,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             </div>
                             <!-- image -->
                             <div class="col-md-12 pt-3 pb-1">
-                                <label for="img">Image</label>
+                                <label for="ts_img">Image</label>
                                 <input type="file" accept="image/*" name="ts_img" id="ts_img" required>
                             </div>
 

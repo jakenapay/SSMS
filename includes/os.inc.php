@@ -289,3 +289,91 @@ if (isset($_POST['enable-supply'])) {
         echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
     }
 }
+
+
+// add supply
+if (isset($_POST['add-office-btn'])) {
+
+    // include other php process
+    include_once 'config.inc.php';
+    include_once 'functions.inc.php';
+
+    if (empty($_POST['user_id'])) {
+        header("location: ../officeSupplies.php?m=noid");
+        exit();
+    }
+
+    // details
+    $uid = $_POST['user_id'];
+    $name = $_POST['os_name'];
+    $brand = $_POST['os_brand'];
+    $uom = $_POST['os_uom'];
+    $qty = $_POST['os_quantity'];
+    $loc = $_POST['os_location'];
+    $des = $_POST['os_description'];
+    $stat = $_POST['status'];
+    $os_img = $_POST['os_img']['name'];
+
+    // functions to be added
+    // requires
+    require_once 'config.inc.php';
+    require_once 'functions.inc.php';
+
+    // Get the uploaded image file and its information
+    $image = $_FILES['os_img']['name'];
+    $tmp_img_name = $_FILES['os_img']['tmp_name'];
+    $image_type = $_FILES['os_img']['type'];
+    $image_size = $_FILES['os_img']['size'];
+    $image_error = $_FILES['os_img']['error'];
+
+    // Seperate extension and filename
+    $image_tmp_ext = explode('.', $image);
+    $image_ext = strtolower(end($image_tmp_ext));
+
+    // Check if there is an empty field
+    if (empty($name) or empty($uom) or empty($brand) or empty($qty) or empty($qty) or empty($loc)) {
+        header("location: ../officeSupplies.php?m=emptyFields");
+        exit();
+    }
+
+    // Check if image type is an image
+    if (checkImageType($image_type) !== false) {
+        header("location: ../officeSupplies.php?m=ImageTypeDenied");
+        exit();
+    }
+
+    // Check if image size is more than 2mb
+    if (checkImageSize($image_size) !== false) {
+        header("location: ../officeSupplies.php?m=ImageTooLarge");
+        exit();
+    }
+
+    // Check if image has an error
+    if (
+        checkImageError($image_error) !== false
+    ) {
+        header("location: ../officeSupplies.php?m=ImageError");
+        exit();
+    }
+
+    // If all functions were passed then explode the image name and extension
+    // Create a unique ID for the image
+    // Upload the image to the folder
+    $image_new_name = uniqid('', true) . "." . $image_ext;
+
+    // Upload the image to upload folder (product_img)
+    $image_final_name = 'IMG_' . $image_new_name;
+    $folder = '../officeSupplies/';
+    move_uploaded_file($tmp_img_name, $folder . $image_final_name);
+
+    // All done head back to product.php
+    $sql = "INSERT INTO `ssms`.`office_supplies` (`os_name`, `os_brand`, `os_uom`, `os_quantity`, `os_location`, `os_img`, `os_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name', '$brand','$uom','$qty', '$loc', '$image_final_name', '$des', '$stat', now(), now(), '$uid')";
+
+    if ($conn->query($sql) === false) {
+        header("location: ../officeSupplies.php?m=uploadError");
+        exit();
+    }
+
+    header('location: ../officeSupplies.php?m=success');
+    exit();
+}

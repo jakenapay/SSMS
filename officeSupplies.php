@@ -53,6 +53,77 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 </head>
 
 <body>
+
+    <!-- Add Modal for technology supplies -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Add Office Supply</h5>
+                    <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="includes/os.inc.php" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- add name -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="os_name">Name</label><br>
+                                <input class="form-control" type="text" name="os_name" id="os_name" placeholder="Supply Name">
+                            </div>
+                            <!-- brand -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="os_brand">Brand</label><br>
+                                <input class="form-control" type="text" name="os_brand" id="os_brand" placeholder="Supply Brand">
+                            </div>
+                            <!-- uom -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="os_uom">Unit of Measure</label><br>
+                                <input class="form-control" type="text" name="os_uom" id="os_uom" placeholder="Unit of Measure">
+                            </div>
+                            <!-- quantity -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="os_quantity">Quantity</label>
+                                <input class="form-control" type="number" min="1" max="100" name="os_quantity" id="os_quantity" required placeholder="(1-100)">
+                            </div>
+                            <!-- location -->
+                            <div class="col-md-6 pt-3 pb-1">
+                                <label for="os_location">Location</label>
+                                <input class="form-control" type="text" name="os_location" id="os_location" placeholder="Location">
+                            </div>
+                            <!-- description -->
+                            <div class="col-md-12 pt-3 pb-1">
+                                <label for="os_description">Description</label>
+                                <textarea class="form-control" type="text" name="os_description" id="os_description" placeholder="Other information.."></textarea>
+                            </div>
+                            <!-- status -->
+                            <div class="col-md-12 pt-3 pb-1">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" class="text-dark">
+                                    <option value="enabled">Enabled</option>
+                                    <option value="disabled">Enabled</option>
+                                </select>
+                            </div>
+                            <!-- image -->
+                            <div class="col-md-12 pt-3 pb-1">
+                                <label for="os_img">Image</label>
+                                <input type="file" accept="image/*" name="os_img" id="os_img" required>
+                            </div>
+
+                            <!-- hidden -->
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-default px-2" name="add-office-btn" value="Add Supply">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigational sidebar -->
     <?php include 'nav.php';
     include 'includes/config.inc.php';
@@ -83,6 +154,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <i class="fa-solid fa-boxes-packing icon"></i>
                             <p class="header-title text">Office Supplies</p>
                         </span>
+                        <?php
+                        if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                            <div>
+                                <button class="btn btn-default py-1 px-2 my-1" data-bs-toggle="modal" data-bs-target="#addModal">Add Office Supply</button>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -103,6 +180,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <th scope="col">Brand</th>
                                     <th scope="col">Unit of Measure</th>
                                     <th scope="col">Location</th>
+                                    <th scope="col">Image</th>
                                     <!-- for users -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") { ?>
@@ -124,9 +202,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") {
-                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0 AND status='enabled'";
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, os_img as img, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0 AND status='enabled'";
                                 } else if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
-                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0";
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, os_img as img, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0";
                                 }
 
                                 $result = $conn->query($sql);
@@ -138,6 +216,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         $uom = $row['uom'];
                                         $brand = $row['brand'];
                                         $loc = $row['loc'];
+                                        $des = $row['des'];
+                                        $img = $row['img'];
 
                                         // for admins only to see
                                         $qty = $row['qty'];
@@ -164,6 +244,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <input name="os_uom" type="hidden" value="<?php echo $uom; ?>">
 
                                                 <td><?php echo $loc; ?></td>
+                                                <input name="os_location" type="hidden" value="<?php echo $loc; ?>">
+
+                                                <td><img src="officeSupplies/<?php echo $img; ?>" style="width: 100px;" class="img-fluid"></td>
                                                 <input name="os_location" type="hidden" value="<?php echo $loc; ?>">
 
                                                 <?php
