@@ -117,6 +117,8 @@ if (isset($_POST['update-img'])) {
         }
     } else {
         $img = $old_img;
+        header("location: ../officeSupplies.php?m=noimg");
+        exit();
     }
 }
 

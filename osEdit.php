@@ -130,6 +130,14 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                     </div>
                                 </div>';
                     }
+                    if ($_GET['m'] == 'noimg') {
+                        $message = 'No image';
+                        echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                    }
                     if ($_GET['m'] == 'ImageTypeDenied') {
                         $message = 'Image type is denied';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
