@@ -87,33 +87,33 @@
 
 
                         <label for="user_firstname">First Name</label>
-                        <div class="form-input">
+                        <div class="form-input m-0">
                             <span><i class="fa-regular fa-address-card"></i></span>
                             <input type="text" name="user_firstname" id="user_firstname">
                         </div>
 
                         <label for="user_lastname">Last Name</label>
-                        <div class="form-input">
+                        <div class="form-input m-0">
                             <span><i class="fa-regular fa-address-card"></i></span>
                             <input type="text" name="user_lastname" id="user_lastname">
                         </div>
 
                         <label for="email">Email Address</label>
-                        <div class="form-input">
+                        <div class="form-input m-0">
                             <span><i class="fa fa-envelope-o"></i></span>
                             <input type="email" name="email" id="email">
                         </div>
 
                         <label for="password">Password</label>
-                        <div class="form-input">
+                        <div class="form-input m-0">
                             <span><i class="fa fa-key"></i></span>
-                            <input type="password" id="password" name="password">
+                            <input type="password" id="password" name="password" minlength="8">
                         </div>
 
                         <label for="confirmPassword">Confirm Password</label>
-                        <div class="form-input">
+                        <div class="form-input m-0">
                             <span><i class="fa fa-key"></i></span>
-                            <input type="password" id="confirmPassword" name="confirmPassword">
+                            <input type="password" id="confirmPassword" name="confirmPassword" minlength="8">
                         </div>
 
                         <div class="mb-3">

@@ -11,6 +11,7 @@ if (isset($_POST['save-btn'])) {
     $fname = $_POST['new_fn'];
     $lname = $_POST['new_ln'];
     $email = $_POST['new_em'];
+    $pw = $_POST['new_pw'];
 
     // check for invalid email
     if (invalidEmail($email) !== false) {
@@ -27,9 +28,9 @@ if (isset($_POST['save-btn'])) {
         }
     }
 
-
+    $pw = password_hash($pw, PASSWORD_ARGON2I);
     // sql query
-    $sql = "UPDATE ssms.users SET user_firstname='$fname', user_lastname='$lname', user_email='$email' WHERE user_id=$id";
+    $sql = "UPDATE ssms.users SET user_firstname='$fname', user_lastname='$lname', user_email='$email', user_password='$pw' WHERE user_id=$id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../profile.php?m=updateSuccess");
         exit();

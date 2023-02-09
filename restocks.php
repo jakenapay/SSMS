@@ -100,7 +100,7 @@ include 'includes/user.inc.php';
                             </div>
 
                             <!-- hidden -->
-                            <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
@@ -112,7 +112,7 @@ include 'includes/user.inc.php';
         </div>
     </div>
 
-    <!-- View Modal for technology supplies -->
+    <!-- View Modal for office supplies -->
     <div class="modal fade" id="viewModalOffice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -151,6 +151,8 @@ include 'includes/user.inc.php';
                                 <label for="restock_quantity">Quantity (0-100)</label>
                                 <input class="form-control" type="number" min="0" max="100" name="restock_quantity" id="restock_quantity" required>
                             </div>
+                            <!-- hidden -->
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between">

@@ -74,7 +74,6 @@
                         <div class="form-input">
                             <span><i class="fa fa-envelope-o"></i></span>
                             <input type="email" name="email" id="email" tabindex="10">
-
                         </div>
 
                         <label for="password">Password</label>

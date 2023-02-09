@@ -201,6 +201,10 @@ session_start();
                                     <label for="user_lastname" class="label text-center">Last name</label>
                                     <input id="user_lastname" name="user_lastname" type="text" value="<?php echo $ln; ?>" disabled>
                                 </div>
+                                <!-- <div class="form-input">
+                                    <label for="email" class="label">Password</label>
+                                    <input id="email" name="email" type="password" value="<?php echo $pw; ?>" readonly>
+                                </div> -->
                                 <div class="form-input">
                                     <label for="email" class="label">Email Address</label>
                                     <input id="email" name="email" type="email" value="<?php echo $em; ?>" readonly>
@@ -335,6 +339,7 @@ session_start();
                         $fn = $row['user_firstname'];
                         $ln = $row['user_lastname'];
                         $em = $row['user_email'];
+                        $pw = $row['user_password'];
                         $old_img = $row['user_img'];
                         $ct = $row['user_category'];
                         $st = $row['user_status'];
@@ -351,6 +356,10 @@ session_start();
                         <div class="form-group pt-2 pb-2">
                             <label for="new_ln">Last name</label>
                             <input type="text" class="form-control" id="new_ln" name="new_ln" placeholder="Enter last name" value="<?php echo $ln; ?>">
+                        </div>
+                        <div class="form-group pt-2 pb-2">
+                            <label for="new_pw">Password</label>
+                            <input type="password" class="form-control" id="new_pw" name="new_pw" placeholder="Enter Password" value="" minlength="8">
                         </div>
                         <div class="form-group pt-2 pb-2">
                             <label for="new_em">Email address</label>

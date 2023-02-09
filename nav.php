@@ -109,15 +109,14 @@
                 <?php
                 } ?>
 
-                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
-                    if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>
-                        <li class="nav-link">
-                            <a href="reports.php">
-                                <i class="fa-solid fa-bug icon"></i>
-                                <span class="text nav-text">Reports</span>
-                            </a>
-                        </li>
-                <?php }
+                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) { ?>
+                    <li class="nav-link">
+                        <a href="reports.php">
+                            <i class="fa-solid fa-bug icon"></i>
+                            <span class="text nav-text">Reports</span>
+                        </a>
+                    </li>
+                <?php
                 } ?>
 
             </ul>

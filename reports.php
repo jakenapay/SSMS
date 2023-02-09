@@ -9,10 +9,10 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
 // Checks if its a user or admin; if user then go to stocks page
 // Only admin can go to index page or dashboard
-if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
-    header("location: history.php");
-    exit();
-}
+// if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+//     header("location: history.php");
+//     exit();
+// }
 
 include 'includes/user.inc.php';
 ?>
@@ -268,9 +268,9 @@ include 'includes/user.inc.php';
                                         . "FROM ssms.reports r\n"
                                         . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
                                         . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON r.user_id = u.user_id\n"
-                                        . "WHERE u.user_id=" . $id . "\n"
-                                        . "ORDER BY r.restock_date DESC;";
+                                        . "LEFT JOIN ssms.users u ON r.report_by = u.user_id\n"
+                                        . "WHERE r.report_by=" . $_SESSION['id'] . "\n"
+                                        . "ORDER BY r.report_date DESC;";
                                 } else {
                                     $sql = "SELECT \n"
                                         . "    r.report_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
@@ -281,7 +281,6 @@ include 'includes/user.inc.php';
                                         . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
                                         . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
                                         . "LEFT JOIN ssms.users u ON r.report_by = u.user_id\n"
-                                        . "WHERE r.report_by=" . $_SESSION['id'] . "\n"
                                         . "ORDER BY r.report_date DESC;";
                                 }
                                 $result = $conn->query($sql);
