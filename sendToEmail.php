@@ -1,3 +1,77 @@
+<?php
+include 'includes/config.inc.php';
+//library to use phpmailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+if (isset($_POST['send-code-btn'])) {
+
+    // check if empty user email
+    if (empty($_POST['email'])) {
+        header("location: sendToEmail.php?m=emptyFields");
+        exit();
+    }
+
+    // generate code
+    function generateRandomString($length = 4)
+    {
+        $characters = '0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    $code = generateRandomString($length = 4);
+    $msg = "Your code is " . $code;
+    $subj = "Your code to retrieve your account.";
+    // email of the user
+    $receiver = $_POST['email'];
+
+    require("phpmailer/src/Exception.php");
+    require("phpmailer/src/PHPMailer.php");
+    require("phpmailer/src/SMTP.php");
+
+    $mail = new PHPMailer(true); //to allow this Mailer
+
+    $mail->isSMTP(); //send using Secure Message Transport Protocol
+    $mail->Host = "smtp.gmail.com"; //google server
+
+    $mail->SMTPAuth = true; //enable authentication
+
+    $mail->Username = 'storagesupplyms@gmail.com';
+    $mail->Password = 'yzdeygapfniprdrq'; //google password
+
+    $mail->SMTPSecure = "tls"; //tls (Transport Layer Security)
+    $mail->Port = 587;
+
+    $mail->From = "storagesupplyms@gmail.com"; //my gmail
+    $mail->FromName = "Storage Suppy Management System Admin"; //sender name
+
+    $mail->addAddress($receiver); //email reciever
+
+    $mail->isHTML(true); //this line is to allow the html
+    $mail->Subject    = $subj;
+    $mail->Body    = $msg;
+    $mail->send();
+
+    $sql = "UPDATE ssms.users SET code='$code' WHERE user_email='$receiver'";
+    if ($conn->query($sql) === FALSE) {
+        //     $error = $conn->error;
+        //     echo "<script>alert(" . $error . ");</script>";
+        header("location: sendToEmail.php?m=error");
+        exit();
+    }
+
+
+    header("location: enterCode.php?email=$receiver");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,11 +90,11 @@
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>">
-
     <link rel="stylesheet" type="text/css" href="assets/css/login.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" type="text/css" href="assets/css/profile.css?v=<?php echo time(); ?>">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -28,19 +102,25 @@
 
     <!-- ajax -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <style>
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
-<body>
+<body class="cd">
     <div class="container">
-        <div class="row px-3">
-            <div class="col-lg-10 col-xl-9 card flex-row mx-auto px-0">
-                <div class="img-left d-none d-md-flex"></div>
-
+        <div class="row">
+            <div class="col-lg-6 col-xl-6 card">
+                <!-- <div class="img-left d-none d-md-fledx"></div> -->
                 <div class="card-body">
-                    <h4 class="title text-center mt-4">
-                        S.S.M.S Login
+                    <h4 class="title text-center">
+                        S.S.M.S Forgot Password
                     </h4>
-                    <form class="form-box px-3" action="includes/login.inc.php" method="post">
+                    <form class="form-box px-3" action="" method="post">
 
                         <!-- error message here -->
                         <?php
@@ -62,53 +142,36 @@
                                 $message = 'Inactive account';
                                 echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
                             }
-                            if ($_GET['m'] == 'passwordchanged') {
-                                $message = 'Password changed successfully';
+                            if ($_GET['m'] == 'passwordNotMatch') {
+                                $message = 'Password does not match';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'emailExist') {
+                                $message = 'Email already exists';
+                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'requestSuccess') {
+                                $message = 'Request success';
+                                echo '<p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>';
+                            }
+                            if ($_GET['m'] == 'requestFailed') {
+                                $message = 'Request failed';
                                 echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
                             }
                         }
                         ?>
-
-
-                        <label for="email">Email Address</label>
+                        <label for="email">Enter your email address to receive a code.</label>
                         <div class="form-input">
                             <span><i class="fa fa-envelope-o"></i></span>
-                            <input type="email" name="email" id="email" tabindex="10">
-
-                        </div>
-
-                        <label for="password">Password</label>
-                        <div class="form-input">
-                            <span><i class="fa fa-key"></i></span>
-                            <input type="password" id="password" name="password">
+                            <input type="email" name="email" id="email" placeholder="Enter your email" required>
                         </div>
 
                         <div class="mb-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="toggle-password" name="" onclick="showHidePassword()">
-                                <label id="label-toggle" class="custom-control-label" for="toggle-password">Show password</label>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <button name="login-btn" id="login-btn" type="submit" class="btn btn-block text-uppercase">
-                                Login
+                            <button name="send-code-btn" id="send-code-btn" type="submit" class="btn btn-block text-uppercase">
+                                Send Code
                             </button>
                         </div>
-
-                        <div class="d-flex justify-content-between">
-                            <a href="requestAccount.php" class="forget-link">
-                                Request an account
-                            </a>
-                            <a href="sendToEmail.php" class="forget-link">
-                                Forgot Password?
-                            </a>
-                        </div>
-
-
                 </div>
-
-
                 </form>
             </div>
         </div>
@@ -118,12 +181,15 @@
     <script>
         function showHidePassword() {
             var x = document.getElementById("password");
+            var x2 = document.getElementById("confirmPassword");
             var y = document.getElementById("label-toggle");
-            if (x.type === "password") {
+            if (x.type === "password" || x2.type === "password") {
                 x.type = "text";
+                x2.type = "text";
                 y.innerHTML = "Hide Password";
             } else {
                 x.type = "password";
+                x2.type = "password";
                 y.innerHTML = "Show Password";
             }
         }

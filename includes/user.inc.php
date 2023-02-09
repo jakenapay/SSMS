@@ -198,15 +198,6 @@ if (isset($_POST['send_email'])) {
     $mail->Body    = $msg;
     $mail->send();
 
-    echo "
-    <script>
-    alert('success');
-
-    </script>
-
-    ";
-
-
-    echo '<script>alert("Email sent successfully !")</script>';
-    echo '<script>window.location.href="../profile.php";</script>';
+    header("location: ../profile.php?m=success");
+    exit();
 }
