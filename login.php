@@ -64,7 +64,7 @@
                             }
                             if ($_GET['m'] == 'passwordchanged') {
                                 $message = 'Password changed successfully';
-                                echo '<p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>';
+                                echo '<p class="message-success pl-2 text-dark"><i class="fa-solid fa-check"></i>' . $message . '</p>';
                             }
                         }
                         ?>

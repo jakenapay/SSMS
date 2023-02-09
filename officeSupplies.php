@@ -358,7 +358,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <td><?php echo $loc; ?></td>
                                                 <input name="os_location" type="hidden" value="<?php echo $loc; ?>">
 
-                                                <td><img src="officeSupplies/<?php echo $img; ?>" style="width: 100px;" class="img-fluid"></td>
+                                                <td><img alt="<?php echo $name; ?>" src="officeSupplies/<?php echo $img; ?>" style="width: 100px;" class="img-fluid"></td>
                                                 <input name="os_location" type="hidden" value="<?php echo $loc; ?>">
 
                                                 <?php
@@ -398,7 +398,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 <?php
                                     }
                                 } else {
-                                    echo '<tr><td>No data found</td></tr>';
+                                    echo '<td>No data found</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>';
                                 }
                                 ?>
                             </tbody>

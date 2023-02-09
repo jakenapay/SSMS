@@ -149,7 +149,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 <?php
                                     }
                                 } else {
-                                    echo '<tr><td>No data found</td></tr>';
+                                    echo '<tr><td>No data found</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                            </tr>';
                                 }
 
                                 ?>

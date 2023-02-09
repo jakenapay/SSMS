@@ -188,7 +188,7 @@ include 'includes/config.inc.php';
 
             var options = {
                 chart: {
-                    title: 'Count of Supplies',
+                    title: 'Count of Low Stocks Supplies',
                     subtitle: 'Office Supplies vs Technology Supplies'
                 },
                 bars: 'horizontal' // Required for Material Bar Charts.
