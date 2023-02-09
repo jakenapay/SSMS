@@ -53,13 +53,20 @@
     padding: unset !important;
 }
 
-.viewBtn, .btn-default {
+.viewBtn,
+.btn-default {
     color: #FFF !important;
     background-color: #780000 !important;
     padding: 0px 15px !important;
 }
 
 .home .icon {
+    padding: 1rem;
+    margin-right: 1rem;
+    border-radius: 100%;
+}
+
+.dbicon {
     padding: 1rem;
     margin-right: 1rem;
     border-radius: 100%;
@@ -75,7 +82,8 @@
     background-color: #39009930;
 }
 
-.home .fa-users {
+.home .fa-users,
+.dbicon {
     color: #9E0059;
     background-color: #9E005930;
 }
@@ -112,10 +120,6 @@
 
 .home hr {
     margin: 9px 0;
-}
-
-.btn {
-    btn
 }
 
 @media screen and (min-width: 768px) {

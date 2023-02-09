@@ -239,6 +239,7 @@ include 'includes/config.inc.php';
                         <div class="header-content">
                             <div class="d-flex flex-row align-items-center">
                                 <!-- <i class="fa-solid fa-house-chimney icon"></i> -->
+                                <i class="fa-solid fa-house-chimney icon dbicon"></i>
                                 <p class="header-title text">Dashboard</p>
                             </div>
                             <p id="path"><a href="profile.php"><?php echo $ln . ', ' . $fn; ?></a></p>
@@ -247,7 +248,6 @@ include 'includes/config.inc.php';
                 </div>
 
                 <!-- Total Office supplies -->
-
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <a style="text-decoration: none" href="officesupplies.php" class="dashboard-link">
                         <div class="box-content">
