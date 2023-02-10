@@ -132,12 +132,12 @@ if (isset($_POST['enter-pass-btn'])) {
                         <label for="p1">Enter new password</label>
                         <div class="form-input m-0">
                             <span><i class="fa-regular fa-keyboard"></i></span>
-                            <input type="password" name="p1" id="p1" placeholder="Enter new password">
+                            <input type="password" name="p1" id="p1" placeholder="Enter new password" minlength="8">
                         </div>
                         <label for="p2">Confirm new password</label>
                         <div class="form-input m-0">
                             <span><i class="fa-regular fa-keyboard"></i></span>
-                            <input type="password" name="p2" id="p2" placeholder="Re-enter password">
+                            <input type="password" name="p2" id="p2" placeholder="Re-enter password" minlength="8">
                         </div>
 
                         <div class="mb-3">
