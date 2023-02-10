@@ -53,7 +53,7 @@ function invalidUsername($em)
 
 function checkEmailExist($conn, $em)
 {
-    $sql = "SELECT * FROM ssms.users WHERE user_email='$em'";
+    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_email='$em'";
     $sql_result = $conn->query($sql);
 
     if ($sql_result->num_rows > 0) {
@@ -69,7 +69,7 @@ function checkEmailExist($conn, $em)
 function login($conn, $em, $pw)
 {
 
-    $sql = "SELECT * FROM ssms.users WHERE user_email='$em' LIMIT 1";
+    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_email='$em' LIMIT 1";
     $sql_result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($sql_result) > 0) {
@@ -138,7 +138,7 @@ function signUp($conn, $fn, $ln, $em, $pw)
     $status = "inactive";
 
     // query
-    $sql = "INSERT INTO ssms.users (user_firstname, user_lastname, user_password, user_email, user_category, user_status, user_date)
+    $sql = "INSERT INTO epiz_33456032_ssms.users (user_firstname, user_lastname, user_password, user_email, user_category, user_status, user_date)
 VALUES ('$fn', '$ln', '$pw', '$em', '$category', '$status', now())";
 
     if ($conn->query($sql) === TRUE) {

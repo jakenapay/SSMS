@@ -29,7 +29,7 @@ session_start();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <title>SSMS | Profile & Accounts</title>
+    <title>Profile & Accounts</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -54,7 +54,7 @@ session_start();
 
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -255,9 +255,9 @@ session_start();
                                         // Checks if its a user or admin; if user then go to stocks page
                                         // Only admin can go to index page or dashboard
                                         if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
-                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM ssms.users WHERE user_id=' . $id . '";
+                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM epiz_33456032_ssms.users WHERE user_id=' . $id . '";
                                         } else {
-                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM ssms.users";
+                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM epiz_33456032_ssms.users";
                                         }
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
@@ -330,7 +330,7 @@ session_start();
                 <?php
                 include 'includes/config.inc.php';
                 $id = $_SESSION['id'];
-                $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+                $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
@@ -414,7 +414,7 @@ session_start();
                 <?php
                 include 'includes/config.inc.php';
                 $id = $_SESSION['id'];
-                $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+                $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row

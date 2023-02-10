@@ -27,7 +27,7 @@ if (isset($_POST['enter-pass-btn'])) {
 
     // hash the pw and update the user's password
     $p1 = password_hash($p1, PASSWORD_ARGON2I);
-    $sql = $conn->query("UPDATE ssms.users SET user_password='$p1' WHERE user_email='$email' AND code='$code'");
+    $sql = $conn->query("UPDATE epiz_33456032_ssms.users SET user_password='$p1' WHERE user_email='$email' AND code='$code'");
     if (!$sql) {
         // echo '<script>alert("' . $conn->error . '");</script>';
         header("location: newPassword.php?email=$email&m=error");
@@ -48,7 +48,7 @@ if (isset($_POST['enter-pass-btn'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSMS</title>
+    <title>New Password</title>
 
     <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />

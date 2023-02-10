@@ -57,7 +57,7 @@ if (isset($_POST['send-code-btn'])) {
     $mail->Body    = $msg;
     $mail->send();
 
-    $sql = "UPDATE ssms.users SET code='$code' WHERE user_email='$receiver'";
+    $sql = "UPDATE epiz_33456032_ssms.users SET code='$code' WHERE user_email='$receiver'";
     if ($conn->query($sql) === FALSE) {
         //     $error = $conn->error;
         //     echo "<script>alert(" . $error . ");</script>";

@@ -30,7 +30,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>Notifications</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -92,7 +92,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     include 'includes/config.inc.php';
                                     // Checks if its a user or admin; if user then go to stocks page
                                     // Only admin can go to this page or dashboard
-                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity < 5";
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, status, date_added as da, date_last_modified as dm FROM epiz_33456032_epiz_33456032_epiz_33456032_ssms.office_supplies WHERE os_quantity < 5";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -159,7 +159,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     include 'includes/config.inc.php';
                                     // Checks if its a user or admin; if user then go to stocks page
                                     // Only admin can go to index page or dashboard
-                                    $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity < 5";
+                                    $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM epiz_33456032_epiz_33456032_epiz_33456032_ssms.technology_supplies WHERE ts_quantity < 5";
 
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {

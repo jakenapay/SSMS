@@ -33,7 +33,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS | Office Supplies</title>
+    <title>Office Supplies</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -129,7 +129,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <?php include 'nav.php';
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -314,9 +314,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") {
-                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, os_img as img, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0 AND status='enabled'";
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, os_img as img, status, date_added as da, date_last_modified as dm FROM epiz_33456032_ssms.office_supplies WHERE os_quantity > 0 AND status='enabled'";
                                 } else if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
-                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, os_img as img, status, date_added as da, date_last_modified as dm FROM ssms.office_supplies WHERE os_quantity > 0";
+                                    $sql = "SELECT os_id as id, os_name as name, os_brand as brand, os_uom as uom, os_quantity as qty, os_location as loc, os_desc as des, os_img as img, status, date_added as da, date_last_modified as dm FROM epiz_33456032_ssms.office_supplies WHERE os_quantity > 0";
                                 }
 
                                 $result = $conn->query($sql);

@@ -39,7 +39,7 @@ include 'includes/user.inc.php';
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>Reports</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -80,7 +80,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT ts_id as t_id, ts_name as t_item FROM ssms.technology_supplies";
+                                    $sql = "SELECT ts_id as t_id, ts_name as t_item FROM epiz_33456032_ssms.technology_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -138,7 +138,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT os_id as os_id, os_name as os_item FROM ssms.office_supplies";
+                                    $sql = "SELECT os_id as os_id, os_name as os_item FROM epiz_33456032_ssms.office_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -265,10 +265,10 @@ include 'includes/user.inc.php';
                                         . "    r.report_description AS Description, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    r.report_date AS Date\n"
-                                        . "FROM ssms.reports r\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON r.report_by = u.user_id\n"
+                                        . "FROM epiz_33456032_ssms.reports r\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.office_supplies os ON r.os_id = os.os_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users u ON r.report_by = u.user_id\n"
                                         . "WHERE r.report_by=" . $_SESSION['id'] . "\n"
                                         . "ORDER BY r.report_date DESC;";
                                 } else {
@@ -277,10 +277,10 @@ include 'includes/user.inc.php';
                                         . "    r.report_description AS Description, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    r.report_date AS Date\n"
-                                        . "FROM ssms.reports r\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON r.report_by = u.user_id\n"
+                                        . "FROM epiz_33456032_ssms.reports r\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.office_supplies os ON r.os_id = os.os_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users u ON r.report_by = u.user_id\n"
                                         . "ORDER BY r.report_date DESC;";
                                 }
                                 $result = $conn->query($sql);

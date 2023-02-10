@@ -18,7 +18,7 @@ if (isset($_POST['enter-code-btn'])) {
     $email = $_GET['email'];
 
     // retrieve code from database to compare to input
-    $sql = $conn->query("SELECT code,user_email as email FROM ssms.users WHERE user_email='$email'");
+    $sql = $conn->query("SELECT code,user_email as email FROM epiz_33456032_ssms.users WHERE user_email='$email'");
     if ($sql) {
         while ($row = $sql->fetch_assoc()) {
             $code_db = $row['code'];

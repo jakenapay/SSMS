@@ -40,7 +40,7 @@ include 'includes/config.inc.php';
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>Home</title>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -57,11 +57,11 @@ include 'includes/config.inc.php';
                 ['Supplies', 'Quantity'],
                 <?php
                 include('includes/config.inc.php');
-                $office_supplies_query = "SELECT COUNT(*) as count FROM ssms.office_supplies";
+                $office_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.office_supplies";
                 $office_supplies_result = mysqli_query($conn, $office_supplies_query);
                 $office_supplies_data = mysqli_fetch_assoc($office_supplies_result);
                 $office_supplies_count = $office_supplies_data['count'];
-                $technology_supplies_query = "SELECT COUNT(*) as count FROM ssms.technology_supplies";
+                $technology_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.technology_supplies";
                 $technology_supplies_result = mysqli_query($conn, $technology_supplies_query);
                 $technology_supplies_data = mysqli_fetch_assoc($technology_supplies_result);
                 $technology_supplies_count = $technology_supplies_data['count'];
@@ -117,7 +117,7 @@ include 'includes/config.inc.php';
                 $query = "SELECT
     MONTH(restock_date) as month,
     SUM(restock_quantity) as total_quantity
-    FROM ssms.restocks
+    FROM epiz_33456032_ssms.restocks
     GROUP BY MONTH(restock_date)
     ORDER BY month DESC
     LIMIT 12";
@@ -174,11 +174,11 @@ include 'includes/config.inc.php';
                 <?php
                 include('includes/config.inc.php');
                 $id = $_SESSION['id'];
-                $office_supplies_query = "SELECT COUNT(*) as count FROM ssms.history WHERE user_id=$id AND os_id!=''";
+                $office_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.history WHERE user_id=$id AND os_id!=''";
                 $office_supplies_result = mysqli_query($conn, $office_supplies_query);
                 $office_supplies_data = mysqli_fetch_assoc($office_supplies_result);
                 $office_supplies_count = $office_supplies_data['count'];
-                $technology_supplies_query = "SELECT COUNT(*) as count FROM ssms.history WHERE user_id=$id AND ts_id!=''";
+                $technology_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.history WHERE user_id=$id AND ts_id!=''";
                 $technology_supplies_result = mysqli_query($conn, $technology_supplies_query);
                 $technology_supplies_data = mysqli_fetch_assoc($technology_supplies_result);
                 $technology_supplies_count = $technology_supplies_data['count'];
@@ -215,7 +215,7 @@ include 'includes/config.inc.php';
     <?php include 'nav.php';
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -256,7 +256,7 @@ include 'includes/config.inc.php';
                             <i class="fa-solid fa-boxes-packing icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.office_supplies");
+                                $result = $conn->query("SELECT COUNT(*) FROM epiz_33456032_ssms.office_supplies");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
 
@@ -276,7 +276,7 @@ include 'includes/config.inc.php';
                             <i class="fa-solid fa-computer icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.technology_supplies");
+                                $result = $conn->query("SELECT COUNT(*) FROM epiz_33456032_ssms.technology_supplies");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
                                     <h3 class="amount"><strong><?php echo implode($result); ?></strong></h3>
@@ -307,7 +307,7 @@ include 'includes/config.inc.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM ssms.history as h LEFT JOIN ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN ssms.users as u on h.user_id=u.user_id WHERE h.user_id=$id ORDER BY h.history_date DESC LIMIT 3;";
+                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM epiz_33456032_ssms.history as h LEFT JOIN epiz_33456032_ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN epiz_33456032_ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN epiz_33456032_ssms.users as u on h.user_id=u.user_id WHERE h.user_id=$id ORDER BY h.history_date DESC LIMIT 3;";
 
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {

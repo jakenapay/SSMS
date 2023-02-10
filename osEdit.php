@@ -20,7 +20,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
     require 'includes/functions.inc.php';
 
     $id = $_GET['eid'];
-    $result = $conn->query("SELECT *, CONCAT(ssms.users.user_firstname, ' ', ssms.users.user_lastname) as fullname FROM ssms.office_supplies INNER JOIN ssms.users ON ssms.office_supplies.modified_by=ssms.users.user_id WHERE os_id = $id LIMIT 1");
+    $result = $conn->query("SELECT *, CONCAT(epiz_33456032_epiz_33456032_ssms.users.user_firstname, ' ', epiz_33456032_epiz_33456032_ssms.users.user_lastname) as fullname FROM epiz_33456032_epiz_33456032_ssms.office_supplies INNER JOIN epiz_33456032_epiz_33456032_ssms.users ON epiz_33456032_epiz_33456032_ssms.office_supplies.modified_by=epiz_33456032_epiz_33456032_ssms.users.user_id WHERE os_id = $id LIMIT 1");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set
@@ -71,7 +71,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>Edit Supply</title>
 
 </head>
 

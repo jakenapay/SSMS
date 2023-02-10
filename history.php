@@ -30,8 +30,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
-
+    <title>History</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
 
@@ -54,7 +54,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <?php include 'includes/user.inc.php';
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -109,10 +109,10 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "    h.history_quantity AS Quantity, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    h.history_date AS Date\n"
-                                        . "FROM ssms.history h\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                        . "FROM epiz_33456032_ssms.history h\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users u ON h.user_id = u.user_id\n"
                                         . "WHERE u.user_id=" . $id . "\n"
                                         . "ORDER BY h.history_date;";
                                 } else {
@@ -121,12 +121,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "    h.history_quantity AS Quantity, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    h.history_date AS Date\n"
-                                        . "FROM ssms.history h\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
+                                        . "FROM epiz_33456032_ssms.history h\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users u ON h.user_id = u.user_id\n"
                                         . "ORDER BY h.history_date;";
-                                    // $sql = "SELECT *, h.history_id as Id FROM `ssms`.`history` as h";
+                                    // $sql = "SELECT *, h.history_id as Id FROM `epiz_33456032_ssms`.`history` as h";
                                 }
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
