@@ -128,7 +128,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                     <div class="box-content d-block">
                                     <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
                                     </div>
-                                </div>';
+                                </div>;
                     }
                     if ($_GET['m'] == 'noimg') {
                         $message = 'No image';
