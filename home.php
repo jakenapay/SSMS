@@ -251,7 +251,7 @@ include 'includes/config.inc.php';
                 <!-- Total Office supplies -->
 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                    <a style="text-decoration: none" href="officesupplies.php" class="dashboard-link">
+                    <a style="text-decoration: none" href="http://storagemanagement.rf.gd/officeSupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-boxes-packing icon"></i>
                             <span>
@@ -271,7 +271,7 @@ include 'includes/config.inc.php';
 
                 <!-- Total technology supplies -->
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                    <a style="text-decoration: none" href="technologysupplies.php" class="dashboard-link">
+                    <a style="text-decoration: none" href="http://storagemanagement.rf.gd/technologySupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-computer icon"></i>
                             <span>
@@ -292,7 +292,6 @@ include 'includes/config.inc.php';
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
                             <h3 class="amount"><strong>Recent history</strong></h3>
-                            <p class="category ellipsis" id="month-details"><a href="history.php">See more</a></p>
                         </span>
                         <hr>
                         <div class="table-responsive">
@@ -357,7 +356,6 @@ include 'includes/config.inc.php';
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
                             <h3 class="amount"><strong>Office Supply vs Technology Supply</strong></h3>
-                            <p class="category ellipsis" id="month-details"><a href="notifications.php">See more</a></p>
                         </span>
                         <hr>
                         <span>
