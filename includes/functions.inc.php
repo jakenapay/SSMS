@@ -133,7 +133,7 @@ function invalidEmail($em)
 function signUp($conn, $fn, $ln, $em, $pw)
 {
     // hash by md5
-    $pw = password_hash($pw, PASSWORD_ARGON2I);
+    $pw = password_hash($pw, PASSWORD_DEFAULT);
     $category = "user";
     $status = "inactive";
 
