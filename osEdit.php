@@ -86,7 +86,9 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                     <div class="header">
                         <div class="header-content">
                             <span class="d-flex justify-content-between align-items-center">
-                                <i class="fa-solid fa-computer icon"></i>
+                                <!-- <i class="fa-solid fa-computer icon"></i> -->
+                                <!-- Update 02/16/23-02:09 -->
+                                <i class="fa-solid fa-boxes-packing icon"></i>
                                 <p class="header-title text">Edit Office Supplies</p>
                             </span>
                         </div>
@@ -187,7 +189,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>';
                     }
                     if ($_GET['m'] == 'success') {
-                        $message = 'Technology supply updated';
+                        $message = 'Office supply updated';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -195,7 +197,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>';
                     }
                     if ($_GET['m'] == 'enablingSuccess') {
-                        $message = 'Technology supply updated';
+                        $message = 'Office supply updated';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -203,7 +205,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>';
                     }
                     if ($_GET['m'] == 'disablingSuccess') {
-                        $message = 'Technology supply updated';
+                        $message = 'Office supply updated';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
