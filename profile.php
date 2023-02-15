@@ -41,7 +41,9 @@ session_start();
 
     <script>
         $(document).ready(function() {
-            $('table').DataTable();
+            $('table').DataTable({
+                "paging": false
+            });
         });
     </script>
 
@@ -363,7 +365,7 @@ session_start();
                         </div>
                         <div class="form-group pt-2 pb-2">
                             <label for="new_em">Email address</label>
-                            <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>" readonly>
+                            <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>" disabled>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
@@ -476,7 +478,7 @@ session_start();
                 e.preventDefault();
                 // alert('hello');
                 var user_id = $(this).closest('tr').find('.user_id').text();
-
+                console.log(user_id);
                 $.ajax({
                     type: 'POST',
                     url: "includes/user.inc.php",

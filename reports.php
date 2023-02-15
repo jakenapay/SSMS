@@ -227,7 +227,7 @@ include 'includes/user.inc.php';
                                 </div>';
                 }
                 if ($_GET['m'] == 'success') {
-                    $message = 'Technology Supply Updated';
+                    $message = 'Report success';
                     echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>

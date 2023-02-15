@@ -15,7 +15,7 @@ if (isset($_POST['report-office-btn'])) {
     $des = $_POST['report_description'];
     $by = $_POST['user_id'];
 
-    $sql = "INSERT INTO `epiz_33456032_ssms`.`reports` (`os_id`, `report_description`, `report_by`, `report_date`) VALUES ('$osid', '$des', '$by', now());";
+    $sql = "INSERT INTO `epiz_33456032_ssms`.`reports` (`os_id`, `report_description`, `report_by`, `report_date`) VALUES ('$osid', '$des', '$by', '$now');";
 
     if ($conn->query($sql) === TRUE) {
         // succeed
@@ -42,7 +42,7 @@ if (isset($_POST['report-tech-btn'])) {
     $des = $_POST['report_description'];
     $by = $_POST['user_id'];
 
-    $sql = "INSERT INTO `epiz_33456032_ssms`.`reports` (`ts_id`, `report_description`, `report_by`, `report_date`) VALUES ('$tsid', '$des', '$by', now());";
+    $sql = "INSERT INTO `epiz_33456032_ssms`.`reports` (`ts_id`, `report_description`, `report_by`, `report_date`) VALUES ('$tsid', '$des', '$by', '$now');";
 
     if ($conn->query($sql) === TRUE) {
         // succeed

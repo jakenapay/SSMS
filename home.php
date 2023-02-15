@@ -57,11 +57,11 @@ include 'includes/config.inc.php';
                 ['Supplies', 'Quantity'],
                 <?php
                 include('includes/config.inc.php');
-                $office_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.office_supplies";
+                $office_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.office_supplies WHERE os_quantity > 0";
                 $office_supplies_result = mysqli_query($conn, $office_supplies_query);
                 $office_supplies_data = mysqli_fetch_assoc($office_supplies_result);
                 $office_supplies_count = $office_supplies_data['count'];
-                $technology_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.technology_supplies";
+                $technology_supplies_query = "SELECT COUNT(*) as count FROM epiz_33456032_ssms.technology_supplies WHERE ts_quantity > 0";
                 $technology_supplies_result = mysqli_query($conn, $technology_supplies_query);
                 $technology_supplies_data = mysqli_fetch_assoc($technology_supplies_result);
                 $technology_supplies_count = $technology_supplies_data['count'];
@@ -251,12 +251,12 @@ include 'includes/config.inc.php';
                 <!-- Total Office supplies -->
 
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                    <a style="text-decoration: none" href="http://storagemanagement.rf.gd/officeSupplies.php" class="dashboard-link">
+                    <a style="text-decoration: none" href="officeSupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-boxes-packing icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM epiz_33456032_ssms.office_supplies");
+                                $result = $conn->query("SELECT COUNT(*) FROM epiz_33456032_ssms.office_supplies WHERE os_quantity > 0");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
 
@@ -271,12 +271,12 @@ include 'includes/config.inc.php';
 
                 <!-- Total technology supplies -->
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                    <a style="text-decoration: none" href="http://storagemanagement.rf.gd/technologySupplies.php" class="dashboard-link">
+                    <a style="text-decoration: none" href="technologySupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-computer icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM epiz_33456032_ssms.technology_supplies");
+                                $result = $conn->query("SELECT COUNT(*) FROM epiz_33456032_ssms.technology_supplies WHERE ts_quantity > 0");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
                                     <h3 class="amount"><strong><?php echo implode($result); ?></strong></h3>
@@ -306,7 +306,7 @@ include 'includes/config.inc.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM epiz_33456032_ssms.history as h LEFT JOIN epiz_33456032_ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN epiz_33456032_ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN epiz_33456032_ssms.users as u on h.user_id=u.user_id WHERE h.user_id=$id ORDER BY h.history_date DESC LIMIT 3;";
+                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(u.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM epiz_33456032_ssms.history as h LEFT JOIN epiz_33456032_ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN epiz_33456032_ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN epiz_33456032_ssms.users as u on h.user_id=u.user_id WHERE h.user_id=$id ORDER BY h.history_date DESC LIMIT 3;";
 
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
@@ -327,7 +327,7 @@ include 'includes/config.inc.php';
                                     <?php
                                         }
                                     } else {
-                                        echo '<tr><td>No data found</td></tr>';
+                                        echo '<tr><td>No data found</td><td></td><td></td><td></td></tr>';
                                     }
 
                                     ?>

@@ -28,8 +28,10 @@ if (isset($_POST['save-changes'])) {
         exit();
     }
 
+    
+
     // Sql query to update the row
-    $updateQuery = "UPDATE epiz_33456032_ssms.office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom',`os_location`='$loc', `os_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE os_id=$osid;";
+    $updateQuery = "UPDATE epiz_33456032_ssms.office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom',`os_location`='$loc', `os_desc`='$des', `date_last_modified`='$now',`modified_by`=$uid WHERE os_id=$osid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         // echo "<script>alert('Product updated successfully.');</script>";
@@ -106,7 +108,7 @@ if (isset($_POST['update-img'])) {
         $folder = '../officeSupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE epiz_33456032_ssms.office_supplies SET os_img='$img', date_last_modified=now(), modified_by=$uid WHERE os_id=$osid";
+        $sql = "UPDATE epiz_33456032_ssms.office_supplies SET os_img='$img', date_last_modified='$now', modified_by=$uid WHERE os_id=$osid";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../osEdit.php?eid='.$osid.'&m=failed');</script>";
@@ -236,9 +238,9 @@ if (isset($_POST['get-btn-office'])) {
         exit();
     }
 
-    $sql = "UPDATE epiz_33456032_ssms.office_supplies SET os_quantity='$left', date_last_modified=now(), modified_by=$id WHERE os_id=$osid";
+    $sql = "UPDATE epiz_33456032_ssms.office_supplies SET os_quantity='$left', date_last_modified='$now', modified_by=$id WHERE os_id=$osid";
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO epiz_33456032_ssms.history(`os_id`, `history_quantity`, `user_id`, `history_date`) VALUES ('$osid', '$qty', $id, now())";
+        $sql2 = "INSERT INTO epiz_33456032_ssms.history(`os_id`, `history_quantity`, `user_id`, `history_date`) VALUES ('$osid', '$qty', $id, '$now')";
         if ($conn->query($sql2) === TRUE) {
             header("location: ../officeSupplies.php?m=success");
         } else {
@@ -261,7 +263,7 @@ if (isset($_POST['delete-supply'])) {
     $del_id = $_POST['del_id']; // delete id of the certain TS
     $uid = $_POST['uid']; // user id - the id of account that you're using
 
-    $sql = "UPDATE epiz_33456032_ssms.office_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$del_id";
+    $sql = "UPDATE epiz_33456032_ssms.office_supplies SET status='disabled', date_last_modified='$now', modified_by=$uid WHERE os_id=$del_id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../officeSupplies.php?m=disablingSuccess");
         exit();
@@ -282,7 +284,7 @@ if (isset($_POST['enable-supply'])) {
     $enbl_id = $_POST['enbl_id']; // delete id of the certain TS
     $uid = $_POST['uid']; // user id - the id of account that you're using
 
-    $sql = "UPDATE epiz_33456032_ssms.office_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$enbl_id";
+    $sql = "UPDATE epiz_33456032_ssms.office_supplies SET status='enabled', date_last_modified='$now', modified_by=$uid WHERE os_id=$enbl_id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../officeSupplies.php?m=enablingSuccess");
         exit();
@@ -369,7 +371,7 @@ if (isset($_POST['add-office-btn'])) {
     move_uploaded_file($tmp_img_name, $folder . $image_final_name);
 
     // All done head back to product.php
-    $sql = "INSERT INTO `epiz_33456032_ssms`.`office_supplies` (`os_name`, `os_brand`, `os_uom`, `os_quantity`, `os_location`, `os_img`, `os_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name', '$brand','$uom','$qty', '$loc', '$image_final_name', '$des', '$stat', now(), now(), '$uid')";
+    $sql = "INSERT INTO `epiz_33456032_ssms`.`office_supplies` (`os_name`, `os_brand`, `os_uom`, `os_quantity`, `os_location`, `os_img`, `os_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name', '$brand','$uom','$qty', '$loc', '$image_final_name', '$des', '$stat', '$now', '$now', '$uid')";
 
     if ($conn->query($sql) === false) {
         header("location: ../officeSupplies.php?m=uploadError");

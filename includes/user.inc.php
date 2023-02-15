@@ -77,7 +77,7 @@ if (isset($_POST['check_view'])) {
                         <label for="date_last_modified">Last Modified</label>
                         <input type="text" class="form-control" id="date_last_modified" name="date_last_modified" value="' . $dlm . '" disabled>
                         <input type="hidden" class="form-control" id="date_last_modified" name="date_last_modified" value="' . $dlm . '" >
-                    </div>  
+                    </div>
                     <div class="col-md-12 pt-1 pb-1">
                         <label for="modified_by">Modified By</label>
                         <input type="text" class="form-control" id="modified_by" name="modified_by" value="' . $by . '" disabled>
@@ -140,12 +140,12 @@ if (isset($_POST['user_btn_update'])) {
     $by = $_POST['modified_by'];
     $dlm = $_POST['date_last_modified'];
 
-    $sql = "UPDATE epiz_33456032_ssms.users SET user_id='$user_id', user_firstname='$fn', user_lastname='$ln', user_email='$em', user_category='$cat', user_status='$stat', user_date='$date',date_last_modified=now(), modified_by=$uid WHERE user_id=$user_id";
+    $sql = "UPDATE epiz_33456032_ssms.users SET user_id='$user_id', user_firstname='$fn', user_lastname='$ln', user_email='$em', user_category='$cat', user_status='$stat', user_date='$date',date_last_modified='$now', modified_by=$uid WHERE user_id=$user_id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../profile.php?m=success");
     } else {
         echo $conn->error;
-        echo "<script>alert('Error updating product.');window.location.replace('../restocks.php?m=error');</script>";
+        echo "<script>alert('Error updating profile.');window.location.replace('../profile.php?m=error');</script>";
     }
 }
 

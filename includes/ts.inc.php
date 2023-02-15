@@ -30,7 +30,7 @@ if (isset($_POST['save-changes'])) {
     }
 
     // Sql query to update the row
-    $updateQuery = "UPDATE ssms.technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE ts_id=$tsid;";
+    $updateQuery = "UPDATE epiz_33456032_ssms.technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`='$now',`modified_by`=$uid WHERE ts_id=$tsid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         echo "<script>alert('Product updated successfully.');</script>";
@@ -107,7 +107,7 @@ if (isset($_POST['update-img'])) {
         $folder = '../technologySupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE ssms.technology_supplies SET ts_img='$img', date_last_modified=now(), modified_by=$uid WHERE ts_id=$tsid";
+        $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET ts_img='$img', date_last_modified='$now', modified_by=$uid WHERE ts_id=$tsid";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../tsEdit.php?eid='.$tsid.'&m=failed');</script>";
@@ -130,7 +130,7 @@ if (isset($_POST['check_view'])) {
     // requirements to run into database and functions for configurations
     require 'config.inc.php';
 
-    $result = $conn->query("SELECT * FROM ssms.technology_supplies WHERE ts_id = $ts_id");
+    $result = $conn->query("SELECT * FROM epiz_33456032_ssms.technology_supplies WHERE ts_id = $ts_id");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set
@@ -245,9 +245,9 @@ if (isset($_POST['get-btn-tech'])) {
         exit();
     }
 
-    $sql = "UPDATE ssms.technology_supplies SET ts_quantity='$left', date_last_modified=now(), modified_by=$id WHERE ts_id=$tsid";
+    $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET ts_quantity='$left', date_last_modified='$now', modified_by=$id WHERE ts_id=$tsid";
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO ssms.history(`ts_id`, `history_quantity`, `user_id`, `history_date`) VALUES ('$tsid', '$qty', $id, now())";
+        $sql2 = "INSERT INTO epiz_33456032_ssms.history(`ts_id`, `history_quantity`, `user_id`, `history_date`) VALUES ('$tsid', '$qty', $id, '$now')";
         if ($conn->query($sql2) === TRUE) {
             header("location: ../technologySupplies.php?m=success");
         } else {
@@ -270,7 +270,7 @@ if (isset($_POST['delete-supply'])) {
     $del_id = $_POST['del_id']; // delete id of the certain TS
     $uid = $_POST['uid']; // user id - the id of account that you're using
 
-    $sql = "UPDATE ssms.technology_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$del_id";
+    $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET status='disabled', date_last_modified='$now', modified_by=$uid WHERE ts_id=$del_id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../technologySupplies.php?m=disablingSuccess");
         exit();
@@ -292,7 +292,7 @@ if (isset($_POST['enable-supply'])) {
     $enbl_id = $_POST['enbl_id']; // delete id of the certain TS
     $uid = $_POST['uid']; // user id - the id of account that you're using
 
-    $sql = "UPDATE ssms.technology_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$enbl_id";
+    $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET status='enabled', date_last_modified='$now', modified_by=$uid WHERE ts_id=$enbl_id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../technologySupplies.php?m=enablingSuccess");
         exit();
@@ -379,7 +379,7 @@ if (isset($_POST['add-tech-btn'])) {
     move_uploaded_file($tmp_img_name, $folder . $image_final_name);
 
     // All done head back to product.php
-    $sql = "INSERT INTO `ssms`.`technology_supplies` (`ts_name`, `ts_model`, `ts_brand`, `ts_category`, `ts_quantity`, `ts_location`, `ts_img`, `ts_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name','$model','$brand','$cat','$qty', '$loc', '$image_final_name', '$des', '$stat', now(), now(), '$uid')";
+    $sql = "INSERT INTO `epiz_33456032_ssms`.`technology_supplies` (`ts_name`, `ts_model`, `ts_brand`, `ts_category`, `ts_quantity`, `ts_location`, `ts_img`, `ts_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name','$model','$brand','$cat','$qty', '$loc', '$image_final_name', '$des', '$stat', '$now', '$now', '$uid')";
 
     if ($conn->query($sql) === false) {
         header("location: ../technologySupplies.php?m=uploadError");
