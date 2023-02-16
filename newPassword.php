@@ -2,6 +2,12 @@
 include 'includes/config.inc.php';
 
 if (!isset($_GET['email'])) {
+    echo "<script>alert('Error occured, no email received.');</script>";
+    header("location: sendToEmail.php");
+    exit();
+}
+if (!isset($_GET['code'])) {
+    echo "<script>alert('Error occured, no code received.');</script>";
     header("location: sendToEmail.php");
     exit();
 }
@@ -141,8 +147,15 @@ if (isset($_POST['enter-pass-btn'])) {
                         </div>
 
                         <div class="mb-3">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="toggle-password" name="" onclick="showHidePassword()">
+                                <label id="label-toggle" class="custom-control-label" for="toggle-password">Show password</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
                             <button name="enter-pass-btn" id="enter-pass-btn" type="submit" class="btn btn-block text-uppercase">
-                                Enter Code
+                                Enter new password
                             </button>
                         </div>
                     </form>
@@ -153,10 +166,10 @@ if (isset($_POST['enter-pass-btn'])) {
 
     <script>
         function showHidePassword() {
-            var x = document.getElementById("password");
-            var x2 = document.getElementById("confirmPassword");
+            var x = document.getElementById("p1");
+            var x2 = document.getElementById("p2");
             var y = document.getElementById("label-toggle");
-            if (x.type === "password" || x2.type === "password") {
+            if (x.type === "password") {
                 x.type = "text";
                 x2.type = "text";
                 y.innerHTML = "Hide Password";

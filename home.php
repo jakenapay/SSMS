@@ -89,6 +89,10 @@ include 'includes/config.inc.php';
                 drawChart();
             }
 
+            window.resize = function() {
+                drawChart();
+            }
+
             window.onmousemove = function() {
                 drawChart();
             }
@@ -156,7 +160,13 @@ include 'includes/config.inc.php';
                 drawChart();
             }
 
+            window.resize = function() {
+                drawChart();
+            }
 
+            window.onmousemove = function() {
+                drawChart();
+            }
 
         }
     </script>
@@ -338,7 +348,7 @@ include 'includes/config.inc.php';
                 </div>
 
                 <!-- Pie Chart -->
-                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                     <div class="large-content">
                         <span class="d-flex justify-content-between">
                             <h3 class="amount"><strong>Supplies</strong></h3>
