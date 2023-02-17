@@ -41,7 +41,9 @@ session_start();
 
     <script>
         $(document).ready(function() {
-            $('table').DataTable();
+            $('table').DataTable({
+                paging: false
+            });
         });
     </script>
 
@@ -361,6 +363,12 @@ session_start();
                             <label for="new_pw">Password</label>
                             <input type="password" class="form-control" id="new_pw" name="new_pw" placeholder="Enter Password" value="" minlength="8">
                         </div>
+                        <div class="mb-3">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="toggle-password" name="" onclick="showHidePassword()">
+                                <label id="label-toggle" class="custom-control-label" for="toggle-password">Show password</label>
+                            </div>
+                        </div>
                         <div class="form-group pt-2 pb-2">
                             <label for="new_em">Email address</label>
                             <input type="email" class="form-control" id="new_em" name="new_em" aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $em; ?>" readonly>
@@ -502,6 +510,19 @@ session_start();
 
             });
         });
+    </script>
+    <script>
+        function showHidePassword() {
+            var x = document.getElementById("new_pw");
+            var y = document.getElementById("label-toggle");
+            if (x.type === "password") {
+                x.type = "text";
+                y.innerHTML = "Hide Password";
+            } else {
+                x.type = "password";
+                y.innerHTML = "Show Password";
+            }
+        }
     </script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->

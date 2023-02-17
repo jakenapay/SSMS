@@ -155,9 +155,6 @@ include 'includes/config.inc.php';
             window.onmouseover = function() {
                 drawChart();
             }
-
-
-
         }
     </script>
 

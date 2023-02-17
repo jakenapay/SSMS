@@ -28,7 +28,7 @@ if (isset($_POST['save-btn'])) {
         }
     }
 
-    $pw = password_hash($pw, PASSWORD_ARGON2I);
+    $pw = password_hash($pw, PASSWORD_DEFAULT);
     // sql query
     $sql = "UPDATE ssms.users SET user_firstname='$fname', user_lastname='$lname', user_email='$email', user_password='$pw' WHERE user_id=$id";
     if ($conn->query($sql) === TRUE) {

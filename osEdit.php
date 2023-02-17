@@ -20,7 +20,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
     require 'includes/functions.inc.php';
 
     $id = $_GET['eid'];
-    $result = $conn->query("SELECT *, CONCAT(ssms.users.user_firstname, ' ', ssms.users.user_lastname) as fullname FROM ssms.office_supplies INNER JOIN ssms.users ON ssms.office_supplies.modified_by=ssms.users.user_id WHERE os_id = $id LIMIT 1");
+    $result = $conn->query("SELECT *, ssms.office_supplies.date_last_modified as dlmr, CONCAT(ssms.users.user_firstname, ' ', ssms.users.user_lastname) as fullname FROM ssms.office_supplies INNER JOIN ssms.users ON ssms.office_supplies.modified_by=ssms.users.user_id WHERE os_id = $id LIMIT 1");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set
@@ -35,7 +35,8 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
             $old_img = $row['os_img'];
             $des = $row['os_desc'];
             $da = $row['date_added'];
-            $dlm = $row['date_last_modified'];
+            $dlmr = $row['dlmr'];
+            // $dlm = $row['date_last_modified'];
             $by = $row['fullname'];
         }
     }
@@ -86,7 +87,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                     <div class="header">
                         <div class="header-content">
                             <span class="d-flex justify-content-between align-items-center">
-                                <i class="fa-solid fa-computer icon"></i>
+                                <i class="fa-solid fa-boxes-packing icon"></i>
                                 <p class="header-title text">Edit Office Supplies</p>
                             </span>
                         </div>
@@ -187,7 +188,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>';
                     }
                     if ($_GET['m'] == 'success') {
-                        $message = 'Technology supply updated';
+                        $message = 'Office supply updated';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -195,7 +196,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>';
                     }
                     if ($_GET['m'] == 'enablingSuccess') {
-                        $message = 'Technology supply updated';
+                        $message = 'Office supply updated';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -203,7 +204,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>';
                     }
                     if ($_GET['m'] == 'disablingSuccess') {
-                        $message = 'Technology supply updated';
+                        $message = 'Office supply updated';
                         echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -263,7 +264,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 <div class="col-md-6 pb-3">
                                     <label for="date_last_modified">Last Modified</label>
                                     <input id="date_last_modified" name="date_last_modified" type="hidden" class="form-control" placeholder="Last Modified" value="<?php echo $dlm; ?>">
-                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $dlm; ?></p>
+                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $dlmr; ?></p>
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="modified_by">Modified by</label>

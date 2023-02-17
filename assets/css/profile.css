@@ -49,6 +49,10 @@ input {
     display: block;
 }
 
+#toggle-password {
+    display: unset;
+}
+
 input {
     padding: 0.2rem 0.5rem;
     border-radius: 10px;

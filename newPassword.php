@@ -8,20 +8,21 @@ if (!isset($_GET['email'])) {
 
 if (isset($_POST['enter-pass-btn'])) {
 
-    // check if empty user email
-    if (empty($_POST['p1']) or empty($_POST['p2']) or empty($_GET['code'])) {
-        header("location: newPassword.php?email=$email&m=emptyFields");
-        exit();
-    }
-
     $p1 = $_POST['p1'];
     $p2 = $_POST['p2'];
     $email = $_GET['email'];
     $code = $_GET['code'];
 
+    // check if empty user email
+    if (empty($_POST['p1']) or empty($_POST['p2']) or empty($_GET['code'])) {
+        header("location: newPassword.php?email=$email&code=$code&m=emptyFields");
+        exit();
+    }
+
+
     // compare if pw match
     if ($p1 != $p2) {
-        header("location: newPassword.php?email=$email&m=pwnotmatch");
+        header("location: newPassword.php?email=$email&code=$code&m=pwnotmatch");
         exit();
     }
 
@@ -30,7 +31,7 @@ if (isset($_POST['enter-pass-btn'])) {
     $sql = $conn->query("UPDATE ssms.users SET user_password='$p1' WHERE user_email='$email' AND code='$code'");
     if (!$sql) {
         // echo '<script>alert("' . $conn->error . '");</script>';
-        header("location: newPassword.php?email=$email&m=error");
+        header("location: newPassword.php?email=$email&code=$code&m=error");
         exit();
     }
 
@@ -141,6 +142,13 @@ if (isset($_POST['enter-pass-btn'])) {
                         </div>
 
                         <div class="mb-3">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="toggle-password" name="" onclick="showHidePassword()">
+                                <label id="label-toggle" class="custom-control-label" for="toggle-password">Show password</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
                             <button name="enter-pass-btn" id="enter-pass-btn" type="submit" class="btn btn-block text-uppercase">
                                 Enter Code
                             </button>
@@ -153,10 +161,10 @@ if (isset($_POST['enter-pass-btn'])) {
 
     <script>
         function showHidePassword() {
-            var x = document.getElementById("password");
-            var x2 = document.getElementById("confirmPassword");
+            var x = document.getElementById("p1");
+            var x2 = document.getElementById("p2");
             var y = document.getElementById("label-toggle");
-            if (x.type === "password" || x2.type === "password") {
+            if (x.type === "password") {
                 x.type = "text";
                 x2.type = "text";
                 y.innerHTML = "Hide Password";

@@ -25,7 +25,7 @@ if (isset($_POST['send-code-btn'])) {
     }
 
     $code = generateRandomString($length = 4);
-    $msg = "Your code is " . $code;
+    $msg = "Your code is " . $code . ". Dont share your code to avoid unauthorized access.";
     $subj = "Your code to retrieve your account.";
     // email of the user
     $receiver = $_POST['email'];
