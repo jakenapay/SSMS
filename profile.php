@@ -1,6 +1,11 @@
 <?php
 session_start();
-
+// Check if there's an id, if it has, then it's logged in
+// If there's no id, head back to login page
+if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
+    header("location: login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -84,11 +89,13 @@ session_start();
                                 <p class="header-title text">Profile & Accounts</p>
                             </div>
 
-                            <!-- Button trigger modal -->
-                            <div><input type="hidden" id="user_id" name="user_id" class="user_id" value="<?php echo $_SESSION['id']; ?>" readonly></div>
-                            <button type="button" class="btn delete-btn btn-default px-2" data-bs-toggle="modal" data-bs-target="#delAccModal">
-                                Disable account
-                            </button>
+                            <?php if ((isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user')) { ?>
+                                <!-- Button trigger modal -->
+                                <div><input type="hidden" id="user_id" name="user_id" class="user_id" value="<?php echo $_SESSION['id']; ?>" readonly></div>
+                                <button type="button" class="btn delete-btn btn-default px-2" data-bs-toggle="modal" data-bs-target="#delAccModal">
+                                    Disable account
+                                </button>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
