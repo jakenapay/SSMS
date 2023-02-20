@@ -16,7 +16,7 @@ if (isset($_POST['restock-btn'])) {
     $id = $_POST['user_id'];
     $qty = $_POST['restock_quantity'];
 
-    $sql = "UPDATE ssms.technology_supplies SET ts_quantity='$qty', date_last_modified=now(), modified_by=$id WHERE ts_id=$item";
+    $sql = "UPDATE ssms.technology_supplies SET ts_quantity=ts_quantity + $qty, date_last_modified=now(), modified_by=$id WHERE ts_id=$item";
     if ($conn->query($sql) === TRUE) {
         $sql2 = "INSERT INTO ssms.restocks(`ts_id`, `restock_quantity`, `user_id`, `restock_date`) VALUES ('$item', '$qty', '$id', now())";
         if ($conn->query($sql2) === TRUE) {
@@ -51,7 +51,7 @@ if (isset($_POST['restock-btn-office'])) {
     $id = $_POST['user_id'];
     $qty = $_POST['restock_quantity'];
 
-    $sql = "UPDATE ssms.office_supplies SET os_quantity='$qty', date_last_modified=now(), modified_by=$id WHERE os_id=$item";
+    $sql = "UPDATE ssms.office_supplies SET os_quantity=os_quantity + $qty , date_last_modified=now(), modified_by=$id WHERE os_id=$item";
     if ($conn->query($sql) === TRUE) {
         $sql2 = "INSERT INTO ssms.restocks(`os_id`, `restock_quantity`, `user_id`, `restock_date`) VALUES ('$item', '$qty', '$id', now())";
         if ($conn->query($sql2) === TRUE) {
