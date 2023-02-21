@@ -105,7 +105,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <option value="enabled">Enabled</option>
                                     <option value="disabled">Disabled</option>
                                 </select>
-                            </div>
+                            </div
                             <!-- image -->
                             <div class="col-md-12 pt-3 pb-1">
                                 <label for="os_img">Image</label>
