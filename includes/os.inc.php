@@ -9,8 +9,8 @@ if (isset($_POST['save-changes'])) {
         exit();
     }
 
-    require 'config.inc.php';
-    require 'functions.inc.php';
+    include 'config.inc.php';
+    include 'functions.inc.php';
 
     $uid =  $_POST['uid']; // User id or more likely modified by
     $osid = $_POST['os_id'];

@@ -20,7 +20,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
     require 'includes/functions.inc.php';
 
     $id = $_GET['eid'];
-    $result = $conn->query("SELECT *, CONCAT(epiz_33456032_ssms.users.user_firstname, ' ', epiz_33456032_ssms.users.user_lastname) as fullname FROM epiz_33456032_ssms.office_supplies INNER JOIN epiz_33456032_ssms.users ON epiz_33456032_ssms.office_supplies.modified_by=epiz_33456032_ssms.users.user_id WHERE os_id = $id LIMIT 1");
+    $result = $conn->query("SELECT *, epiz_33456032_ssms.office_supplies.date_last_modified AS dlm, epiz_33456032_ssms.office_supplies.date_added AS da, CONCAT(epiz_33456032_ssms.users.user_firstname, ' ', epiz_33456032_ssms.users.user_lastname) as fullname FROM epiz_33456032_ssms.office_supplies INNER JOIN epiz_33456032_ssms.users ON epiz_33456032_ssms.office_supplies.modified_by=epiz_33456032_ssms.users.user_id WHERE os_id = $id LIMIT 1");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set
@@ -34,8 +34,8 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
             $loc = $row['os_location'];
             $old_img = $row['os_img'];
             $des = $row['os_desc'];
-            $da = $row['date_added'];
-            $dlm = $row['date_last_modified'];
+            $da = $row['da'];
+            $dlm = $row['dlm'];
             $by = $row['fullname'];
         }
     }

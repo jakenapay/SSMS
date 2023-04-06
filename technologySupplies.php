@@ -32,7 +32,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>Technology Supplies</title>
+    <title>SSMS | Technology Supplies</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -90,7 +90,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <!-- quantity -->
                             <div class="col-md-6 pt-3 pb-1">
                                 <label for="ts_quantity">Quantity</label>
-                                <input class="form-control" type="number" min="1" max="100" name="ts_quantity" id="ts_quantity" required placeholder="(1-100)">
+                                <input class="form-control" type="number" min="1" name="ts_quantity" id="ts_quantity" required placeholder="Supply Quantity">
                             </div>
                             <!-- location -->
                             <div class="col-md-6 pt-3 pb-1">
@@ -133,7 +133,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <?php include 'nav.php';
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -254,7 +254,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 </div>';
                 }
                 if ($_GET['m'] == 'success') {
-                    $message = 'Get supply success';
+                    $message = 'Technology supply updated';
                     echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
@@ -315,9 +315,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") {
-                                    $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM epiz_33456032_ssms.technology_supplies WHERE ts_quantity > 0 AND status = 'enabled'";
+                                    $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity > 0 AND status = 'enabled'";
                                 } else if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
-                                    $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM epiz_33456032_ssms.technology_supplies WHERE ts_quantity > 0";
+                                    $sql = "SELECT ts_id as id, ts_name as name, ts_model as model, ts_brand as brand, ts_category as cat, ts_quantity as qty, ts_location as loc, status,ts_img as img, ts_desc as des, date_added as da, date_last_modified as dm FROM ssms.technology_supplies WHERE ts_quantity > 0";
                                 }
 
 

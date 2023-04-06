@@ -50,6 +50,8 @@ if (isset($_POST['restock-btn-office'])) {
     $item = $_POST['restock_item'];
     $id = $_POST['user_id'];
     $qty = $_POST['restock_quantity'];
+    date_default_timezone_set("Asia/Manila");
+    $now = date("Y-m-d H:i:s");
 
     $sql = "UPDATE epiz_33456032_ssms.office_supplies SET os_quantity='$qty', date_last_modified='$now', modified_by=$id WHERE os_id=$item";
     if ($conn->query($sql) === TRUE) {
