@@ -90,7 +90,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                             <!-- quantity -->
                             <div class="col-md-6 pt-3 pb-1">
                                 <label for="ts_quantity">Quantity</label>
-                                <input class="form-control" type="number" min="1" max="100" name="ts_quantity" id="ts_quantity" required placeholder="(1-100)">
+                                <input class="form-control" type="number" min="1" name="ts_quantity" id="ts_quantity" required placeholder="(1-100)">
                             </div>
                             <!-- location -->
                             <div class="col-md-6 pt-3 pb-1">
