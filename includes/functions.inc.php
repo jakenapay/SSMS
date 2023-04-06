@@ -141,7 +141,7 @@ function signUp($conn, $fn, $ln, $em, $pw)
 
     // query
     $sql = "INSERT INTO epiz_33456032_ssms.users (user_firstname, user_lastname, user_password, user_email, user_category, user_status, user_date)
-VALUES ('$fn', '$ln', '$pw', '$em', '$category', '$status', '$now'";
+VALUES ('$fn', '$ln', '$pw', '$em', '$category', '$status', '$now')";
 
     if ($conn->query($sql) === TRUE) {
         header("location: ../requestAccount.php?m=requestSuccess");
