@@ -136,8 +136,6 @@ function signUp($conn, $fn, $ln, $em, $pw)
     $pw = password_hash($pw, PASSWORD_DEFAULT);
     $category = "user";
     $status = "inactive";
-    date_default_timezone_set("Asia/Manila");
-    $now = date("Y-m-d H:i:s");
 
     // query
     $sql = "INSERT INTO epiz_33456032_ssms.users (user_firstname, user_lastname, user_password, user_email, user_category, user_status, user_date)
