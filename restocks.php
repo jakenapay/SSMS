@@ -95,8 +95,8 @@ include 'includes/user.inc.php';
                                 </select>
                             </div>
                             <div class="form-group my-2">
-                                <label for="restock_quantity">Quantity (0-100)</label>
-                                <input class="form-control" type="number" min="0" max="100" name="restock_quantity" id="restock_quantity" required>
+                                <label for="restock_quantity">Quantity</label>
+                                <input class="form-control" type="number" min="1" name="restock_quantity" id="restock_quantity" required>
                             </div>
 
                             <!-- hidden -->
@@ -148,8 +148,8 @@ include 'includes/user.inc.php';
                                 </select>
                             </div>
                             <div class="form-group my-2">
-                                <label for="restock_quantity">Quantity (0-100)</label>
-                                <input class="form-control" type="number" min="0" max="100" name="restock_quantity" id="restock_quantity" required>
+                                <label for="restock_quantity">Quantity</label>
+                                <input class="form-control" type="number" min="1" name="restock_quantity" id="restock_quantity" required>
                             </div>
                             <!-- hidden -->
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
