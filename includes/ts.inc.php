@@ -20,17 +20,18 @@ if (isset($_POST['save-changes'])) {
     $cat = $_POST['ts_category'];
     $loc = $_POST['ts_location'];
     $des = $_POST['ts_desc'];
+    $qty = $_POST['ts_quantity'];
     $dlm = $_POST['date_last_modified'];
     $by = $_POST['modified_by'];
 
-    if (checkEmptyInput($name, $model, $brand, $cat, $loc, $dlm, $by) !== false) {
+    if (checkEmptyInput($name, $model, $brand, $cat, $qty, $loc, $dlm, $by) !== false) {
         // if true !== false => true; run this code
         header("location: ../tsEdit.php?eid=$tsid&m=emptyFields");
         exit();
     }
 
     // Sql query to update the row
-    $updateQuery = "UPDATE ssms.technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE ts_id=$tsid;";
+    $updateQuery = "UPDATE ssms.technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_quantity`='$qty', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE ts_id=$tsid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         echo "<script>alert('Product updated successfully.');</script>";
