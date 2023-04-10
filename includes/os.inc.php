@@ -18,11 +18,12 @@ if (isset($_POST['save-changes'])) {
     $uom = $_POST['os_uom'];
     $brand = $_POST['os_brand'];
     $des = $_POST['os_desc'];
+    $qty = $_POST['os_quantity'];
     $loc = $_POST['os_location'];
     $dlm = $_POST['date_last_modified'];
     $by = $_POST['modified_by'];
 
-    if (checkEmptyInput($name, $des, $brand, $uom, $loc, $dlm, $by) !== false) {
+    if (checkEmptyInput($name, $des, $brand, $uom, $qty, $loc, $dlm, $by) !== false) {
         // if true !== false => true; run this code
         header("location: ../osEdit.php?eid=$osid&m=emptyFields");
         exit();
@@ -31,7 +32,7 @@ if (isset($_POST['save-changes'])) {
     
 
     // Sql query to update the row
-    $updateQuery = "UPDATE epiz_33456032_ssms.office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom',`os_location`='$loc', `os_desc`='$des', `date_last_modified`='$now',`modified_by`=$uid WHERE os_id=$osid;";
+    $updateQuery = "UPDATE epiz_33456032_ssms.office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom', `os_quantity`='$qty', `os_location`='$loc', `os_desc`='$des', `date_last_modified`='$now',`modified_by`=$uid WHERE os_id=$osid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         // echo "<script>alert('Product updated successfully.');</script>";

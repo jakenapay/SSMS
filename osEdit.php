@@ -243,8 +243,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="os_quantity">Quantity (<a href="restocks.php?rid=<?php echo $osid; ?>">Restock here</a>)</label>
-                                    <input id="os_quantity" name="os_quantity" type="hidden" class="form-control" placeholder="Quantity" value="<?php echo $qty; ?>">
-                                    <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $qty; ?></p>
+                                    <input id="os_quantity" name="os_quantity" type="number" class="form-control" placeholder="Quantity" value="<?php echo $qty; ?>">
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="os_location">Location</label>
