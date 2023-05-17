@@ -138,14 +138,15 @@ if (isset($_POST['check_view'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         
-        $osid = $row['os_id'];
-        $name = $row['os_name'];
-        $brand = $row['os_brand'];
-        $uom = $row['os_uom'];
-        $qty = $row['os_quantity'];
-        $loc = $row['os_location'];
-        $old_img = $row['os_img'];
-        $des = $row['os_desc'];
+        $tsid = $row['ts_id'];
+        $name = $row['ts_name'];
+        $brand = $row['ts_brand'];
+        $model = $row['ts_model'];
+        $cat = $row['ts_category'];
+        $qty = $row['ts_quantity'];
+        $loc = $row['ts_location'];
+        $old_img = $row['ts_img'];
+        $des = $row['ts_desc'];
         $da = $row['date_added'];
         $dlm = $row['date_last_modified'];
 
