@@ -265,6 +265,14 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     </div>
                                 </div>';
                 }
+                if ($_GET['m'] == 'addSuccess') {
+                    $message = 'Supply Added';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
                 if ($_GET['m'] == 'disablingSuccess') {
                     $message = 'Office supply updated';
                     echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
