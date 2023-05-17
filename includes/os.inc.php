@@ -377,6 +377,6 @@ if (isset($_POST['add-office-btn'])) {
         exit();
     }
 
-    header('location: ../officeSupplies.php?m=success');
+    header('location: ../officeSupplies.php?m=addSuccess');
     exit();
 }
