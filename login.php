@@ -19,7 +19,7 @@
 
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>">
-
+    <link rel="icon" type="image/x-icon" href="logo.png">
     <link rel="stylesheet" type="text/css" href="assets/css/login.css?v=<?php echo time(); ?>">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
