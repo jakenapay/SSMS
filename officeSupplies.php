@@ -381,12 +381,19 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                     }
                                                 } ?>
 
-                                                <td>
-                                                    <!-- Button trigger modal -->
+                                                <!-- <td>
                                                     <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal">
                                                         View
                                                     </button>
+                                                </td> -->
+
+                                                <td>
+                                                    <!-- Button trigger modal -->
+                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $id; ?>">
+                                                        View
+                                                    </button>
                                                 </td>
+
 
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
@@ -523,20 +530,59 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     </script>
     <script>
         $(document).ready(function() {
-            $('.viewBtn').click(function(e) {
-                e.preventDefault();
-                // alert('hello');
-                var os_id = $(this).closest('tr').find('.os_id').text();
+            // $('.viewBtn').click(function(e) {
+            //     e.preventDefault();
+            //     // alert('hello');
+            //     var os_id = $(this).closest('tr').find('.os_id').text();
 
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: "includes/os.inc.php",
+            //         data: {
+            //             'check_view': true,
+            //             'os_id': os_id
+            //         },
+            //         success: function(response) {
+            //             // console.log(response);
+            //             $('.os_view').html(response);
+            //             $('#viewModal').modal('show');
+            //         }
+            //     });
+            // });
+
+            // Event listener for view buttons
+            // $('.viewBtn').click(function(e) {
+            //     e.preventDefault();
+
+            //     // Retrieve the product ID from the data attribute
+            //     var productID = $(this).data('product-id');
+
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: "includes/os.inc.php",
+            //         data: {
+            //             'check_view': true,
+            //             'os_id': productID
+            //         },
+            //         success: function(response) {
+            //             $('.os_view').html(response);
+            //             $('#viewModal').modal('show');
+            //         }
+            //     });
+            // });
+
+
+            $('table').on('click', '.viewBtn', function(e) {
+                e.preventDefault();
+                var productID = $(this).data('product-id');
                 $.ajax({
                     type: 'POST',
                     url: "includes/os.inc.php",
                     data: {
                         'check_view': true,
-                        'os_id': os_id
+                        'os_id': productID
                     },
                     success: function(response) {
-                        // console.log(response);
                         $('.os_view').html(response);
                         $('#viewModal').modal('show');
                     }

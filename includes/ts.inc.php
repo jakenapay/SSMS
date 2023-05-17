@@ -124,34 +124,33 @@ if (isset($_POST['update-img'])) {
 
 
 if (isset($_POST['check_view'])) {
+    // requirements to run into database and functions for configurations
+    require 'config.inc.php';
 
     // get the technology supply id
     $ts_id = $_POST['ts_id'];
 
-    // requirements to run into database and functions for configurations
-    require 'config.inc.php';
+    $stmt = $conn->prepare("SELECT * FROM ssms.technology_supplies WHERE ts_id = ?");
+    $stmt->bind_param('i', $ts_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $result = $conn->query("SELECT * FROM ssms.technology_supplies WHERE ts_id = $ts_id");
-    // Check if the query was successful
-    if ($result) {
-        // Loop through the rows of the result set
-        while ($row = $result->fetch_assoc()) {
-            // Process each row and generate the HTML content
-            $tsid = $row['ts_id'];
-            $name = $row['ts_name'];
-            $model = $row['ts_model'];
-            $brand = $row['ts_brand'];
-            $cat = $row['ts_category'];
-            $qty = $row['ts_quantity'];
-            $loc = $row['ts_location'];
-            $old_img = $row['ts_img'];
-            $des = $row['ts_desc'];
-            $da = $row['date_added'];
-            $dlm = $row['date_last_modified'];
-            // $by = $row['fullname'];
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        
+        $osid = $row['os_id'];
+        $name = $row['os_name'];
+        $brand = $row['os_brand'];
+        $uom = $row['os_uom'];
+        $qty = $row['os_quantity'];
+        $loc = $row['os_location'];
+        $old_img = $row['os_img'];
+        $des = $row['os_desc'];
+        $da = $row['date_added'];
+        $dlm = $row['date_last_modified'];
 
-            echo $return = '
-                <div class="row">
+        $return = '
+        <div class="row">
                     <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
                         <img src="technologySupplies/' . $old_img . '" alt="" class="img-fluid" style="width: 300px;">
                     </div>
@@ -202,13 +201,13 @@ if (isset($_POST['check_view'])) {
                         </div>
                     </div>
                 </div>
-            ';
-        }
+        ';
+
+        echo $return;
     } else {
         echo '<h5>No result</h5>';
     }
 }
-
 
 if (isset($_POST['get-btn-tech'])) {
 

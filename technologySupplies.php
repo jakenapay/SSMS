@@ -381,9 +381,15 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                     }
                                                 } ?>
 
+                                                <!-- <td>
+                                                    <button type="button" class="btn viewBtn" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                                        View
+                                                    </button>
+                                                </td> -->
+
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn viewBtn" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $id; ?>">
                                                         View
                                                     </button>
                                                 </td>
@@ -523,20 +529,17 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     </script>
     <script>
         $(document).ready(function() {
-            $('.viewBtn').click(function(e) {
+            $('table').on('click', '.viewBtn', function(e) {
                 e.preventDefault();
-                // alert('hello');
-                var ts_id = $(this).closest('tr').find('.ts_id').text();
-
+                var productID = $(this).data('product-id');
                 $.ajax({
                     type: 'POST',
                     url: "includes/ts.inc.php",
                     data: {
                         'check_view': true,
-                        'ts_id': ts_id
+                        'ts_id': productID
                     },
                     success: function(response) {
-                        // console.log(response);
                         $('.ts_view').html(response);
                         $('#viewModal').modal('show');
                     }
