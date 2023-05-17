@@ -235,6 +235,12 @@ body.dark .sidebar li a:hover .text {
   display: none;
 }
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.menu-bar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} 
+
 .sidebar .menu-bar .mode {
   border-radius: 6px;
   background-color: var(--primary-color-light);
