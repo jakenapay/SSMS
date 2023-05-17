@@ -70,7 +70,8 @@ if (isset($_POST['enter-pass-btn'])) {
     <link rel="stylesheet" href="assets/css/login.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" type="text/css" href="assets/css/login.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" type="text/css" href="assets/css/profile.css?v=<?php echo time(); ?>">
-
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
