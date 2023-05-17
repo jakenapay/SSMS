@@ -125,79 +125,78 @@ if (isset($_POST['update-img'])) {
     }
 }
 
-
+// New view office supplies
 if (isset($_POST['check_view'])) {
-
-    // get the technology supply id
-    $os_id = $_POST['os_id'];
-
-    // requirements to run into database and functions for configurations
     require 'config.inc.php';
 
-    $result = $conn->query("SELECT * FROM epiz_33456032_ssms.office_supplies WHERE os_id = $os_id");
-    // Check if the query was successful
-    if ($result) {
-        // Loop through the rows of the result set
-        while ($row = $result->fetch_assoc()) {
-            // Process each row and generate the HTML content
-            $osid = $row['os_id'];
-            $name = $row['os_name'];
-            $brand = $row['os_brand'];
-            $uom = $row['os_uom'];
-            $qty = $row['os_quantity'];
-            $loc = $row['os_location'];
-            $old_img = $row['os_img'];
-            $des = $row['os_desc'];
-            $da = $row['date_added'];
-            $dlm = $row['date_last_modified'];
-            // $by = $row['fullname'];
+    $os_id = $_POST['os_id'];
 
-            echo $return = '
-                <div class="row">
-                    <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
-                        <img src="officeSupplies/' . $old_img . '" alt="" class="img-fluid" style="width: 300px;">
-                    </div>
-                    <div class="col-md-6 pt-1 pb-1">
-                        <label for="os_id">ID</label>
-                        <input type="text" class="form-control" id="os_id" name="os_id" value="' . $osid . '" disabled>
-                        <input type="hidden" class="form-control" id="os_id" name="os_id" value="' . $osid . '">
-                    </div>  
-                    <div class="col-md-6 pt-1 pb-1">
-                        <label for="">Name</label>
-                        <input type="text" class="form-control" id="os_name" name="os_name" value="' . $name . '" disabled>
-                    </div>  
-                    <div class="col-md-6 pt-1 pb-1">
-                        <label for="ts_brand">Brand</label>
-                        <input type="text" class="form-control" id="os_brand" name="os_brand" value="' . $brand . '" disabled>
-                    </div>
-                    <div class="col-md-6 pt-1 pb-1">
-                        <label for="ts_model">Unit of Measure</label>
-                        <input type="text" class="form-control" id="os_uom" name="os_uom" value="' . $uom . '" disabled>
-                    </div>
-                    <div class="col-md-12 pt-1 pb-1">
-                        <label for="ts_model">Description (additional information)</label>
-                        <textarea type="text" class="form-control" id="os_uom" name="os_uom" disabled>' . $des . '</textarea>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="w-100 my-2">
-                        <hr
-                    </div>
-                    <div class="col-md-12 pt-3 pb-2">
-                        <h6><strong>Get this item:</strong></h6>
-                        <h6><span class="text-muted"><strong>Note:</strong> Please be careful when getting items</span></h6>
-                         <div class="form-group mt-3">
-                            <span class="d-flex justify-content-between align-items-center">
-                                <label class="" for="get_quantity">Quantity (1-10)</label>
-                                <label><strong>' . $qty . ' left</strong></label>
-                            </span>
-                                <input class="form-control" type="number" min="1" max="10" name="get_quantity" id="get_quantity" placeholder="1-10" required>
-                                <input type="hidden" name="os_quantity" value="' . $qty . '" />
-                        </div>
-                    </div>
-                </div>
-            ';
-        }
+    $stmt = $conn->prepare("SELECT * FROM epiz_33456032_ssms.office_supplies WHERE os_id = ?");
+    $stmt->bind_param('i', $os_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        
+        $osid = $row['os_id'];
+        $name = $row['os_name'];
+        $brand = $row['os_brand'];
+        $uom = $row['os_uom'];
+        $qty = $row['os_quantity'];
+        $loc = $row['os_location'];
+        $old_img = $row['os_img'];
+        $des = $row['os_desc'];
+        $da = $row['date_added'];
+        $dlm = $row['date_last_modified'];
+
+        $return = '
+        <div class="row">
+        <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
+            <img src="officeSupplies/' . $old_img . '" alt="" class="img-fluid" style="width: 300px;">
+        </div>
+        <div class="col-md-6 pt-1 pb-1">
+            <label for="os_id">ID</label>
+            <input type="text" class="form-control" id="os_id" name="os_id" value="' . $osid . '" disabled>
+            <input type="hidden" class="form-control" id="os_id" name="os_id" value="' . $osid . '">
+        </div>  
+        <div class="col-md-6 pt-1 pb-1">
+            <label for="">Name</label>
+            <input type="text" class="form-control" id="os_name" name="os_name" value="' . $name . '" disabled>
+        </div>  
+        <div class="col-md-6 pt-1 pb-1">
+            <label for="ts_brand">Brand</label>
+            <input type="text" class="form-control" id="os_brand" name="os_brand" value="' . $brand . '" disabled>
+        </div>
+        <div class="col-md-6 pt-1 pb-1">
+            <label for="ts_model">Unit of Measure</label>
+            <input type="text" class="form-control" id="os_uom" name="os_uom" value="' . $uom . '" disabled>
+        </div>
+        <div class="col-md-12 pt-1 pb-1">
+            <label for="ts_model">Description (additional information)</label>
+            <textarea type="text" class="form-control" id="os_uom" name="os_uom" disabled>' . $des . '</textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="w-100 my-2">
+            <hr
+        </div>
+        <div class="col-md-12 pt-3 pb-2">
+            <h6><strong>Get this item:</strong></h6>
+            <h6><span class="text-muted"><strong>Note:</strong> Please be careful when getting items</span></h6>
+             <div class="form-group mt-3">
+                <span class="d-flex justify-content-between align-items-center">
+                    <label class="" for="get_quantity">Quantity (1-10)</label>
+                    <label><strong>' . $qty . ' left</strong></label>
+                </span>
+                    <input class="form-control" type="number" min="1" max="10" name="get_quantity" id="get_quantity" placeholder="1-10" required>
+                    <input type="hidden" name="os_quantity" value="' . $qty . '" />
+            </div>
+        </div>
+    </div>
+        ';
+
+        echo $return;
     } else {
         echo '<h5>No result</h5>';
     }

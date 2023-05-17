@@ -383,7 +383,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal">
+                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $id; ?>">
                                                         View
                                                     </button>
                                                 </td>
@@ -523,20 +523,17 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     </script>
     <script>
         $(document).ready(function() {
-            $('.viewBtn').click(function(e) {
+            $('table').on('click', '.viewBtn', function(e) {
                 e.preventDefault();
-                // alert('hello');
-                var os_id = $(this).closest('tr').find('.os_id').text();
-
+                var productID = $(this).data('product-id');
                 $.ajax({
                     type: 'POST',
                     url: "includes/os.inc.php",
                     data: {
                         'check_view': true,
-                        'os_id': os_id
+                        'os_id': productID
                     },
                     success: function(response) {
-                        // console.log(response);
                         $('.os_view').html(response);
                         $('#viewModal').modal('show');
                     }
