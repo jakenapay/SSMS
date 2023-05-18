@@ -392,13 +392,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                                     <td><a href="tsEdit.php?eid=<?php echo $id; ?>"><button type="button" class="btn updateBtn btn-warning px-2" data-bs-toggle="modal" data-bs-target="#updateModal">Update</button></a>
                                                     </td>
-                                                    <?php
-                                                    if ($stat == 'enabled') {
-                                                        echo '<td><a href=""><button class="btn btn-danger px-2 disable-btn">Disable</button></a></td>';
-                                                    } else if ($stat == 'disabled') {
-                                                        echo '<td><a href=""><button class="btn btn-success px-2 enable-btn">Enable</button></a></td>';
-                                                    }
-                                                    ?>
+                                                    <td>
+                                                        <?php if ($stat == 'enabled') { ?>
+                                                            <button class="btn btn-danger px-2 disable-btn" data-ts-id="<?php echo $id; ?>">Disable</button>
+                                                        <?php } else if ($stat == 'disabled') { ?>
+                                                            <button class="btn btn-success px-2 enable-btn" data-ts-id="<?php echo $id; ?>">Enable</button>
+                                                        <?php } ?>
+                                                    </td>
 
                                                 <?php } ?>
                                             </form>
@@ -540,24 +540,40 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 });
             });
 
-            // disabling TS
-            $('.disable-btn').click(function(e) {
+             // Disabling TS
+             $('table').on('click', '.disable-btn', function(e) {
                 e.preventDefault();
-                var ts_id = $(this).closest('tr').find('.ts_id').text();
-                // console.log(ts_id);
-                $('#del_id').val(ts_id);
-                $('#disableModal').modal('show');
-
+                var tsID = $(this).data('ts-id');
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/ts.inc.php",
+                    data: {
+                        'disable_supply': true,
+                        'ts_id': tsID
+                    },
+                    success: function(response) {
+                        $('#del_id').val(tsID);
+                        $('#disableModal').modal('show');
+                    }
+                });
             });
 
-            // enabling TS 
-            $('.enable-btn').click(function(e) {
+            // Enabling TS
+            $('table').on('click', '.enable-btn', function(e) {
                 e.preventDefault();
-                var ts_id = $(this).closest('tr').find('.ts_id').text();
-                // console.log(ts_id);
-                $('#enbl_id').val(ts_id);
-                $('#enableModal').modal('show');
-
+                var tsID = $(this).data('ts-id');
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/ts.inc.php",
+                    data: {
+                        'enable_supply': true,
+                        'ts_id': tsID
+                    },
+                    success: function(response) {
+                        $('#enbl_id').val(tsID);
+                        $('#enableModal').modal('show');
+                    }
+                });
             });
         });
     </script>

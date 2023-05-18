@@ -261,46 +261,51 @@ if (isset($_POST['get-btn-tech'])) {
     }
 }
 
-// disabling tech supply
+// Disabling tech supply new
 if (isset($_POST['delete-supply'])) {
 
-    // include other php process
+    // Include other PHP processes
     include_once 'config.inc.php';
     include_once 'functions.inc.php';
 
-    $del_id = $_POST['del_id']; // delete id of the certain TS
-    $uid = $_POST['uid']; // user id - the id of account that you're using
+    $del_id = $_POST['del_id']; // ID of the supply to disable
+    $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET status='disabled', date_last_modified='$now', modified_by=$uid WHERE ts_id=$del_id";
+    $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$del_id";
     if ($conn->query($sql) === TRUE) {
+        // Return a success response
         header("location: ../technologySupplies.php?m=disablingSuccess");
         exit();
     } else {
+        // Return an error response
         echo $conn->error;
-        echo "<script>alert('Error updating product.');</script>";
+        echo "<script>alert('Error updating product.');window.location.replace('../technologySupplies.php?m=error');</script>";
         exit();
-        // window . location . replace('../technoglogySupplies.php?m=error');
     }
+    exit();
 }
 
-// enable-supply
+// Enabling tech supply new
 if (isset($_POST['enable-supply'])) {
 
-    // include other php process
+    // Include other PHP processes
     include_once 'config.inc.php';
     include_once 'functions.inc.php';
 
-    $enbl_id = $_POST['enbl_id']; // delete id of the certain TS
-    $uid = $_POST['uid']; // user id - the id of account that you're using
+    $enbl_id = $_POST['enbl_id']; // ID of the supply to enable
+    $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET status='enabled', date_last_modified='$now', modified_by=$uid WHERE ts_id=$enbl_id";
+    $sql = "UPDATE epiz_33456032_ssms.technology_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$enbl_id";
     if ($conn->query($sql) === TRUE) {
+        // Return a success response
         header("location: ../technologySupplies.php?m=enablingSuccess");
         exit();
     } else {
+        // Return an error response
         echo $conn->error;
-        echo "<script>alert('Error updating product.');window.location.replace('../technoglogySupplies.php?m=error');</script>";
+        echo "<script>alert('Error updating product.');window.location.replace('../technologySupplies.php?m=error');</script>";
     }
+    exit();
 }
 
 // add supply

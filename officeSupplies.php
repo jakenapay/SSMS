@@ -394,13 +394,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                                 Update
                                                             </button></a>
                                                     </td>
-                                                    <?php
-                                                    if ($stat == 'enabled') {
-                                                        echo '<td><a href=""><button class="btn btn-danger px-2 disable-btn">Disable</button></a></td>';
-                                                    } else if ($stat == 'disabled') {
-                                                        echo '<td><a href=""><button class="btn btn-success px-2 enable-btn">Enable</button></a></td>';
-                                                    }
-                                                    ?>
+                                                    <td>
+                                                        <?php if ($stat == 'enabled') { ?>
+                                                            <button class="btn btn-danger px-2 disable-btn" data-os-id="<?php echo $id; ?>">Disable</button>
+                                                        <?php } else if ($stat == 'disabled') { ?>
+                                                            <button class="btn btn-success px-2 enable-btn" data-os-id="<?php echo $id; ?>">Enable</button>
+                                                        <?php } ?>
+                                                    </td>
                                                 <?php } ?>
                                             </form>
                                         </tr>
@@ -540,24 +540,40 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 });
             });
 
-            // disabling TS
-            $('.disable-btn').click(function(e) {
+            // Disabling OS
+            $('table').on('click', '.disable-btn', function(e) {
                 e.preventDefault();
-                var os_id = $(this).closest('tr').find('.os_id').text();
-                // console.log(ts_id);
-                $('#del_id').val(os_id);
-                $('#disableModal').modal('show');
-
+                var osID = $(this).data('os-id');
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/os.inc.php",
+                    data: {
+                        'disable_supply': true,
+                        'os_id': osID
+                    },
+                    success: function(response) {
+                        $('#del_id').val(osID);
+                        $('#disableModal').modal('show');
+                    }
+                });
             });
 
-            // enabling TS 
-            $('.enable-btn').click(function(e) {
+            // Enabling OS
+            $('table').on('click', '.enable-btn', function(e) {
                 e.preventDefault();
-                var os_id = $(this).closest('tr').find('.os_id').text();
-                // console.log(ts_id);
-                $('#enbl_id').val(os_id);
-                $('#enableModal').modal('show');
-
+                var osID = $(this).data('os-id');
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/os.inc.php",
+                    data: {
+                        'enable_supply': true,
+                        'os_id': osID
+                    },
+                    success: function(response) {
+                        $('#enbl_id').val(osID);
+                        $('#enableModal').modal('show');
+                    }
+                });
             });
         });
     </script>
