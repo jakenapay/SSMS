@@ -53,6 +53,17 @@
                         <span class="text nav-text">History</span>
                     </a>
                 </li>
+                
+                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
+                    if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>
+                        <li class="nav-link">
+                            <a href="requests.php">
+                                <i class="fa-solid fa-list-check icon"></i>
+                                <span class="text nav-text">Requests</span>
+                            </a>
+                        </li>
+                <?php }
+                } ?>
 
                 <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
                     if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>
@@ -65,16 +76,6 @@
                 <?php }
                 } ?>
 
-                <!-- <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
-                            if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>
-                        <li class="nav-link">
-                            <a href="analytics.php">
-                                <i class="fa-solid fa-chart-pie icon"></i>
-                                <span class="text nav-text">Analytics</span>
-                            </a>
-                        </li>
-                <?php }
-                        } ?> -->
 
                 <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) {
                     if (isset($_SESSION['ct']) and ($_SESSION['ct']) != 'user') { ?>

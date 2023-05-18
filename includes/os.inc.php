@@ -240,7 +240,7 @@ if (isset($_POST['get-btn-office'])) {
 
     $sql = "UPDATE epiz_33456032_ssms.office_supplies SET os_quantity='$left', date_last_modified='$now', modified_by=$id WHERE os_id=$osid";
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO epiz_33456032_ssms.history(`os_id`, `history_quantity`, `user_id`, `history_date`) VALUES ('$osid', '$qty', $id, '$now')";
+        $sql2 = "INSERT INTO epiz_33456032_ssms.history(`os_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$osid', '$qty', $id, 'pending', NULL, now())";
         if ($conn->query($sql2) === TRUE) {
             header("location: ../officeSupplies.php?m=success");
         } else {
