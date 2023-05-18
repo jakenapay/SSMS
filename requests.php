@@ -191,6 +191,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                             </tr>';
                                 }
 
