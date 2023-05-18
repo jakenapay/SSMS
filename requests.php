@@ -97,7 +97,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <th scope="col">Quantity</th>
                                     <th scope="col">User</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Modified by</th>
+                                    <th scope="col">Approved by</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Action</th>
                                 </tr>
