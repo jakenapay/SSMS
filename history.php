@@ -142,6 +142,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 if ($result->num_rows > 0) {
                                     // output data of each row
                                     while ($row = $result->fetch_assoc()) {
+                                        $id = $row['Id'];
                                         $item = $row['Item'];
                                         $qty = $row['Quantity'];
                                         $user = $row['User'];
