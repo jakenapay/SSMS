@@ -248,7 +248,7 @@ if (isset($_POST['get-btn-tech'])) {
 
     $sql = "UPDATE ssms.technology_supplies SET ts_quantity='$left', date_last_modified=now(), modified_by=$id WHERE ts_id=$tsid";
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO ssms.history(`ts_id`, `history_quantity`, `user_id`, `history_date`) VALUES ('$tsid', '$qty', $id, now())";
+        $sql2 = "INSERT INTO ssms.history(`ts_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$tsid', '$qty', $id, 'pending', NULL, now())";
         if ($conn->query($sql2) === TRUE) {
             header("location: ../technologySupplies.php?m=success");
         } else {

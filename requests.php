@@ -76,7 +76,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
             <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="header">
                     <div class="header-content">
-                        <p class="header-title text">History <span class="text-muted">(Supply taken)</span></p>
+                        <p class="header-title text">Requests</p>
                     </div>
                 </div>
             </div>
@@ -97,8 +97,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     <th scope="col">Quantity</th>
                                     <th scope="col">User</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Approved by</th>
+                                    <th scope="col">Modified by</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -111,7 +112,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
                                         . "    h.history_quantity AS Quantity, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                        . "    CONCAT(mb.user_firstname, ' ', mb.user_lastname) AS Modified, \n"
+                                        . "    CONCAT(u.user_firstname, ' ', u.user_lastname) AS Modified, \n"
                                         . "    h.status as Status,\n"
                                         . "    h.history_date AS Date\n"
                                         . "FROM ssms.history h\n"
@@ -134,8 +135,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
                                         . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
                                         . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                        . "LEFT JOIN ssms.users mb ON h.modified_by = mb.user_id\n"
-                                        . "WHERE h.status = 'approved'\n"
+                                        . "LEFT JOIN ssms.users mb ON h.modified_by = u.user_id\n"
+                                        . "WHERE h.status = 'pending'\n"
                                         . "ORDER BY h.history_date;";
                                 }
                                 $result = $conn->query($sql);
@@ -152,17 +153,33 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                 ?>
                                         <tr>
-                                            <td><?php echo $id; ?></td>
-                                            <td><?php echo $item; ?></td>
-                                            <td><?php echo $qty; ?></td>
-                                            <td><?php echo $user; ?></td>
-                                            <?php
-                                                if ($stat == "approved") {
-                                                    echo '<td class="text-capitalize text-success"><strong>' . $stat . '</strong></td>';
-                                                }
-                                            ?>
-                                            <td><?php echo $by; ?></td>
-                                            <td><?php echo $date; ?></td>
+                                            <form action="includes/requests.inc.php" method="POST" enctype="multipart/form-data">
+                                                <td><?php echo $id; ?></td>
+                                                <td><?php echo $item; ?></td>
+                                                <td><?php echo $qty; ?></td>
+                                                <td><?php echo $user; ?></td>
+                                                <?php
+                                                    if ($stat == "approved") {
+                                                        echo '<td class="text-capitalize text-success"><strong>' . $stat . '</strong></td>';
+                                                    } else if ($stat == "pending") {
+                                                        echo '<td class="text-capitalize text-warning"><strong>' . $stat . '</strong></td>';
+                                                    } 
+                                                ?>
+                                                <td><?php echo $by; ?></td>
+                                                <td><?php echo $date; ?></td>
+
+                                                <!-- Action -->
+                                                <?php
+                                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <td>
+                                                        <?php if ($stat == 'pending') { ?>
+                                                            <button class="btn btn-success px-2 appr-btn" data-appr-id="<?php echo $id; ?>">Approve</button>
+                                                        <?php } ?>
+                                                    </td>
+
+                                                <?php } ?>
+                                                <!-- End of action -->
+                                            </form>
                                         </tr>
                                 <?php
                                     }
@@ -183,6 +200,33 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                     </div>
                 </div>
             </div>
+
+            <!-- Aprrove Modal -->
+            <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form action="includes/requests.inc.php" method="post">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="disableModal">Approve Request</h5>
+                                <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="appr_id" id="appr_id">
+                                <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
+                                <h6>Are you sure you want to approve this request?</h6>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-between">
+                                <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
+                                <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
+                                <input type="submit" class="btn btn-default px-2" name="approve-request" value="Approve Request">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -203,6 +247,30 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
             sidebar.classList.remove("close");
         })
     </script>
+
+<script>
+        $(document).ready(function() {
+
+            // Disabling OS
+            $('table').on('click', '.appr-btn', function(e) {
+                e.preventDefault();
+                var appr_id = $(this).data('appr-id');
+                $.ajax({
+                    type: 'POST',
+                    url: "includes/requests.inc.php",
+                    data: {
+                        'approve_supply': true,
+                        'appr_id': appr_id
+                    },
+                    success: function(response) {
+                        $('#appr_id').val(appr_id);
+                        $('#approveModal').modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
