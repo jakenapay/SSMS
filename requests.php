@@ -55,7 +55,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <?php include 'includes/user.inc.php';
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM epiz_33456032_ssms.users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -115,11 +115,11 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) AS Modified, \n"
                                         . "    h.status as Status,\n"
                                         . "    h.history_date AS Date\n"
-                                        . "FROM ssms.history h\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                        . "LEFT JOIN ssms.users mb ON h.modified_by = u.user_id\n"
+                                        . "FROM epiz_33456032_ssms.history h\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users u ON h.user_id = u.user_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users mb ON h.modified_by = u.user_id\n"
                                         . "WHERE u.user_id=" . $id . "\n"
                                         . "ORDER BY h.history_date;";
                                 } else {
@@ -131,11 +131,11 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "    CONCAT(mb.user_firstname, ' ', mb.user_lastname) AS Modified,\n"
                                         . "    h.status AS Status,\n"
                                         . "    h.history_date AS Date\n"
-                                        . "FROM ssms.history h\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                        . "LEFT JOIN ssms.users mb ON h.modified_by = u.user_id\n"
+                                        . "FROM epiz_33456032_ssms.history h\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.office_supplies os ON h.os_id = os.os_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users u ON h.user_id = u.user_id\n"
+                                        . "LEFT JOIN epiz_33456032_ssms.users mb ON h.modified_by = u.user_id\n"
                                         . "WHERE h.status = 'pending'\n"
                                         . "ORDER BY h.history_date;";
                                 }
