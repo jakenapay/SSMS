@@ -11,7 +11,7 @@ if (isset($_POST['approve-request'])) {
     $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
     // probably add some date last modified by
-    $sql = "UPDATE ssms.history SET status='approved', modified_by=$uid WHERE history_id=$appr_id";
+    $sql = "UPDATE epiz_33456032_ssms.history SET status='approved', modified_by=$uid WHERE history_id=$appr_id";
     if ($conn->query($sql) === TRUE) {
         // Return a success response
         header("location: ../requests.php?m=approved");
