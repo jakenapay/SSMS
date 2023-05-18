@@ -183,7 +183,7 @@ if (isset($_POST['send_email'])) {
     $mail->SMTPAuth = true; //enable authentication
 
     $mail->Username = 'storagesupplyms@gmail.com';
-    $mail->Password = 'yzdeygapfniprdrq'; //google password
+    $mail->Password = 'aslhlcxjhijdizbm'; //google password
 
     $mail->SMTPSecure = "tls"; //tls (Transport Layer Security)
     $mail->Port = 587;
