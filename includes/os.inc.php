@@ -123,84 +123,6 @@ if (isset($_POST['update-img'])) {
     }
 }
 
-
-// if (isset($_POST['check_view'])) {
-
-//     // get the technology supply id
-//     $os_id = $_POST['os_id'];
-
-//     // requirements to run into database and functions for configurations
-//     require 'config.inc.php';
-
-//     $result = $conn->query("SELECT * FROM ssms.office_supplies WHERE os_id = $os_id");
-//     // Check if the query was successful
-//     if ($result) {
-//         // Loop through the rows of the result set
-//         while ($row = $result->fetch_assoc()) {
-//             // Process each row and generate the HTML content
-//             $osid = $row['os_id'];
-//             $name = $row['os_name'];
-//             $brand = $row['os_brand'];
-//             $uom = $row['os_uom'];
-//             $qty = $row['os_quantity'];
-//             $loc = $row['os_location'];
-//             $old_img = $row['os_img'];
-//             $des = $row['os_desc'];
-//             $da = $row['date_added'];
-//             $dlm = $row['date_last_modified'];
-//             // $by = $row['fullname'];
-
-//             echo $return = '
-//                 <div class="row">
-//                     <div class="col-md-12 pt-4 pb-5 d-flex justify-content-center">
-//                         <img src="officeSupplies/' . $old_img . '" alt="" class="img-fluid" style="width: 300px;">
-//                     </div>
-//                     <div class="col-md-6 pt-1 pb-1">
-//                         <label for="os_id">ID</label>
-//                         <input type="text" class="form-control" id="os_id" name="os_id" value="' . $osid . '" disabled>
-//                         <input type="hidden" class="form-control" id="os_id" name="os_id" value="' . $osid . '">
-//                     </div>  
-//                     <div class="col-md-6 pt-1 pb-1">
-//                         <label for="">Name</label>
-//                         <input type="text" class="form-control" id="os_name" name="os_name" value="' . $name . '" disabled>
-//                     </div>  
-//                     <div class="col-md-6 pt-1 pb-1">
-//                         <label for="ts_brand">Brand</label>
-//                         <input type="text" class="form-control" id="os_brand" name="os_brand" value="' . $brand . '" disabled>
-//                     </div>
-//                     <div class="col-md-6 pt-1 pb-1">
-//                         <label for="ts_model">Unit of Measure</label>
-//                         <input type="text" class="form-control" id="os_uom" name="os_uom" value="' . $uom . '" disabled>
-//                     </div>
-//                     <div class="col-md-12 pt-1 pb-1">
-//                         <label for="ts_model">Description (additional information)</label>
-//                         <textarea type="text" class="form-control" id="os_uom" name="os_uom" disabled>' . $des . '</textarea>
-//                     </div>
-//                 </div>
-//                 <div class="row">
-//                     <div class="w-100 my-2">
-//                         <hr
-//                     </div>
-//                     <div class="col-md-12 pt-3 pb-2">
-//                         <h6><strong>Get this item:</strong></h6>
-//                         <h6><span class="text-muted"><strong>Note:</strong> Please be careful when getting items</span></h6>
-//                          <div class="form-group mt-3">
-//                             <span class="d-flex justify-content-between align-items-center">
-//                                 <label class="" for="get_quantity">Quantity (1-10)</label>
-//                                 <label><strong>' . $qty . ' left</strong></label>
-//                             </span>
-//                                 <input class="form-control" type="number" min="1" max="10" name="get_quantity" id="get_quantity" placeholder="1-10" required>
-//                                 <input type="hidden" name="os_quantity" value="' . $qty . '" />
-//                         </div>
-//                     </div>
-//                 </div>
-//             ';
-//         }
-//     } else {
-//         echo '<h5>No result</h5>';
-//     }
-// }
-
 // New view office supplies
 if (isset($_POST['check_view'])) {
     require 'config.inc.php';
@@ -330,46 +252,55 @@ if (isset($_POST['get-btn-office'])) {
     }
 }
 
-// disabling tech supply
+
+// Disabling tech supply
 if (isset($_POST['delete-supply'])) {
 
-    // include other php process
+    // Include other PHP processes
     include_once 'config.inc.php';
     include_once 'functions.inc.php';
 
-    $del_id = $_POST['del_id']; // delete id of the certain TS
-    $uid = $_POST['uid']; // user id - the id of account that you're using
+    $del_id = $_POST['del_id']; // ID of the supply to disable
+    $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
     $sql = "UPDATE ssms.office_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$del_id";
     if ($conn->query($sql) === TRUE) {
+        // Return a success response
         header("location: ../officeSupplies.php?m=disablingSuccess");
         exit();
     } else {
+        // Return an error response
         echo $conn->error;
         echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
         exit();
     }
+    exit();
 }
 
-// enable-supply
+// Enabling tech supply
 if (isset($_POST['enable-supply'])) {
 
-    // include other php process
+    // Include other PHP processes
     include_once 'config.inc.php';
     include_once 'functions.inc.php';
 
-    $enbl_id = $_POST['enbl_id']; // delete id of the certain TS
-    $uid = $_POST['uid']; // user id - the id of account that you're using
+    $enbl_id = $_POST['enbl_id']; // ID of the supply to enable
+    $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
     $sql = "UPDATE ssms.office_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$enbl_id";
     if ($conn->query($sql) === TRUE) {
+        // Return a success response
         header("location: ../officeSupplies.php?m=enablingSuccess");
         exit();
     } else {
+        // Return an error response
         echo $conn->error;
         echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
     }
+    exit();
 }
+
+
 
 
 // add supply
