@@ -79,7 +79,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT ts_id as id, ts_quantity as quantity, ts_name as item, ts_location as location FROM ssms.technology_supplies";
+                                    $sql = "SELECT ts_id as id, ts_quantity as quantity, ts_name as item, ts_location as location FROM technology_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -132,7 +132,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT os_id as id, os_quantity as quantity,os_name as item, os_location as location FROM ssms.office_supplies";
+                                    $sql = "SELECT os_id as id, os_quantity as quantity,os_name as item, os_location as location FROM office_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -249,10 +249,10 @@ include 'includes/user.inc.php';
                                         . "    r.restock_quantity AS Quantity, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    r.restock_date AS Date\n"
-                                        . "FROM ssms.restocks r\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON r.user_id = u.user_id\n"
+                                        . "FROM restocks r\n"
+                                        . "LEFT JOIN office_supplies os ON r.os_id = os.os_id\n"
+                                        . "LEFT JOIN technology_supplies ts ON r.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN users u ON r.user_id = u.user_id\n"
                                         . "WHERE u.user_id=" . $id . "\n"
                                         . "ORDER BY r.restock_date DESC;";
                                 } else {
@@ -261,12 +261,11 @@ include 'includes/user.inc.php';
                                         . "    r.restock_quantity AS Quantity, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    r.restock_date AS Date\n"
-                                        . "FROM ssms.restocks r\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON r.user_id = u.user_id\n"
+                                        . "FROM restocks r\n"
+                                        . "LEFT JOIN office_supplies os ON r.os_id = os.os_id\n"
+                                        . "LEFT JOIN technology_supplies ts ON r.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN users u ON r.user_id = u.user_id\n"
                                         . "ORDER BY r.restock_date DESC;";
-                                    // $sql = "SELECT *, h.history_id as Id FROM `ssms`.`history` as h";
                                 }
                                 $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {

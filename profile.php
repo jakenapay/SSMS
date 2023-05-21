@@ -62,7 +62,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -265,9 +265,9 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         // Checks if its a user or admin; if user then go to stocks page
                                         // Only admin can go to index page or dashboard
                                         if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
-                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM ssms.users WHERE user_id=' . $id . '";
+                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM users WHERE user_id=' . $id . '";
                                         } else {
-                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM ssms.users";
+                                            $sql = "SELECT user_id as id, user_firstname as fn, user_lastname as ln, user_email as em, user_img as img, user_category as cat, user_status as stat FROM users";
                                         }
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
@@ -340,7 +340,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 <?php
                 include 'includes/config.inc.php';
                 $id = $_SESSION['id'];
-                $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+                $sql = "SELECT * FROM users WHERE user_id=$id LIMIT 1";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row
@@ -430,7 +430,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 <?php
                 include 'includes/config.inc.php';
                 $id = $_SESSION['id'];
-                $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+                $sql = "SELECT * FROM users WHERE user_id=$id LIMIT 1";
                 $result = mysqli_query($conn, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     // output data of each row

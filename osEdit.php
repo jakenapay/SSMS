@@ -20,7 +20,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
     require 'includes/functions.inc.php';
 
     $id = $_GET['eid'];
-    $result = $conn->query("SELECT *, ssms.office_supplies.date_last_modified as dlmr, CONCAT(ssms.users.user_firstname, ' ', ssms.users.user_lastname) as fullname FROM ssms.office_supplies INNER JOIN ssms.users ON ssms.office_supplies.modified_by=ssms.users.user_id WHERE os_id = $id LIMIT 1");
+    $result = $conn->query("SELECT *, office_supplies.date_last_modified as dlmr, CONCAT(users.user_firstname, ' ', users.user_lastname) as fullname FROM office_supplies INNER JOIN users ON office_supplies.modified_by=users.user_id WHERE os_id = $id LIMIT 1");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set

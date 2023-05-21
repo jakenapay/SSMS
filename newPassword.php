@@ -28,7 +28,7 @@ if (isset($_POST['enter-pass-btn'])) {
 
     // hash the pw and update the user's password
     $p1 = password_hash($p1, PASSWORD_DEFAULT);
-    $sql = $conn->query("UPDATE ssms.users SET user_password='$p1' WHERE user_email='$email' AND code='$code'");
+    $sql = $conn->query("UPDATE users SET user_password='$p1' WHERE user_email='$email' AND code='$code'");
     if (!$sql) {
         // echo '<script>alert("' . $conn->error . '");</script>';
         header("location: newPassword.php?email=$email&code=$code&m=error");

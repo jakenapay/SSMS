@@ -30,7 +30,7 @@ if (isset($_POST['save-changes'])) {
     }
 
     // Sql query to update the row
-    $updateQuery = "UPDATE ssms.office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom', `os_quantity`='$qty', `os_location`='$loc', `os_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE os_id=$osid;";
+    $updateQuery = "UPDATE office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom', `os_quantity`='$qty', `os_location`='$loc', `os_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE os_id=$osid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         // echo "<script>alert('Product updated successfully.');</script>";
@@ -107,7 +107,7 @@ if (isset($_POST['update-img'])) {
         $folder = '../officeSupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE ssms.office_supplies SET os_img='$img', date_last_modified=now(), modified_by=$uid WHERE os_id=$osid";
+        $sql = "UPDATE office_supplies SET os_img='$img', date_last_modified=now(), modified_by=$uid WHERE os_id=$osid";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../osEdit.php?eid='.$osid.'&m=failed');</script>";
@@ -129,7 +129,7 @@ if (isset($_POST['check_view'])) {
 
     $os_id = $_POST['os_id'];
 
-    $stmt = $conn->prepare("SELECT * FROM ssms.office_supplies WHERE os_id = ?");
+    $stmt = $conn->prepare("SELECT * FROM office_supplies WHERE os_id = ?");
     $stmt->bind_param('i', $os_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -237,9 +237,9 @@ if (isset($_POST['get-btn-office'])) {
         exit();
     }
 
-    $sql = "UPDATE ssms.office_supplies SET os_quantity='$left', date_last_modified=now(), modified_by=$id WHERE os_id=$osid";
+    $sql = "UPDATE office_supplies SET os_quantity='$left', date_last_modified=now(), modified_by=$id WHERE os_id=$osid";
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO ssms.history(`os_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$osid', '$qty', $id, 'pending', NULL, now())";
+        $sql2 = "INSERT INTO history(`os_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$osid', '$qty', $id, 'pending', NULL, now())";
         if ($conn->query($sql2) === TRUE) {
             header("location: ../officeSupplies.php?m=success");
         } else {
@@ -263,7 +263,7 @@ if (isset($_POST['delete-supply'])) {
     $del_id = $_POST['del_id']; // ID of the supply to disable
     $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE ssms.office_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$del_id";
+    $sql = "UPDATE office_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$del_id";
     if ($conn->query($sql) === TRUE) {
         // Return a success response
         header("location: ../officeSupplies.php?m=disablingSuccess");
@@ -287,7 +287,7 @@ if (isset($_POST['enable-supply'])) {
     $enbl_id = $_POST['enbl_id']; // ID of the supply to enable
     $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE ssms.office_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$enbl_id";
+    $sql = "UPDATE office_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$enbl_id";
     if ($conn->query($sql) === TRUE) {
         // Return a success response
         header("location: ../officeSupplies.php?m=enablingSuccess");

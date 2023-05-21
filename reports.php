@@ -81,7 +81,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT ts_id as t_id, ts_name as t_item FROM ssms.technology_supplies";
+                                    $sql = "SELECT ts_id as t_id, ts_name as t_item FROM technology_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -139,7 +139,7 @@ include 'includes/user.inc.php';
                                     <option selected>Select</option>
                                     <?php
                                     include 'includes/config.inc.php';
-                                    $sql = "SELECT os_id as os_id, os_name as os_item FROM ssms.office_supplies";
+                                    $sql = "SELECT os_id as os_id, os_name as os_item FROM office_supplies";
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
                                         // output data of each row
@@ -266,10 +266,10 @@ include 'includes/user.inc.php';
                                         . "    r.report_description AS Description, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    r.report_date AS Date\n"
-                                        . "FROM ssms.reports r\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON r.report_by = u.user_id\n"
+                                        . "FROM reports r\n"
+                                        . "LEFT JOIN office_supplies os ON r.os_id = os.os_id\n"
+                                        . "LEFT JOIN technology_supplies ts ON r.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN users u ON r.report_by = u.user_id\n"
                                         . "WHERE r.report_by=" . $_SESSION['id'] . "\n"
                                         . "ORDER BY r.report_date DESC;";
                                 } else {
@@ -278,10 +278,10 @@ include 'includes/user.inc.php';
                                         . "    r.report_description AS Description, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    r.report_date AS Date\n"
-                                        . "FROM ssms.reports r\n"
-                                        . "LEFT JOIN ssms.office_supplies os ON r.os_id = os.os_id\n"
-                                        . "LEFT JOIN ssms.technology_supplies ts ON r.ts_id = ts.ts_id\n"
-                                        . "LEFT JOIN ssms.users u ON r.report_by = u.user_id\n"
+                                        . "FROM reports r\n"
+                                        . "LEFT JOIN office_supplies os ON r.os_id = os.os_id\n"
+                                        . "LEFT JOIN technology_supplies ts ON r.ts_id = ts.ts_id\n"
+                                        . "LEFT JOIN users u ON r.report_by = u.user_id\n"
                                         . "ORDER BY r.report_date DESC;";
                                 }
                                 $result = $conn->query($sql);

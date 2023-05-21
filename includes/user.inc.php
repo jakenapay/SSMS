@@ -11,7 +11,7 @@ if (isset($_POST['check_view'])) {
 
     include 'config.inc.php';
 
-    $result = $conn->query("SELECT u.user_id, u.user_firstname, u.user_lastname, u.user_email, u.user_img, u.user_category, u.user_status, u.user_date, u.date_last_modified, us.modified_by as Modified_by FROM `ssms`.`users` as u INNER JOIN `ssms`.`users` as us ON u.user_id=us.user_id WHERE u.user_id=$user_id");
+    $result = $conn->query("SELECT u.user_id, u.user_firstname, u.user_lastname, u.user_email, u.user_img, u.user_category, u.user_status, u.user_date, u.date_last_modified, us.modified_by as Modified_by FROM `users` as u INNER JOIN `users` as us ON u.user_id=us.user_id WHERE u.user_id=$user_id");
     // Check if the query was successful
     if ($result) {
         // Loop through the rows of the result set
@@ -140,7 +140,7 @@ if (isset($_POST['user_btn_update'])) {
     $by = $_POST['modified_by'];
     $dlm = $_POST['date_last_modified'];
 
-    $sql = "UPDATE ssms.users SET user_id='$user_id', user_firstname='$fn', user_lastname='$ln', user_email='$em', user_category='$cat', user_status='$stat', user_date='$date',date_last_modified=now(), modified_by=$uid WHERE user_id=$user_id";
+    $sql = "UPDATE users SET user_id='$user_id', user_firstname='$fn', user_lastname='$ln', user_email='$em', user_category='$cat', user_status='$stat', user_date='$date',date_last_modified=now(), modified_by=$uid WHERE user_id=$user_id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../profile.php?m=success");
     } else {
@@ -183,7 +183,7 @@ if (isset($_POST['send_email'])) {
     $mail->SMTPAuth = true; //enable authentication
 
     $mail->Username = 'storagesupplyms@gmail.com';
-    $mail->Password = 'yzdeygapfniprdrq'; //google password
+    $mail->Password = 'aslhlcxjhijdizbm'; //google password
 
     $mail->SMTPSecure = "tls"; //tls (Transport Layer Security)
     $mail->Port = 587;

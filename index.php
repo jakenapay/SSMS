@@ -57,11 +57,11 @@ include 'includes/config.inc.php';
                 ['Supplies', 'Quantity'],
                 <?php
                 include('includes/config.inc.php');
-                $office_supplies_query = "SELECT COUNT(*) as count FROM ssms.office_supplies";
+                $office_supplies_query = "SELECT COUNT(*) as count FROM office_supplies";
                 $office_supplies_result = mysqli_query($conn, $office_supplies_query);
                 $office_supplies_data = mysqli_fetch_assoc($office_supplies_result);
                 $office_supplies_count = $office_supplies_data['count'];
-                $technology_supplies_query = "SELECT COUNT(*) as count FROM ssms.technology_supplies";
+                $technology_supplies_query = "SELECT COUNT(*) as count FROM technology_supplies";
                 $technology_supplies_result = mysqli_query($conn, $technology_supplies_query);
                 $technology_supplies_data = mysqli_fetch_assoc($technology_supplies_result);
                 $technology_supplies_count = $technology_supplies_data['count'];
@@ -117,7 +117,7 @@ include 'includes/config.inc.php';
                 $query = "SELECT 
     MONTH(restock_date) as month, 
     SUM(restock_quantity) as total_quantity
-    FROM ssms.restocks
+    FROM restocks
     GROUP BY MONTH(restock_date)
     ORDER BY month DESC
     LIMIT 12";
@@ -173,11 +173,11 @@ include 'includes/config.inc.php';
                 ['Supplies', 'Count'],
                 <?php
                 include('includes/config.inc.php');
-                $office_supplies_query = "SELECT COUNT(*) as count FROM ssms.office_supplies WHERE os_quantity < 5";
+                $office_supplies_query = "SELECT COUNT(*) as count FROM office_supplies WHERE os_quantity < 5";
                 $office_supplies_result = mysqli_query($conn, $office_supplies_query);
                 $office_supplies_data = mysqli_fetch_assoc($office_supplies_result);
                 $office_supplies_count = $office_supplies_data['count'];
-                $technology_supplies_query = "SELECT COUNT(*) as count FROM ssms.technology_supplies WHERE ts_quantity < 5";
+                $technology_supplies_query = "SELECT COUNT(*) as count FROM technology_supplies WHERE ts_quantity < 5";
                 $technology_supplies_result = mysqli_query($conn, $technology_supplies_query);
                 $technology_supplies_data = mysqli_fetch_assoc($technology_supplies_result);
                 $technology_supplies_count = $technology_supplies_data['count'];
@@ -214,7 +214,7 @@ include 'includes/config.inc.php';
     <?php include 'nav.php';
     include 'includes/config.inc.php';
     $id = $_SESSION['id'];
-    $sql = "SELECT * FROM ssms.users WHERE user_id=$id LIMIT 1";
+    $sql = "SELECT * FROM users WHERE user_id=$id LIMIT 1";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         // output data of each row
@@ -254,7 +254,7 @@ include 'includes/config.inc.php';
                             <i class="fa-solid fa-boxes-packing icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.office_supplies");
+                                $result = $conn->query("SELECT COUNT(*) FROM office_supplies");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
 
@@ -274,7 +274,7 @@ include 'includes/config.inc.php';
                             <i class="fa-solid fa-computer icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.technology_supplies");
+                                $result = $conn->query("SELECT COUNT(*) FROM technology_supplies");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
                                     <h3 class="amount"><strong><?php echo implode($result); ?></strong></h3>
@@ -292,7 +292,7 @@ include 'includes/config.inc.php';
                             <i class="fa-solid fa-users icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.users");
+                                $result = $conn->query("SELECT COUNT(*) FROM users");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
                                     <h3 class="amount"><strong><?php echo implode($result); ?></strong></h3>
@@ -310,7 +310,7 @@ include 'includes/config.inc.php';
                             <i class="fa-solid fa-bug icon"></i>
                             <span>
                                 <?php
-                                $result = $conn->query("SELECT COUNT(*) FROM ssms.reports");
+                                $result = $conn->query("SELECT COUNT(*) FROM reports");
                                 if ($result = $result->fetch_assoc()) {
                                 ?>
                                     <h3 class="amount"><strong><?php echo implode($result); ?></strong></h3>
@@ -341,18 +341,7 @@ include 'includes/config.inc.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    // $sql = "SELECT \n"
-                                    //     . "    h.history_id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
-                                    //     . "    h.history_quantity AS Quantity, \n"
-                                    //     . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
-                                    //     . "    DATE_FORMAT(h.history_date, '%Y-%m-%d') AS Date\n"
-                                    //     . "FROM ssms.history h\n"
-                                    //     . "LEFT JOIN ssms.office_supplies os ON h.os_id = os.os_id\n"
-                                    //     . "LEFT JOIN ssms.technology_supplies ts ON h.ts_id = ts.ts_id\n"
-                                    //     . "LEFT JOIN ssms.users u ON h.user_id = u.user_id\n"
-                                    //     . "WHERE MONTH(h.history_date) = MONTH(CURRENT_DATE())\n"
-                                    //     . "AND YEAR(h.history_date) = YEAR(CURRENT_DATE()) ORDER BY h.history_date DESC LIMIT 3;";
-                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM ssms.history as h LEFT JOIN ssms.office_supplies as os on h.os_id=os.os_id LEFT JOIN ssms.technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN ssms.users as u on h.user_id=u.user_id ORDER BY h.history_date DESC LIMIT 3;";
+                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM history as h LEFT JOIN office_supplies as os on h.os_id=os.os_id LEFT JOIN technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN users as u on h.user_id=u.user_id ORDER BY h.history_date DESC LIMIT 3;";
 
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {
@@ -439,7 +428,7 @@ include 'includes/config.inc.php';
                             <!-- php code to select admins -->
                             <?php
                             require 'includes/config.inc.php';
-                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_category='admin'";
+                            $sql = "SELECT COUNT(user_id) FROM users WHERE user_category='admin'";
                             $result = mysqli_query($conn, $sql);
                             $count = mysqli_fetch_array($result)[0];
                             ?>
@@ -458,7 +447,7 @@ include 'includes/config.inc.php';
                             <!-- php code to select users -->
                             <?php
                             require 'includes/config.inc.php';
-                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_category='user'";
+                            $sql = "SELECT COUNT(user_id) FROM users WHERE user_category='user'";
                             $result = mysqli_query($conn, $sql);
                             $count = mysqli_fetch_array($result)[0];
                             ?>
@@ -477,7 +466,7 @@ include 'includes/config.inc.php';
                             <!-- php code to select users -->
                             <?php
                             require 'includes/config.inc.php';
-                            $sql = "SELECT COUNT(user_id) FROM ssms.users WHERE user_status='inactive'";
+                            $sql = "SELECT COUNT(user_id) FROM users WHERE user_status='inactive'";
                             $result = mysqli_query($conn, $sql);
                             $count = mysqli_fetch_array($result)[0];
                             ?>
@@ -526,16 +515,6 @@ include 'includes/config.inc.php';
         searchBtn.addEventListener("click", () => {
             sidebar.classList.remove("close");
         })
-
-        modeSwitch.addEventListener("click", () => {
-            body.classList.toggle("dark");
-
-            if (body.classList.contains("dark")) {
-                modeText.innerText = "Light mode";
-            } else {
-                modeText.innerText = "Dark mode";
-            }
-        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

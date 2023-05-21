@@ -31,7 +31,7 @@ if (isset($_POST['save-changes'])) {
     }
 
     // Sql query to update the row
-    $updateQuery = "UPDATE ssms.technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_quantity`='$qty', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE ts_id=$tsid;";
+    $updateQuery = "UPDATE technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_quantity`='$qty', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE ts_id=$tsid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         echo "<script>alert('Product updated successfully.');</script>";
@@ -108,7 +108,7 @@ if (isset($_POST['update-img'])) {
         $folder = '../technologySupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE ssms.technology_supplies SET ts_img='$img', date_last_modified=now(), modified_by=$uid WHERE ts_id=$tsid";
+        $sql = "UPDATE technology_supplies SET ts_img='$img', date_last_modified=now(), modified_by=$uid WHERE ts_id=$tsid";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../tsEdit.php?eid='.$tsid.'&m=failed');</script>";
@@ -130,7 +130,7 @@ if (isset($_POST['check_view'])) {
     // get the technology supply id
     $ts_id = $_POST['ts_id'];
 
-    $stmt = $conn->prepare("SELECT * FROM ssms.technology_supplies WHERE ts_id = ?");
+    $stmt = $conn->prepare("SELECT * FROM technology_supplies WHERE ts_id = ?");
     $stmt->bind_param('i', $ts_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -246,9 +246,9 @@ if (isset($_POST['get-btn-tech'])) {
         exit();
     }
 
-    $sql = "UPDATE ssms.technology_supplies SET ts_quantity='$left', date_last_modified=now(), modified_by=$id WHERE ts_id=$tsid";
+    $sql = "UPDATE technology_supplies SET ts_quantity='$left', date_last_modified=now(), modified_by=$id WHERE ts_id=$tsid";
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO ssms.history(`ts_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$tsid', '$qty', $id, 'pending', NULL, now())";
+        $sql2 = "INSERT INTO history(`ts_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$tsid', '$qty', $id, 'pending', NULL, now())";
         if ($conn->query($sql2) === TRUE) {
             header("location: ../technologySupplies.php?m=success");
         } else {
@@ -271,7 +271,7 @@ if (isset($_POST['delete-supply'])) {
     $del_id = $_POST['del_id']; // ID of the supply to disable
     $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE ssms.technology_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$del_id";
+    $sql = "UPDATE technology_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$del_id";
     if ($conn->query($sql) === TRUE) {
         // Return a success response
         header("location: ../technologySupplies.php?m=disablingSuccess");
@@ -295,7 +295,7 @@ if (isset($_POST['enable-supply'])) {
     $enbl_id = $_POST['enbl_id']; // ID of the supply to enable
     $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE ssms.technology_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$enbl_id";
+    $sql = "UPDATE technology_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE ts_id=$enbl_id";
     if ($conn->query($sql) === TRUE) {
         // Return a success response
         header("location: ../technologySupplies.php?m=enablingSuccess");
