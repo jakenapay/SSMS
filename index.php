@@ -40,7 +40,8 @@ include 'includes/config.inc.php';
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -249,7 +250,7 @@ include 'includes/config.inc.php';
 
                 <!-- Total Office supplies -->
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <a style="text-decoration: none" href="officesupplies.php" class="dashboard-link">
+                    <a style="text-decoration: none" href="officeSupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-boxes-packing icon"></i>
                             <span>
@@ -269,7 +270,7 @@ include 'includes/config.inc.php';
 
                 <!-- Total technology supplies -->
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <a style="text-decoration: none" href="technologysupplies.php" class="dashboard-link">
+                    <a style="text-decoration: none" href="technologySupplies.php" class="dashboard-link">
                         <div class="box-content">
                             <i class="fa-solid fa-computer icon"></i>
                             <span>
@@ -341,7 +342,7 @@ include 'includes/config.inc.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(U.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM history as h LEFT JOIN office_supplies as os on h.os_id=os.os_id LEFT JOIN technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN users as u on h.user_id=u.user_id ORDER BY h.history_date DESC LIMIT 3;";
+                                    $sql = "SELECT COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item, h.history_quantity as Quantity, CONCAT(u.user_firstname, ' ', u.user_lastname) as User, h.history_date as Date FROM history as h LEFT JOIN office_supplies as os on h.os_id=os.os_id LEFT JOIN technology_supplies as ts on h.ts_id=ts.ts_id LEFT JOIN users as u on h.user_id=u.user_id ORDER BY h.history_date DESC LIMIT 3;";
 
                                     $result = $conn->query($sql);
                                     if ($result->num_rows > 0) {

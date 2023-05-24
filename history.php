@@ -31,7 +31,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>History</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -104,7 +105,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // Only admin can go to index page or dashboard
                                 if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                                     $sql = "SELECT \n"
-                                        . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                        . "    h.history_id as Id, COALESCE(os.os_name, ts.ts_model) as Item,\n"
                                         . "    h.history_quantity AS Quantity, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    CONCAT(mb.user_firstname, ' ', mb.user_lastname) AS Modified, \n"
@@ -120,7 +121,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 } else {
                                     $sql = "SELECT DISTINCT\n"
                                         . "    h.history_id AS Id,\n"
-                                        . "    COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) AS Item,\n"
+                                        . "    COALESCE(os.os_name, ts.ts_model) AS Item,\n"
                                         . "    h.history_quantity AS Quantity,\n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) AS User,\n"
                                         . "    CONCAT(mb.user_firstname, ' ', mb.user_lastname) AS Modified,\n"

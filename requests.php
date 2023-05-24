@@ -31,7 +31,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS</title>
+    <title>Requests</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -109,7 +109,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // Only admin can go to index page or dashboard
                                 if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
                                     $sql = "SELECT \n"
-                                        . "    h.history_id as Id, COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) as Item,\n"
+                                        . "    h.history_id as Id, COALESCE(os.os_name, ts.ts_model) as Item,\n"
                                         . "    h.history_quantity AS Quantity, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) as User, \n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) AS Modified, \n"
@@ -125,7 +125,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 } else {
                                     $sql = "SELECT DISTINCT\n"
                                         . "    h.history_id AS Id,\n"
-                                        . "    COALESCE(os.os_name, CONCAT(ts.ts_name, ' ', ts.ts_model)) AS Item,\n"
+                                        . "    COALESCE(os.os_name, ts.ts_model) AS Item,\n"
+                                        . "    COALESCE(os.os_id, ts.ts_id) AS Item_id, \n"
                                         . "    h.history_quantity AS Quantity,\n"
                                         . "    CONCAT(u.user_firstname, ' ', u.user_lastname) AS User,\n"
                                         . "    CONCAT(mb.user_firstname, ' ', mb.user_lastname) AS Modified,\n"
@@ -145,6 +146,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     while ($row = $result->fetch_assoc()) {
                                         $id = $row['Id'];
                                         $item = $row['Item'];
+                                        $item_id = $row['Item_id'];
                                         $qty = $row['Quantity'];
                                         $user = $row['User'];
                                         $stat = $row['Status'];
@@ -173,7 +175,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                                     <td>
                                                         <?php if ($stat == 'pending') { ?>
-                                                            <button class="btn btn-success px-2 appr-btn" data-appr-id="<?php echo $id; ?>">Approve</button>
+                                                            <button class="btn btn-success px-2 appr-btn" data-appr-id="<?php echo $id; ?>" data-item-name="<?php echo $item ?>" data-item-id="<?php echo $item_id; ?>" data-item-qty="<?php echo $qty; ?>">Approve</button>
                                                         <?php } ?>
                                                     </td>
 
@@ -214,7 +216,15 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 </button>
                             </div>
                             <div class="modal-body">
+                                <!-- <label for="appr_id">Approve ID</label> -->
                                 <input type="hidden" name="appr_id" id="appr_id">
+                                <!-- <label for="appr_item_name">Item Name</label> -->
+                                <input type="hidden" name="appr_item_name" id="appr_item_name">
+                                <!-- <label for="appr_item_id">Item ID</label> -->
+                                <input type="hidden" name="appr_item_id" id="appr_item_id">
+                                <!-- <label for="appr_item_qty">Item QTY</label> -->
+                                <input type="hidden" name="appr_item_qty" id="appr_item_qty">
+                                <!-- <label for="">User ID</label> -->
                                 <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
                                 <h6>Are you sure you want to approve this request?</h6>
                             </div>
@@ -252,19 +262,28 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 <script>
         $(document).ready(function() {
 
-            // Disabling OS
+            // Approving supply
             $('table').on('click', '.appr-btn', function(e) {
                 e.preventDefault();
                 var appr_id = $(this).data('appr-id');
+                var appr_item_name = $(this).data('item-name');
+                var appr_item_id = $(this).data('item-id');
+                var appr_item_qty = $(this).data('item-qty');
                 $.ajax({
                     type: 'POST',
                     url: "includes/requests.inc.php",
                     data: {
                         'approve_supply': true,
-                        'appr_id': appr_id
+                        'appr_id': appr_id,
+                        'appr_item_name': appr_item_name,
+                        'appr_item_id': appr_item_id,
+                        'appr_item_qty': appr_item_qty
                     },
                     success: function(response) {
                         $('#appr_id').val(appr_id);
+                        $('#appr_item_name').val(appr_item_name);
+                        $('#appr_item_id').val(appr_item_id);
+                        $('#appr_item_qty').val(appr_item_qty);
                         $('#approveModal').modal('show');
                     }
                 });

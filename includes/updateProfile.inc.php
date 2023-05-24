@@ -30,7 +30,7 @@ if (isset($_POST['save-btn'])) {
 
     $pw = password_hash($pw, PASSWORD_DEFAULT);
     // sql query
-    $sql = "UPDATE users SET user_firstname='$fname', user_lastname='$lname', user_email='$email', user_password='$pw' WHERE user_id=$id";
+    $sql = "UPDATE users SET user_firstname='$fname', user_lastname='$lname', user_email='$email', user_password='$pw', date_last_modified='$now' WHERE user_id=$id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../profile.php?m=updateSuccess");
         exit();
@@ -107,7 +107,7 @@ if (isset($_POST['edit-image'])) {
         $folder = '../userProfile/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE users SET user_img='$img', date_last_modified=now(), modified_by='$uid' WHERE user_id=$user_id";
+        $sql = "UPDATE users SET user_img='$img', date_last_modified='$now', modified_by='$uid' WHERE user_id=$user_id";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../profile.php?m=failed');</script>";
@@ -139,7 +139,7 @@ if (isset($_POST['delete-confirm-btn'])) {
 
     $id = $_POST['user_id'];
     $pw = $_POST['user_password'];
-    $sql = "UPDATE users SET user_status='inactive' WHERE user_id=$id";
+    $sql = "UPDATE users SET user_status='inactive', date_last_modified='$now' WHERE user_id=$id";
     if ($conn->query($sql) === TRUE) {
         header("location: ../login.php");
         exit();

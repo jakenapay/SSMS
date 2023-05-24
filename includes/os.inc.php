@@ -9,8 +9,8 @@ if (isset($_POST['save-changes'])) {
         exit();
     }
 
-    require 'config.inc.php';
-    require 'functions.inc.php';
+    include 'config.inc.php';
+    include 'functions.inc.php';
 
     $uid =  $_POST['uid']; // User id or more likely modified by
     $osid = $_POST['os_id'];
@@ -29,8 +29,10 @@ if (isset($_POST['save-changes'])) {
         exit();
     }
 
+    
+
     // Sql query to update the row
-    $updateQuery = "UPDATE office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom', `os_quantity`='$qty', `os_location`='$loc', `os_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE os_id=$osid;";
+    $updateQuery = "UPDATE office_supplies SET `os_name`='$name', `os_brand`='$brand', `os_uom`='$uom', `os_quantity`='$qty', `os_location`='$loc', `os_desc`='$des', `date_last_modified`='$now',`modified_by`=$uid WHERE os_id=$osid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         // echo "<script>alert('Product updated successfully.');</script>";
@@ -107,7 +109,7 @@ if (isset($_POST['update-img'])) {
         $folder = '../officeSupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE office_supplies SET os_img='$img', date_last_modified=now(), modified_by=$uid WHERE os_id=$osid";
+        $sql = "UPDATE office_supplies SET os_img='$img', date_last_modified='$now', modified_by=$uid WHERE os_id=$osid";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../osEdit.php?eid='.$osid.'&m=failed');</script>";
@@ -200,7 +202,6 @@ if (isset($_POST['check_view'])) {
     }
 }
 
-
 if (isset($_POST['get-btn-office'])) {
 
     // include other php process
@@ -237,21 +238,18 @@ if (isset($_POST['get-btn-office'])) {
         exit();
     }
 
-    $sql = "UPDATE office_supplies SET os_quantity='$left', date_last_modified=now(), modified_by=$id WHERE os_id=$osid";
+    // $sql = "UPDATE office_supplies SET os_quantity='$left', date_last_modified='$now', modified_by=$id WHERE os_id=$osid";
+    // Lalagay sa request.inc.php
+    $sql = "INSERT INTO history(`os_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$osid', '$qty', $id, 'pending', NULL, now())";
+
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO history(`os_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$osid', '$qty', $id, 'pending', NULL, now())";
-        if ($conn->query($sql2) === TRUE) {
-            header("location: ../officeSupplies.php?m=success");
-        } else {
-            echo $conn->error;
-            echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
-        }
+        header("location: ../officeSupplies.php?m=success");
+        exit();
     } else {
         echo $conn->error;
         echo "<script>alert('Error updating product.');window.location.replace('../officeSupplies.php?m=error');</script>";
     }
 }
-
 
 // Disabling tech supply
 if (isset($_POST['delete-supply'])) {
@@ -299,8 +297,6 @@ if (isset($_POST['enable-supply'])) {
     }
     exit();
 }
-
-
 
 
 // add supply
@@ -379,7 +375,7 @@ if (isset($_POST['add-office-btn'])) {
     move_uploaded_file($tmp_img_name, $folder . $image_final_name);
 
     // All done head back to product.php
-    $sql = "INSERT INTO `ssms`.`office_supplies` (`os_name`, `os_brand`, `os_uom`, `os_quantity`, `os_location`, `os_img`, `os_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name', '$brand','$uom','$qty', '$loc', '$image_final_name', '$des', '$stat', now(), now(), '$uid')";
+    $sql = "INSERT INTO `office_supplies` (`os_name`, `os_brand`, `os_uom`, `os_quantity`, `os_location`, `os_img`, `os_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name', '$brand','$uom','$qty', '$loc', '$image_final_name', '$des', '$stat', '$now', '$now', '$uid')";
 
     if ($conn->query($sql) === false) {
         header("location: ../officeSupplies.php?m=uploadError");

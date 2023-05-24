@@ -31,7 +31,7 @@ if (isset($_POST['save-changes'])) {
     }
 
     // Sql query to update the row
-    $updateQuery = "UPDATE technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_quantity`='$qty', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`=now(),`modified_by`=$uid WHERE ts_id=$tsid;";
+    $updateQuery = "UPDATE technology_supplies SET `ts_name`='$name', `ts_model`='$model', `ts_brand`='$brand', `ts_category`='$cat', `ts_quantity`='$qty', `ts_location`='$loc', `ts_desc`='$des', `date_last_modified`='$now',`modified_by`=$uid WHERE ts_id=$tsid;";
 
     if ($conn->query($updateQuery) === TRUE) {
         echo "<script>alert('Product updated successfully.');</script>";
@@ -108,7 +108,7 @@ if (isset($_POST['update-img'])) {
         $folder = '../technologySupplies/';
         move_uploaded_file($imgTmpName, $folder . $img);
 
-        $sql = "UPDATE technology_supplies SET ts_img='$img', date_last_modified=now(), modified_by=$uid WHERE ts_id=$tsid";
+        $sql = "UPDATE technology_supplies SET ts_img='$img', date_last_modified='$now', modified_by=$uid WHERE ts_id=$tsid";
 
         if ($conn->query($sql) === TRUE) {
             echo "<script>alert('Product updated successfully.');window.location.replace('../tsEdit.php?eid='.$tsid.'&m=failed');</script>";
@@ -121,7 +121,6 @@ if (isset($_POST['update-img'])) {
         $img = $old_img;
     }
 }
-
 
 if (isset($_POST['check_view'])) {
     // requirements to run into database and functions for configurations
@@ -210,6 +209,7 @@ if (isset($_POST['check_view'])) {
     }
 }
 
+
 if (isset($_POST['get-btn-tech'])) {
 
     // include other php process
@@ -246,15 +246,10 @@ if (isset($_POST['get-btn-tech'])) {
         exit();
     }
 
-    $sql = "UPDATE technology_supplies SET ts_quantity='$left', date_last_modified=now(), modified_by=$id WHERE ts_id=$tsid";
+    $sql = "INSERT INTO history(`ts_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$tsid', '$qty', $id, 'pending', NULL, now())";
     if ($conn->query($sql) === TRUE) {
-        $sql2 = "INSERT INTO history(`ts_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$tsid', '$qty', $id, 'pending', NULL, now())";
-        if ($conn->query($sql2) === TRUE) {
-            header("location: ../technologySupplies.php?m=success");
-        } else {
-            echo $conn->error;
-            echo "<script>alert('Error updating product.');window.location.replace('../technoglogySupplies.php?m=error');</script>";
-        }
+        header("location: ../technologySupplies.php?m=getSuccess");
+        exit();
     } else {
         echo $conn->error;
         echo "<script>alert('Error updating product.');window.location.replace('../technoglogySupplies.php?m=error');</script>";
@@ -385,7 +380,7 @@ if (isset($_POST['add-tech-btn'])) {
     move_uploaded_file($tmp_img_name, $folder . $image_final_name);
 
     // All done head back to product.php
-    $sql = "INSERT INTO `ssms`.`technology_supplies` (`ts_name`, `ts_model`, `ts_brand`, `ts_category`, `ts_quantity`, `ts_location`, `ts_img`, `ts_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name','$model','$brand','$cat','$qty', '$loc', '$image_final_name', '$des', '$stat', now(), now(), '$uid')";
+    $sql = "INSERT INTO `technology_supplies` (`ts_name`, `ts_model`, `ts_brand`, `ts_category`, `ts_quantity`, `ts_location`, `ts_img`, `ts_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name','$model','$brand','$cat','$qty', '$loc', '$image_final_name', '$des', '$stat', '$now', '$now', '$uid')";
 
     if ($conn->query($sql) === false) {
         header("location: ../technologySupplies.php?m=uploadError");

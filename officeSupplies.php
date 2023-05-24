@@ -34,7 +34,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <title>SSMS | Office Supplies</title>
+    <title>Office Supplies</title>
 
     <!-- jQuery Datatables -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -268,6 +268,14 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 }
                 if ($_GET['m'] == 'addSuccess') {
                     $message = 'Supply Added';
+                    echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                        <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                }
+                if ($_GET['m'] == 'getSuccess') {
+                    $message = 'Supply requested successfully';
                     echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="box-content d-block">
                                         <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
