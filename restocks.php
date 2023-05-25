@@ -308,12 +308,11 @@ include 'includes/user.inc.php';
             modeSwitch = body.querySelector(".toggle-switch"),
             modeText = body.querySelector(".mode-text");
 
-
-        toggle.addEventListener("click", () => {
+        sidebar.addEventListener("mouseout", () => {
             sidebar.classList.toggle("close");
         })
 
-        searchBtn.addEventListener("click", () => {
+        sidebar.addEventListener("mouseover", () => {
             sidebar.classList.remove("close");
         })
     </script>
