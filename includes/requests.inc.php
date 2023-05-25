@@ -60,7 +60,7 @@ if (isset($_POST['approve-request'])) {
         if($conn->query($update_ts_sql) === TRUE) {
             $approve_sql = "UPDATE history SET status='approved', modified_by=$uid WHERE history_id=$appr_id";
             if($conn->query($approve_sql) === TRUE) {
-                header("location: ../requests.php?m=approvedTechnologySupplyRequest");
+                header("location: ../requests.php?m=requestApproved");
                 exit();
             }
             else {
@@ -78,7 +78,7 @@ if (isset($_POST['approve-request'])) {
         if($conn->query($update_os_sql) === TRUE) {
             $approve_sql = "UPDATE history SET status='approved', modified_by=$uid WHERE history_id=$appr_id";
             if($conn->query($approve_sql) === TRUE) {
-                header("location: ../requests.php?m=approvedOfficeSupplyRequest");
+                header("location: ../requests.php?m=requestApproved");
                 exit();
             }
             else {

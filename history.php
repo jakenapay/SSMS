@@ -115,7 +115,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         . "LEFT JOIN office_supplies os ON h.os_id = os.os_id\n"
                                         . "LEFT JOIN technology_supplies ts ON h.ts_id = ts.ts_id\n"
                                         . "LEFT JOIN users u ON h.user_id = u.user_id\n"
-                                        . "LEFT JOIN users mb ON h.modified_by = u.user_id\n"
+                                        . "LEFT JOIN users mb ON h.modified_by = mb.user_id\n"
                                         . "WHERE u.user_id=" . $id . "\n"
                                         . "ORDER BY h.history_date;";
                                 } else {
@@ -153,18 +153,36 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                             <td><?php echo $item; ?></td>
                                             <td><?php echo $qty; ?></td>
                                             <td><?php echo $user; ?></td>
+
+                                            <!-- Status -->
                                             <?php
                                                 if ($stat == "approved") {
                                                     echo '<td class="text-capitalize text-success"><strong>' . $stat . '</strong></td>';
                                                 }
+                                                else if ($stat == "pending") {
+                                                    echo '<td class="text-capitalize text-warning"><strong>' . $stat . '</strong></td>';
+                                                }
                                             ?>
-                                            <td><?php echo $by; ?></td>
+
+                                            <!-- Approved By -->
+                                            <?php
+                                                if (($by === null) && ($stat === "pending")) {
+                                                    echo '<td class="text-capitalize text-warning"><strong>' . $stat . '</strong></td>';
+                                                }
+                                                else if ($stat == "pending") {
+                                                    echo '<td class="text-capitalize">' . $by . '</td>';
+                                                } 
+                                                else {
+                                                    echo '<td>'.$by.'</td>';
+                                                }
+                                            ?>
                                             <td><?php echo $date; ?></td>
                                         </tr>
                                 <?php
                                     }
                                 } else {
-                                    echo '<tr><td>No data found</td>
+                                    if ((isset($_SESSION['ct']) and ($_SESSION['ct']) == 'user')) {
+                                        echo '<tr><td>No data found</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -172,6 +190,18 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         <td></td>
                                         <td></td>
                                             </tr>';
+                                    } 
+                                    else {
+                                        echo '<tr><td>No data found</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                            </tr>';
+                                    }
                                 }
 
                                 ?>

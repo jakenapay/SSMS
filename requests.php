@@ -20,6 +20,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
     <link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/style1.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="assets/css/history.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/profile.css?v=<?php echo time(); ?>">
     <link rel="icon" type="image/x-icon" href="logo.png">
 
     <!-- font awesome icons -->
@@ -80,6 +81,47 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                     </div>
                 </div>
             </div>
+
+            <div class="col-12">
+                    <!-- error message here -->
+                    <?php
+                    $message = '';
+                    if (isset($_GET['m'])) {
+                        if ($_GET['m'] == 'error') {
+                            $message = 'Error, something went wrong';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                        if ($_GET['m'] == 'insufficientStock') {
+                            $message = 'Insufficient stock will be left, please get a sufficient quantity only';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="box-content d-block">
+                                        <p class="message pl-2"><i class="fa-solid fa-circle-exclamation"></i>' . $message . '</p>
+                                        </div>
+                                    </div>';
+                        }
+                        if ($_GET['m'] == 'updateSuccess') {
+                            $message = 'Update success';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                        if ($_GET['m'] == 'requestApproved') {
+                            $message = 'Request approved';
+                            echo '<div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="box-content d-block">
+                                    <p class="message-success pl-2"><i class="fa-solid fa-check"></i>' . $message . '</p>
+                                    </div>
+                                </div>';
+                        }
+                    }
+                    ?>
+                </div>
 
             <!-- Recent History -->
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -161,13 +203,21 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <td><?php echo $qty; ?></td>
                                                 <td><?php echo $user; ?></td>
                                                 <?php
-                                                    if ($stat == "approved") {
-                                                        echo '<td class="text-capitalize text-success"><strong>' . $stat . '</strong></td>';
-                                                    } else if ($stat == "pending") {
-                                                        echo '<td class="text-capitalize text-warning"><strong>' . $stat . '</strong></td>';
-                                                    } 
+                                                if ($stat == "approved") {
+                                                    echo '<td class="text-capitalize text-success"><strong>' . $stat . '</strong></td>';
+                                                }
+                                                else if ($stat == "pending") {
+                                                    echo '<td class="text-capitalize text-warning"><strong>' . $stat . '</strong></td>';
+                                                }
                                                 ?>
-                                                <td><?php echo $by; ?></td>
+                                                <?php
+                                                    if ($by == null) {
+                                                        echo '<td class="text-capitalize text-warning"><strong>' . $stat . '</strong></td>';
+                                                    }
+                                                    else if ($stat == "pending") {
+                                                        echo '<td class="text-capitalize">' . $by . '</td>';
+                                                    }
+                                                ?>
                                                 <td><?php echo $date; ?></td>
 
                                                 <!-- Action -->
