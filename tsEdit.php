@@ -257,7 +257,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="date_last_modified">Last Modified</label>
-                                    <input id="date_last_modified" name="date_last_modified" type="hidden" class="form-control" placeholder="Last Modified" value="<?php echo $dlm; ?>">
+                                    <input id="date_last_modified" name="date_last_modified" type="hidden" class="form-control" placeholder="Last Modified" value="<?php echo $now; ?>">
                                     <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $dlm; ?></p>
                                 </div>
                                 <div class="col-md-6 pb-3">

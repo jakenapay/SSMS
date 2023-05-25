@@ -1,6 +1,6 @@
 <?php
 
-// UPDATE DETAILS OF TECHNOLOGY SUPPLIES
+// UPDATE DETAILS OF OFFICE SUPPLIES
 if (isset($_POST['save-changes'])) {
 
     if (!isset($_POST['os_id']) and !isset($_POST['uid'])) {

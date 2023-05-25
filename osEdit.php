@@ -36,12 +36,11 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
             $des = $row['os_desc'];
             $da = $row['date_added'];
             $dlmr = $row['dlmr'];
-            // $dlm = $row['date_last_modified'];
             $by = $row['fullname'];
         }
     }
 } else {
-    header("location: officeSupplies.php?m=tanginamo");
+    header("location: officeSupplies.php");
     exit();
 }
 
@@ -263,7 +262,7 @@ if (isset($_GET['eid']) and ($_GET['eid']) != '') {
                                 </div>
                                 <div class="col-md-6 pb-3">
                                     <label for="date_last_modified">Last Modified</label>
-                                    <input id="date_last_modified" name="date_last_modified" type="hidden" class="form-control" placeholder="Last Modified" value="<?php echo $dlm; ?>">
+                                    <input id="date_last_modified" name="date_last_modified" type="hidden" class="form-control" placeholder="Last Modified" value="<?php echo $now; ?>">
                                     <p class="pt-2 pb-1 px-2 border rounded align-items-center"><?php echo $dlmr; ?></p>
                                 </div>
                                 <div class="col-md-6 pb-3">
