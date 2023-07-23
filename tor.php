@@ -312,6 +312,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                         <th scope="col">Last Modified</th>
                                         <th scope="col">Modified By</th>
+
+                                        <!-- for buttons -->
                                         <th scope="col"></th>
                                     <?php } ?>
                                 </tr>
@@ -321,9 +323,17 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") {
-                                    $sql = "SELECT id, tor_id AS 'TOR ID', tor_date as 'Date' FROM tor";
+                                    $sql = "SELECT id, tor_id AS 'TOR ID', tor_date as 'Date', date_last_modified AS tdlm FROM tor";
                                 } else if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
-                                   $sql = "SELECT id, tor_id AS 'TOR ID', tor_date as 'Date', CONCAT(u.user_firstname, ' ', u.user_lastname) As user_fullname FROM tor LEFT JOIN users u ON tor_user = u.user_id";
+                                    $sql = "SELECT id,\n"
+                                    . "tor_id AS 'TOR ID',\n"
+                                    . "CONCAT(u.user_firstname, ' ', u.user_lastname) as User,\n"
+                                    . "tor_date as Date,\n"
+                                    . "t.date_last_modified AS tdlm,\n"
+                                    . "CONCAT(mb.user_firstname, ' ', mb.user_lastname) as 'tmb'\n"
+                                    . "FROM tor t\n"
+                                    . "LEFT JOIN users u ON t.tor_user=u.user_id\n"
+                                    . "LEFT JOIN users mb ON t.modified_by=mb.user_id;";
                                 }
 
                                 $result = $conn->query($sql);
@@ -332,10 +342,10 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     while ($row = $result->fetch_assoc()) {
                                         $t_id = $row['id'];
                                         $tor_id = $row['TOR ID'];
-                                        $tor_user = $row['user_fullname'];
-                                        $tor_date = $row['tor_date'];
-                                        $dlm = $row['date_last_modified'];
-                                        $mby = $row['modified_by'];
+                                        $tor_user = $row['User'];
+                                        $tor_date = $row['Date'];
+                                        $dlm = $row['tdlm'];
+                                        $mby = $row['tmb'];
                                 ?>
                                         <tr>
                                             <form action="includes/os.inc.php" method="post" enctype="multipart/form-data">
@@ -365,12 +375,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <td><?php echo $mby; ?></td>
                                                 <input name="mby" type="hidden" value="<?php echo $mby; ?>">
 
-                                                <!-- <td>
-                                                    Button trigger modal
+                                                <td>
+                                                    <!-- Button trigger modal -->
                                                     <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $id; ?>">
                                                         View
                                                     </button>
-                                                </td> -->
+                                                </td>
                                             </form>
                                         </tr>
                                 <?php
