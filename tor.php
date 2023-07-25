@@ -56,7 +56,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
 <body>
 
-    <!-- Add Modal for technology supplies -->
+    <!-- Add Modal for tor -->
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -66,52 +66,34 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="includes/os.inc.php" method="post" enctype="multipart/form-data">
+                <form action="includes/tor.inc.php" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
                             <!-- add name -->
-                            <div class="col-md-6 pt-3 pb-1">
-                                <label for="os_name">Name</label><br>
-                                <input class="form-control" type="text" name="os_name" id="os_name" placeholder="Supply Name">
+                            <div class="col-md-12 pt-3 pb-1">
+                                <label for="tor_id">TOR ID</label><br>
+                                <input class="form-control" type="text" name="tor_id" id="tor_id" placeholder="TOR ID">
                             </div>
-                            <!-- brand -->
-                            <div class="col-md-6 pt-3 pb-1">
-                                <label for="os_brand">Brand</label><br>
-                                <input class="form-control" type="text" name="os_brand" id="os_brand" placeholder="Supply Brand">
-                            </div>
-                            <!-- uom -->
-                            <div class="col-md-6 pt-3 pb-1">
-                                <label for="os_uom">Unit of Measure</label><br>
-                                <input class="form-control" type="text" name="os_uom" id="os_uom" placeholder="Unit of Measure">
-                            </div>
-                            <!-- quantity -->
-                            <div class="col-md-6 pt-3 pb-1">
-                                <label for="os_quantity">Quantity</label>
-                                <input class="form-control" type="number" min="1" name="os_quantity" id="os_quantity" required placeholder="Supply Quantity">
-                            </div>
-                            <!-- location -->
-                            <div class="col-md-6 pt-3 pb-1">
-                                <label for="os_location">Location</label>
-                                <input class="form-control" type="text" name="os_location" id="os_location" placeholder="Location">
-                            </div>
+
+                            <!-- <div class="col-md-6 pt-3 pb-1"> -->
+                                <!-- <label for="tor_user">Assigned To</label><br> -->
+                                <input class="form-control" type="hidden" name="tor_user" id="tor_user" placeholder="Assigned To">
+                            <!-- </div> -->
+
+                            <!-- <div class="col-md-6 pt-3 pb-1"> -->
+                                <!-- <label for="tor_date">TOR DATE</label><br> -->
+                                <input class="form-control" type="hidden" name="tor_date" id="tor_date" placeholder="TOR DATE">
+                            <!-- </div> -->
+                            
+                            <!-- <div class="col-md-6 pt-3 pb-1"> -->
+                                <!-- <label for="tdlm">Date Last Modified</label> -->
+                                <input class="form-control" type="hidden" name="tdlm" id="tdlm" placeholder="tdlm">
+                            <!-- </div> -->
                             <!-- description -->
-                            <div class="col-md-12 pt-3 pb-1">
-                                <label for="os_description">Description</label>
-                                <textarea class="form-control" type="text" name="os_description" id="os_description" placeholder="Other information.."></textarea>
-                            </div>
-                            <!-- status -->
-                            <div class="col-md-12 pt-3 pb-1">
-                                <label for="status">Status</label>
-                                <select name="status" id="status" class="text-dark">
-                                    <option value="enabled">Enabled</option>
-                                    <option value="disabled">Disabled</option>
-                                </select>
-                            </div>
-                            <!-- image -->
-                            <div class="col-md-12 pt-3 pb-1">
-                                <label for="os_img">Image</label>
-                                <input type="file" accept="image/*" name="os_img" id="os_img" required>
-                            </div>
+                            <!-- <div class="col-md-12 pt-3 pb-1"> -->
+                                <!-- <label for="os_description">Modified by</label> -->
+                                <input class="form-control" type="hidden" name="mby" id="mby" placeholder="Modified By">
+                            <!-- </div> -->
 
                             <!-- hidden -->
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['id']; ?>">
@@ -119,7 +101,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-default px-2" name="add-office-btn" value="Add Supply">
+                        <input type="submit" class="btn btn-default px-2" name="add-tor-btn" value="Add TOR">
                     </div>
                 </form>
             </div>
@@ -300,13 +282,17 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         <table class="table table-hover">
                             <thead>
                                 <tr class="pt-5">
-                                <?php
-                                    if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
-                                        <th scope="col">ID</th>
-                                <?php } ?>
+                                    <th scope="col">ID</th>
                                     <th scope="col">TOR ID</th>
                                     <th scope="col">In Charge</th>
+                                    <?php
+                                        if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
                                     <th scope="col">Date</th>
+                                    <?php } ?>
+                                    <?php
+                                        if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "user") { ?>
+                                            <th scope="col"></th>
+                                    <?php } ?>
                                     <!-- for admins -->
                                     <?php
                                     if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
@@ -324,17 +310,18 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") {
-                                    $sql = "SELECT id,\n"
-                                    . "tor_id AS 'TOR ID',\n"
-                                    . "CONCAT(u.user_firstname, ' ', u.user_lastname) as User,\n"
-                                    . "tor_date as Date,\n"
-                                    . "t.date_last_modified AS tdlm,\n"
-                                    . "CONCAT(mb.user_firstname, ' ', mb.user_lastname) as 'tmb'\n"
-                                    . "FROM tor t\n"
-                                    . "LEFT JOIN users u ON t.tor_user=u.user_id\n"
-                                    . "LEFT JOIN users mb ON t.modified_by=mb.user_id\n"
-                                    . "WHERE u.user_id=" . $id . "\n"
-                                    . "ORDER BY tor_date;";
+                                    $sql = "SELECT id,
+                                            tor_id AS 'TOR ID',
+                                            CONCAT(u.user_firstname, ' ', u.user_lastname) as User,
+                                            tor_date as Date,
+                                            t.date_last_modified AS tdlm,
+                                            CONCAT(mb.user_firstname, ' ', mb.user_lastname) as 'tmb'
+                                            FROM tor t
+                                            LEFT JOIN users u ON t.tor_user = u.user_id
+                                            LEFT JOIN users mb ON t.modified_by = mb.user_id
+                                            WHERE tor_user IS NULL
+                                            ORDER BY tor_date;";
+
                                 } else if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
                                     $sql = "SELECT id,\n"
                                     . "tor_id AS 'TOR ID',\n"
@@ -352,7 +339,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 if ($result->num_rows > 0) {
                                     // output data of each row
                                     while ($row = $result->fetch_assoc()) {
-                                        $t_id = $row['id'];
+                                        $tid = $row['id'];
                                         $tor_id = $row['TOR ID'];
                                         $tor_user = $row['User'];
                                         $tor_date = $row['Date'];
@@ -364,39 +351,50 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                                 <!-- rows -->
 
                                                 <!-- t_id -->
-                                                <td class="tid"><?php echo $t_id; ?></td>
-                                                <input name="tid" type="hidden" value="<?php echo $t_id; ?>">
+                                                <td class="tid"><?php echo $tid; ?></td>
+                                                <input name="tid" type="hidden" value="<?php echo $tid; ?>">
 
                                                 <!-- tor_id -->
                                                 <td><?php echo $tor_id; ?></td>
                                                 <input name="tor_id" type="hidden" value="<?php echo $tor_id; ?>">
 
                                                 <!-- tor_user -->
-                                                <td><?php echo $tor_user; ?></td>
+                                                <td><?php echo ($tor_user === null) ? 'No assigned yet' : $tor_user; ?></td>
                                                 <input name="tor_user" type="hidden" value="<?php echo $tor_user; ?>">
 
-                                                <!-- tor_date -->
-                                                <td><?php echo $tor_date; ?></td>
-                                                <input name="tor_date" type="hidden" value="<?php echo $tor_date; ?>">
+                                                <?php
+                                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <!-- tor_date -->
+                                                    <td><?php echo $tor_date; ?></td>
+                                                    <input name="tor_date" type="hidden" value="<?php echo $tor_date; ?>">
+                                                <?php } ?>
 
-                                                <!-- date_last_modified -->
-                                                <td><?php echo $dlm; ?></td>
-                                                <input name="dlm" type="hidden" value="<?php echo $dlm; ?>">
-
-                                                <!-- modified_by -->
-                                                <td><?php echo $mby; ?></td>
-                                                <input name="mby" type="hidden" value="<?php echo $mby; ?>">
+                                                <?php
+                                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <!-- date_last_modified -->
+                                                    <td><?php echo $dlm; ?></td>
+                                                    <input name="dlm" type="hidden" value="<?php echo $dlm; ?>">
+                                                <?php } ?>
+                                                
+                                                <?php
+                                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <!-- modified_by -->
+                                                    <td><?php echo $mby; ?></td>
+                                                    <input name="mby" type="hidden" value="<?php echo $mby; ?>">
+                                                <?php } ?>
 
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $t_id; ?>">
+                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $tid; ?>">
                                                         View
                                                     </button>
                                                 </td>
 
+                                                
+
                                                 <?php
                                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
-                                                    <td><a class="btn btn-warning" href="torEdit.php?eid=<?php echo $t_id; ?>"><button type="button" class="btn btn-warning px-2 updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
+                                                    <td><a class="btn btn-warning" href="torEdit.php?eid=<?php echo $tid; ?>"><button type="button" class="btn btn-warning px-2 updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
                                                                 Update
                                                             </button></a>
                                                     </td>
@@ -406,14 +404,26 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 <?php
                                     }
                                 } else {
-                                    echo '<td>No data found</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>';
-                                }
+                                    if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
+                                        echo '<td>No data found</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                ';
+                                    } else 
+                                    {
+                                        echo '<td>No data found</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        ';
+                                    }
+                                    }
+                                    
                                 ?>
                             </tbody>
                         </table>
@@ -475,13 +485,13 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
             $('table').on('click', '.viewBtn', function(e) {
                 e.preventDefault();
-                var productID = $(this).data('tid');
+                var tID = $(this).data('product-id');
                 $.ajax({
                     type: 'POST',
                     url: "includes/tor.inc.php",
                     data: {
                         'check_view': true,
-                        'tid': productID
+                        'tid': tID
                     },
                     success: function(response) {
                         $('.tor_view').html(response);

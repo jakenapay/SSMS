@@ -44,7 +44,7 @@ if (isset($_POST['check_view'])) {
 
     $tid = $_POST['tid'];
 
-    $stmt = $conn->prepare("SELECT * FROM tor WHERE id = ?");
+    $stmt = $conn->prepare("SELECT *, CONCAT(u.user_firstname, ' ', u.user_lastname) as 'fullname' FROM tor LEFT JOIN users u ON tor.tor_user=u.user_id WHERE id = ?");
     $stmt->bind_param('i', $tid);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -55,6 +55,7 @@ if (isset($_POST['check_view'])) {
         $tid = $row['id'];
         $tor_id = $row['tor_id'];
         $tor_user = $row['tor_user'];
+        $fullname = $row['fullname'];
         $date = $row['tor_date'];
         $tdlm = $row['date_last_modified'];
         $mby = $row['modified_by'];
@@ -62,20 +63,15 @@ if (isset($_POST['check_view'])) {
         $return = '
         <div class="row">
         <input type="hidden" class="form-control" id="tid" name="tid" value"' . $tid .'">
-        <div class="col-md-6 pt-1 pb-1">
+        <div class="col-md-12 pt-1 pb-1">
             <label for="tor_id">TOR ID</label>
             <input type="text" class="form-control" id="tor_id" name="tor_id" value="' . $tor_id . '" disabled>
             <input type="hidden" class="form-control" id="tor_id" name="tor_id" value="' . $tor_id . '">
         </div>
-        <div class="col-md-6 pt-1 pb-1">
-            <label for="tor_user">Assigned To</label>
-            <input type="text" class="form-control" id="tor_user" name="tor_user" value="' . $tor_user . '" disabled>
-        </div>  
-        <div class="col-md-6 pt-1 pb-1">
-            <label for="ts_model">Unit of Measure</label>
-            <input type="text" class="form-control" id="os_uom" name="os_uom" value="' . $uom . '" disabled>
-        </div>
+        
         ';
+
+        
 
         echo $return;
     } else {
@@ -121,7 +117,7 @@ if (isset($_POST['get-tor'])) {
 
     // $sql = "UPDATE office_supplies SET os_quantity='$left', date_last_modified='$now', modified_by=$id WHERE os_id=$tor_id";
     // Lalagay sa request.inc.php
-    $sql = "INSERT INTO history(`os_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$tor_id', '$qty', $id, 'pending', NULL, now())";
+    $sql = "INSERT INTO history(`tor_id`, `history_quantity`, `user_id`, `status`, `modified_by`, `history_date`) VALUES ('$tor_id', '1', $id, 'pending', NULL, now())";
 
     if ($conn->query($sql) === TRUE) {
         header("location: ../tor.php?m=success");
@@ -132,56 +128,56 @@ if (isset($_POST['get-tor'])) {
     }
 }
 
-// Disabling tech supply
-if (isset($_POST['delete-supply'])) {
+// // Disabling tech supply
+// if (isset($_POST['delete-supply'])) {
 
-    // Include other PHP processes
-    include_once 'config.inc.php';
-    include_once 'functions.inc.php';
+//     // Include other PHP processes
+//     include_once 'config.inc.php';
+//     include_once 'functions.inc.php';
 
-    $del_id = $_POST['del_id']; // ID of the supply to disable
-    $uid = $_POST['uid']; // User ID - the ID of the account that you're using
+//     $del_id = $_POST['del_id']; // ID of the supply to disable
+//     $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE office_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$del_id";
-    if ($conn->query($sql) === TRUE) {
-        // Return a success response
-        header("location: ../tor.php?m=disablingSuccess");
-        exit();
-    } else {
-        // Return an error response
-        echo $conn->error;
-        echo "<script>alert('Error updating product.');window.location.replace('../tor.php?m=error');</script>";
-        exit();
-    }
-    exit();
-}
+//     $sql = "UPDATE office_supplies SET status='disabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$del_id";
+//     if ($conn->query($sql) === TRUE) {
+//         // Return a success response
+//         header("location: ../tor.php?m=disablingSuccess");
+//         exit();
+//     } else {
+//         // Return an error response
+//         echo $conn->error;
+//         echo "<script>alert('Error updating product.');window.location.replace('../tor.php?m=error');</script>";
+//         exit();
+//     }
+//     exit();
+// }
 
-// Enabling tech supply
-if (isset($_POST['enable-supply'])) {
+// // Enabling tech supply
+// if (isset($_POST['enable-supply'])) {
 
-    // Include other PHP processes
-    include_once 'config.inc.php';
-    include_once 'functions.inc.php';
+//     // Include other PHP processes
+//     include_once 'config.inc.php';
+//     include_once 'functions.inc.php';
 
-    $enbl_id = $_POST['enbl_id']; // ID of the supply to enable
-    $uid = $_POST['uid']; // User ID - the ID of the account that you're using
+//     $enbl_id = $_POST['enbl_id']; // ID of the supply to enable
+//     $uid = $_POST['uid']; // User ID - the ID of the account that you're using
 
-    $sql = "UPDATE office_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$enbl_id";
-    if ($conn->query($sql) === TRUE) {
-        // Return a success response
-        header("location: ../tor.php?m=enablingSuccess");
-        exit();
-    } else {
-        // Return an error response
-        echo $conn->error;
-        echo "<script>alert('Error updating product.');window.location.replace('../tor.php?m=error');</script>";
-    }
-    exit();
-}
+//     $sql = "UPDATE office_supplies SET status='enabled', date_last_modified=now(), modified_by=$uid WHERE os_id=$enbl_id";
+//     if ($conn->query($sql) === TRUE) {
+//         // Return a success response
+//         header("location: ../tor.php?m=enablingSuccess");
+//         exit();
+//     } else {
+//         // Return an error response
+//         echo $conn->error;
+//         echo "<script>alert('Error updating product.');window.location.replace('../tor.php?m=error');</script>";
+//     }
+//     exit();
+// }
 
 
 // add supply
-if (isset($_POST['add-office-btn'])) {
+if (isset($_POST['add-tor-btn'])) {
 
     // include other php process
     include_once 'config.inc.php';
@@ -194,69 +190,21 @@ if (isset($_POST['add-office-btn'])) {
 
     // details
     $uid = $_POST['user_id'];
-    $name = $_POST['os_name'];
-    $brand = $_POST['os_brand'];
-    $uom = $_POST['os_uom'];
-    $qty = $_POST['os_quantity'];
-    $loc = $_POST['os_location'];
-    $des = $_POST['os_description'];
-    $stat = $_POST['status'];
-    $os_img = $_POST['os_img']['name'];
+    $tid = $_POST['id'];
+    $tor_id = $_POST['tor_id'];
+    $tor_user = $_POST['tor_user'];
+    $fullname = $_POST['fullname'];
+    $date = $_POST['tor_date'];
+    $tdlm = $_POST['date_last_modified'];
+    $mby = $_POST['modified_by'];
 
     // functions to be added
     // requires
     require_once 'config.inc.php';
     require_once 'functions.inc.php';
 
-    // Get the uploaded image file and its information
-    $image = $_FILES['os_img']['name'];
-    $tmp_img_name = $_FILES['os_img']['tmp_name'];
-    $image_type = $_FILES['os_img']['type'];
-    $image_size = $_FILES['os_img']['size'];
-    $image_error = $_FILES['os_img']['error'];
 
-    // Seperate extension and filename
-    $image_tmp_ext = explode('.', $image);
-    $image_ext = strtolower(end($image_tmp_ext));
-
-    // Check if there is an empty field
-    if (empty($name) or empty($uom) or empty($brand) or empty($qty) or empty($qty) or empty($loc)) {
-        header("location: ../tor.php?m=emptyFields");
-        exit();
-    }
-
-    // Check if image type is an image
-    if (checkImageType($image_type) !== false) {
-        header("location: ../tor.php?m=ImageTypeDenied");
-        exit();
-    }
-
-    // Check if image size is more than 2mb
-    if (checkImageSize($image_size) !== false) {
-        header("location: ../tor.php?m=ImageTooLarge");
-        exit();
-    }
-
-    // Check if image has an error
-    if (
-        checkImageError($image_error) !== false
-    ) {
-        header("location: ../tor.php?m=ImageError");
-        exit();
-    }
-
-    // If all functions were passed then explode the image name and extension
-    // Create a unique ID for the image
-    // Upload the image to the folder
-    $image_new_name = uniqid('', true) . "." . $image_ext;
-
-    // Upload the image to upload folder (product_img)
-    $image_final_name = 'IMG_' . $image_new_name;
-    $folder = '../tor/';
-    move_uploaded_file($tmp_img_name, $folder . $image_final_name);
-
-    // All done head back to product.php
-    $sql = "INSERT INTO `office_supplies` (`os_name`, `os_brand`, `os_uom`, `os_quantity`, `os_location`, `os_img`, `os_desc`, `status`, `date_added`, `date_last_modified`, `modified_by`) VALUES ('$name', '$brand','$uom','$qty', '$loc', '$image_final_name', '$des', '$stat', '$now', '$now', '$uid')";
+    $sql = "INSERT INTO `tor` (`tor_id`, `tor_user`, `tor_date`, `date_last_modified`, `modified_by`) VALUES ('$tor_id', NULL, '$now', '$now', '$uid')";
 
     if ($conn->query($sql) === false) {
         header("location: ../tor.php?m=uploadError");
