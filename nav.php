@@ -109,6 +109,17 @@
                 <?php
                 } ?>
 
+                <!-- TOR -->
+                <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) { ?>
+                    <li class="nav-link">
+                        <a href="tor.php">
+                        <i class="fa-solid fa-file-lines icon"></i>
+                            <span class="text nav-text">Transcript of Records</span>
+                        </a>
+                    </li>
+                <?php
+                } ?>
+
                 <?php if (isset($_SESSION['id']) and ($_SESSION['id'] != '')) { ?>
                     <li class="nav-link">
                         <a href="reports.php">

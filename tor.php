@@ -153,7 +153,7 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                 <div class="header">
                     <div class="header-content">
                         <span class="d-flex justify-content-start align-items-center">
-                            <i class="fa-solid fa-boxes-packing icon"></i>
+                            <i class="fa-solid fa-file-lines icon"></i>
                             <p class="header-title text">Transcript of Records</p>
                         </span>
                         <?php
@@ -315,7 +315,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                         <!-- for buttons -->
                                         <th scope="col"></th>
-                                    <?php } ?>
+                                        <th scope="col"></th>
+                                        <?php } ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -323,7 +324,17 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                 // fetch all tech supplies that is more than 3 stocks of quantity
                                 include 'includes/config.inc.php';
                                 if (isset($_SESSION['ct']) && ($_SESSION['ct']) != "admin") {
-                                    $sql = "SELECT id, tor_id AS 'TOR ID', tor_date as 'Date', date_last_modified AS tdlm FROM tor";
+                                    $sql = "SELECT id,\n"
+                                    . "tor_id AS 'TOR ID',\n"
+                                    . "CONCAT(u.user_firstname, ' ', u.user_lastname) as User,\n"
+                                    . "tor_date as Date,\n"
+                                    . "t.date_last_modified AS tdlm,\n"
+                                    . "CONCAT(mb.user_firstname, ' ', mb.user_lastname) as 'tmb'\n"
+                                    . "FROM tor t\n"
+                                    . "LEFT JOIN users u ON t.tor_user=u.user_id\n"
+                                    . "LEFT JOIN users mb ON t.modified_by=mb.user_id\n"
+                                    . "WHERE u.user_id=" . $id . "\n"
+                                    . "ORDER BY tor_date;";
                                 } else if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") {
                                     $sql = "SELECT id,\n"
                                     . "tor_id AS 'TOR ID',\n"
@@ -333,7 +344,8 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                     . "CONCAT(mb.user_firstname, ' ', mb.user_lastname) as 'tmb'\n"
                                     . "FROM tor t\n"
                                     . "LEFT JOIN users u ON t.tor_user=u.user_id\n"
-                                    . "LEFT JOIN users mb ON t.modified_by=mb.user_id;";
+                                    . "LEFT JOIN users mb ON t.modified_by=mb.user_id\n"
+                                    . "ORDER BY t.tor_date;";
                                 }
 
                                 $result = $conn->query($sql);
@@ -348,12 +360,12 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                                         $mby = $row['tmb'];
                                 ?>
                                         <tr>
-                                            <form action="includes/os.inc.php" method="post" enctype="multipart/form-data">
+                                            <form action="includes/tor.inc.php" method="post" enctype="multipart/form-data">
                                                 <!-- rows -->
 
                                                 <!-- t_id -->
-                                                <td class="t_id"><?php echo $t_id; ?></td>
-                                                <input name="t_id" type="hidden" value="<?php echo $t_id; ?>">
+                                                <td class="tid"><?php echo $t_id; ?></td>
+                                                <input name="tid" type="hidden" value="<?php echo $t_id; ?>">
 
                                                 <!-- tor_id -->
                                                 <td><?php echo $tor_id; ?></td>
@@ -377,10 +389,18 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
                                                 <td>
                                                     <!-- Button trigger modal -->
-                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $id; ?>">
+                                                    <button type="button" class="btn viewBtn btn-default px-2" data-bs-toggle="modal" data-bs-target="#viewModal" data-product-id="<?php echo $t_id; ?>">
                                                         View
                                                     </button>
                                                 </td>
+
+                                                <?php
+                                                if (isset($_SESSION['ct']) && ($_SESSION['ct']) == "admin") { ?>
+                                                    <td><a class="btn btn-warning" href="torEdit.php?eid=<?php echo $t_id; ?>"><button type="button" class="btn btn-warning px-2 updateBtn" data-bs-toggle="modal" data-bs-target="#updateModal">
+                                                                Update
+                                                            </button></a>
+                                                    </td>
+                                                <?php } ?>
                                             </form>
                                         </tr>
                                 <?php
@@ -405,16 +425,16 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
         <!-- View Modal -->
         <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="includes/os.inc.php" method="post">
+                <form action="includes/tor.inc.php" method="post">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">View Office Supply</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">View Transcript of Record</h5>
                             <button type="button" class="close border-0 bg-white px-2" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <div class="os_view">
+                            <div class="tor_view">
 
                             </div>
 
@@ -422,64 +442,14 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
                         <div class="modal-footer d-flex justify-content-between">
                             <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
                             <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-default px-2" name="get-btn-office" value="Get Supply">
+                            <input type="submit" class="btn btn-default px-2" name="get-tor" value="Get Supply">
                         </div>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- Delete(disabled supply) Modal -->
-        <div class="modal fade" id="disableModal" tabindex="-1" role="dialog" aria-labelledby="disableModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <form action="includes/os.inc.php" method="post">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="disableModal">Disable Office Supply</h5>
-                            <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="del_id" id="del_id">
-                            <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
-                            <h6>Are you sure you want to disable this supply?</h6>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-between">
-                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
-                            <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-default px-2" name="delete-supply" value="Disable Supply">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Enable supply Modal -->
-        <div class="modal fade" id="enableModal" tabindex="-1" role="dialog" aria-labelledby="enableModal" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <form action="includes/os.inc.php" method="post">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="enableModal">Enable Office Supply</h5>
-                            <button type="button" class="close border-0 bg-white" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" name="enbl_id" id="enbl_id">
-                            <input type="hidden" name="uid" value="<?php echo $_SESSION['id']; ?>">
-                            <h6>Are you sure you want to enable this supply?</h6>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-between">
-                            <input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['id']; ?>">
-                            <button type="button" class="btn btn-light px-2" data-bs-dismiss="modal">Close</button>
-                            <input type="submit" class="btn btn-default px-2" name="enable-supply" value="Enable Supply">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        
 
     </section>
 
@@ -505,16 +475,16 @@ if (!isset($_SESSION['id']) and ($_SESSION['id'] == '')) {
 
             $('table').on('click', '.viewBtn', function(e) {
                 e.preventDefault();
-                var productID = $(this).data('product-id');
+                var productID = $(this).data('tid');
                 $.ajax({
                     type: 'POST',
-                    url: "includes/os.inc.php",
+                    url: "includes/tor.inc.php",
                     data: {
                         'check_view': true,
-                        'os_id': productID
+                        'tid': productID
                     },
                     success: function(response) {
-                        $('.os_view').html(response);
+                        $('.tor_view').html(response);
                         $('#viewModal').modal('show');
                     }
                 });

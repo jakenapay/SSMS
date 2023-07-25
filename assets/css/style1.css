@@ -82,6 +82,11 @@
     background-color: #39009930;
 }
 
+.home .fa-file-lines {
+    color: #1a9900;
+    background-color: #1a990030;
+}
+
 .home .fa-users,
 .dbicon {
     color: #9E0059;
